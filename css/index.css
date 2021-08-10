@@ -5944,12 +5944,6 @@ blockquote.pullquote.right {
 .read-mode #article-container .note .note-icon {
   color: var(--font-color);
 }
-.recent-post-item {
-  background: rgba(255,255,255,0.8) !important;
-}
-.post_cover {
-  filter: filter: alpha(opacity=85);;
-}
 .card-widget {
   background: rgba(255,255,255,0.8) !important;
 }
