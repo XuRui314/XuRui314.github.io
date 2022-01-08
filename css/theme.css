@@ -1,0 +1,136 @@
+/*
+    Name:     Kimbie (dark)
+    Author:   Jan T. Sott
+    License:  Creative Commons Attribution-ShareAlike 4.0 Unported License
+    URL:      https://github.com/idleberg/Kimbie-highlight.js
+*/
+
+/* 新添加的內容
+  ------------------------------------- 
+  --hl-color                  代碼框字體顔色 【必須】 (把下面.hljs的 color複製到這裏來)
+  --hl-bg                     代碼框背景色 【必須】 (把下面.hljs的 background複製到這裏來)
+  --hltools-bg: #321a0f       代碼框頂部工具欄背景色 【可選】(如果你關掉了 copy、lang 和 shrink,可不用配置這個）
+  --hltools-color: #fff       代碼框頂部工具欄字體顔色 【可選】(如果你關掉了 copy、lang 和 shrink,可不用配置這個）
+  --hlnumber-bg: #221a0f      代碼框行數背景色 【可選】(如果已經關掉 line_number,可以不用配置這個)
+  --hlnumber-color: #fff      代碼框行數字體顔色 【可選】 (如果已經關掉 line_number,可以不用配置這個)
+  --hlscrollbar-bg: #d3af86   代碼框滾動條顔色 【可選】（默認為主題主顔色）
+  --hlexpand-bg: #d3af86      代碼框底部展開背景色 【可選】(如果已經關掉 highlight_height_limit,可以不用配置這個)
+*/
+
+:root {
+	--hl-color: #9a86fd;
+	--hl-bg: #32303a;
+	--hltools-bg: #32303a;
+	--hltools-color: #fff;
+	--hlnumber-bg: #32303a;
+	--hlnumber-color: #9a97a3;
+	--hlscrollbar-bg: #d3af86;
+	--hlexpand-bg: #d3af86;
+  }
+  
+  .hljs-comment,
+  .hljs-prolog,
+  .hljs-doctype,
+  .hljs-cdata {
+	  color: #6c6783;
+  }
+  
+  .hljs-punctuation {
+	  color: #6c6783;
+  }
+  
+  .hljs-namespace {
+	  opacity: .7;
+  }
+  
+  .hljs-tag,
+  .hljs-operator,
+  .hljs-number {
+	  color: #ee861e;
+  }
+  
+  .hljs-property,
+  .hljs-function {
+	  color: #9a86fd;
+  }
+  
+  .hljs-tag-id,
+  .hljs-selector,
+  .hljs-atrule-id {
+	  color: #eeebff;
+  }
+  
+  code.language-javascript,
+  .hljs-attr-name {
+	  color: #c4b9fe;
+  }
+  
+  code.language-css,
+  code.language-scss,
+  .hljs-boolean,
+  .hljs-string,
+  .hljs-entity,
+  .hljs-url,
+  .language-css .hljs-string,
+  .language-scss .hljs-string,
+  .style .hljs-string,
+  .hljs-attr-value,
+  .hljs-keyword,
+  .hljs-control,
+  .hljs-directive,
+  .hljs-unit,
+  .hljs-statement,
+  .hljs-regex,
+  .hljs-atrule {
+	  color: #9d96be;
+  }
+  
+  .hljs-placeholder,
+  .hljs-variable {
+	  color: #f3b16f;
+  }
+  
+  .hljs-deleted {
+	  text-decoration: line-through;
+  }
+  
+  .hljs-inserted {
+	  border-bottom: 1px dotted #eeebff;
+	  text-decoration: none;
+  }
+  
+  .hljs-italic {
+	  font-style: italic;
+  }
+  
+  .hljs-important,
+  .hljs-bold {
+	  font-weight: bold;
+  }
+  
+  .hljs-important {
+	  color: #c4b9fe;
+  }
+  
+  .hljs-entity {
+	  cursor: help;
+  }
+  
+	/* 更改的內容 把.hljs改為 #article-container figure.highlight .hljs *、
+	/* ------------------------------------- */
+	#article-container figure.highlight .hljs {
+	  display: block;
+	  overflow-x: auto;
+	  background: #32303a;
+	  color: #d3af86;
+	  padding: 0.5em;
+	}
+	
+	.hljs-emphasis {
+	  font-style: italic;
+	}
+	
+	.hljs-strong {
+	  font-weight: bold;
+	}
+  
