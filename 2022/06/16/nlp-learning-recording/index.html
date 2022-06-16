@@ -1,0 +1,588 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>nlp learning recording | XuRui-Blog</title><meta name="keywords" content="Python,Deep Learning"><meta name="author" content="zxr"><meta name="copyright" content="zxr"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="nlp learning recording General Procedure Of Preprocessing Normalization Tokenization Stop words Part-of-Speech Tagging Named Entity Recognition Stemming and Lemmatization  Word EmbeddingOne-hot Vector">
+<meta property="og:type" content="article">
+<meta property="og:title" content="nlp learning recording">
+<meta property="og:url" content="https://xurui314.github.io/2022/06/16/nlp-learning-recording/index.html">
+<meta property="og:site_name" content="XuRui-Blog">
+<meta property="og:description" content="nlp learning recording General Procedure Of Preprocessing Normalization Tokenization Stop words Part-of-Speech Tagging Named Entity Recognition Stemming and Lemmatization  Word EmbeddingOne-hot Vector">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80">
+<meta property="article:published_time" content="2022-06-16T04:00:43.000Z">
+<meta property="article:modified_time" content="2022-06-16T04:04:04.321Z">
+<meta property="article:author" content="zxr">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80"><link rel="shortcut icon" href="https://i.loli.net/2021/07/27/lSHRJbx7dYwTk8f.jpg"><link rel="canonical" href="https://xurui314.github.io/2022/06/16/nlp-learning-recording/"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'nlp learning recording',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-06-16 12:04:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/badge.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/dist/APlayer.min.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/bilibiliBanner.css" media="defer" onload="this.media='screen'"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiperstyle.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css">
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script async="" src="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">49</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">23</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">12</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">XuRui-Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">nlp learning recording</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-06-16T04:00:43.000Z" title="Created 2022-06-16 12:00:43">2022-06-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-06-16T04:04:04.321Z" title="Updated 2022-06-16 12:04:04">2022-06-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/NLP/">NLP</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>9min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="nlp learning recording"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80');"></div><article class="post-content" id="article-container"><p>nlp learning recording</p>
+<h2 id="General-Procedure-Of-Preprocessing"><a href="#General-Procedure-Of-Preprocessing" class="headerlink" title="General Procedure Of Preprocessing"></a>General Procedure Of Preprocessing</h2><ul>
+<li>Normalization</li>
+<li>Tokenization</li>
+<li>Stop words</li>
+<li>Part-of-Speech Tagging</li>
+<li>Named Entity Recognition</li>
+<li>Stemming and Lemmatization</li>
+</ul>
+<h2 id="Word-Embedding"><a href="#Word-Embedding" class="headerlink" title="Word Embedding"></a>Word Embedding</h2><h3 id="One-hot-Vector"><a href="#One-hot-Vector" class="headerlink" title="One-hot Vector"></a>One-hot Vector</h3><p><strong>Description</strong>: most simple way to represent categorical feature one-hot.</p>
+<p><strong>Disadvantages</strong>:</p>
+<ul>
+<li>​    For large vocabularies, these vectors will be very long: vector dimensionality is equal to the vocabulary size.</li>
+<li>​    These vectors know nothing about the words they represent, one-hot vectors do not capture meaning.</li>
+</ul>
+<h3 id="Improvement-Motivation"><a href="#Improvement-Motivation" class="headerlink" title="Improvement Motivation"></a>Improvement Motivation</h3><p>To solve the semantics problem, we need to first define the notion of meaning that can be used in practice.</p>
+<p><strong>Distributional hypothesis</strong>: Words which frequently appear in <strong>similar contexts</strong> have <strong>similar meaning</strong>.</p>
+<blockquote>
+<p>“You shall know a word by the company it keeps” with the reference to J. R. Firth in 1957</p>
+</blockquote>
+<p>This is an extremely valuable idea: it can be used in practice to <strong>make word vectors capture their meaning</strong>. </p>
+<p>According to the distributional hypothesis, “<strong>to capture meaning</strong>“ and “<strong>to capture contexts</strong>“ are inherently the same. Therefore, all we need to do is to put information about word contexts into word representation.</p>
+<p><strong>Main idea</strong>: We need to put information about word contexts into word representation.</p>
+<h3 id="Count-Based-Methods"><a href="#Count-Based-Methods" class="headerlink" title="Count-Based Methods"></a>Count-Based Methods</h3><p><img src="https://lena-voita.github.io/resources/lectures/word_emb/preneural/idea-min.png" alt="img"></p>
+<blockquote>
+<p>Main idea: We have to put information about contexts into word vectors.</p>
+<p>How: Put this information <strong>manually</strong> based on global corpus statistics.</p>
+</blockquote>
+<p>general procedure:</p>
+<ol>
+<li>construct a word-context matrix</li>
+<li>reduce its dimensionality</li>
+</ol>
+<p>To estimate similarity between words/contexts, usually you need to evaluate the dot-product of normalized word/context vectors (i.e., <strong>cosine similarity</strong>).</p>
+<p>To define a count-based method, we need to define two things:</p>
+<ul>
+<li>possible contexts (including what does it mean that a word appears in a context),</li>
+<li>the notion of association, i.e., formulas for computing matrix elements.</li>
+</ul>
+<p><strong>Simple: Co-Occurence Counts</strong></p>
+<ul>
+<li><p>Context: surrounding words in a L-sized window.</p>
+</li>
+<li><p>Matrix element: $N(w,c)$ - number of times word w appears in context c.</p>
+</li>
+</ul>
+<p><strong>Positive Pointwise Mutual Information (PPMI)</strong></p>
+<ul>
+<li><p>Context: surrounding words in a L-sized window.</p>
+</li>
+<li><p>Matrix element: $PPMI(w,c) = max(0, PMI(w,c))$ </p>
+<p>where</p>
+</li>
+</ul>
+<script type="math/tex; mode=display">
+PPMI(w,c) =\log \frac{P(w, c)}{P(w) P(c)}=\log \frac{N(w, c)|(w, c)|}{N(w) N(c)}</script><h4 id="SUM"><a href="#SUM" class="headerlink" title="SUM:"></a>SUM:</h4><ol>
+<li>Rely on matrix factorization (e.g. LSA, HAL). </li>
+<li>While these methods effectively leverage global statistical information, they are primarily used to capture word similarities and do poorly on tasks such as word analogy, indicating a sub-optimal vector space structure</li>
+</ol>
+<p><strong>Reference papers/Notes/Blogs</strong>:</p>
+<p><a target="_blank" rel="noopener" href="http://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes01-wordvecs1.pdf">http://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes01-wordvecs1.pdf</a></p>
+<h3 id="Word2Vec"><a href="#Word2Vec" class="headerlink" title="Word2Vec"></a>Word2Vec</h3><p>Let us remember our main idea again:</p>
+<blockquote>
+<p>Main idea: We have to put information about contexts into word vectors.</p>
+</blockquote>
+<p>While count-based methods took this idea quite literally, Word2Vec uses it in a different manner:</p>
+<blockquote>
+<p>How: <strong>Learn</strong> word vectors by teaching them to <strong>predict contexts</strong>.</p>
+</blockquote>
+<p><strong>Intuition:</strong>  Why we choose this kind of structure to build the word embedding?</p>
+<blockquote>
+<p>In fact, we are constructing a dimension reduction method that builds in our insights(distributional hypothesis).</p>
+</blockquote>
+<p>Let’s first look at <strong>t-SNE</strong> method:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://www.datakit.cn/blog/2017/02/05/t_sne_full.html#">http://www.datakit.cn/blog/2017/02/05/t_sne_full.html#</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=NEaUSP4YerM">https://www.youtube.com/watch?v=NEaUSP4YerM</a></p>
+</blockquote>
+<p>t-SNE preserves the original data structure by modeling distance to probability distribution.</p>
+<p>Word2Vec wants to construct a embedding space structure in a lower dimension.</p>
+<p>The structure is actually the <strong>target probability distribution</strong>, instead of just having the original data distribution, in nlp, we can have our target probability distribution using $P(word|text)$ based on the hypothesis.  The way t-SNE calculate the similarity is to use the Gaussian distribution over the Euclidean distance, while Word2Vec uses cosine similarity.</p>
+<blockquote>
+<p>Weight tying is such a method use the idea kind of like Word2Vec.</p>
+</blockquote>
+<p>Word2Vec is a model whose parameters are word vectors. These parameters are optimized iteratively for a certain objective. </p>
+<p>The objective forces word vectors to “know” contexts a word can appear in: the vectors are trained to predict possible contexts of the corresponding words. </p>
+<p>Due to the distributional hypothesis, if vectors “know” about contexts, they “know” word meaning.</p>
+<ul>
+<li>Learned parameters: word vectors</li>
+<li>Goal: make each vector “know” about the contexts of its word.</li>
+<li>How: train vectors to predict possible contexts from words(or words from contexts)</li>
+</ul>
+<p>Word2Vec is an iterative method. Its main idea is as follows:</p>
+<ul>
+<li>take a huge text corpus;</li>
+<li>go over the text with a sliding window, moving one word at a time. At each step, there is a central word and context words (other words in this window);</li>
+<li>for the central word, compute probabilities of context words;</li>
+<li>adjust the vectors to increase these probabilities.</li>
+</ul>
+<p>For the detail of <strong>CBOW</strong> and <strong>Skip-Gram,</strong> just see the following papers:</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/pdf/1411.2738v4.pdf">https://arxiv.org/pdf/1411.2738v4.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="http://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes01-wordvecs1.pdf">http://web.stanford.edu/class/cs224n/readings/cs224n-2019-notes01-wordvecs1.pdf</a></p>
+</blockquote>
+<p>The model explanation:</p>
+<ul>
+<li><p>Weight matrix: learned word/context representations.</p>
+</li>
+<li><p>Dot product: measure the similarity.</p>
+</li>
+</ul>
+<p>The reason why we just use the first matrix as the representation of word embedding. </p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_42279926/article/details/106403211">https://blog.csdn.net/weixin_42279926/article/details/106403211</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/29381505/why-does-word2vec-use-2-representations-for-each-word">https://stackoverflow.com/questions/29381505/why-does-word2vec-use-2-representations-for-each-word</a></p>
+</blockquote>
+<h4 id="Improvement-Motivation-1"><a href="#Improvement-Motivation-1" class="headerlink" title="Improvement Motivation"></a>Improvement Motivation</h4><p>Note that the summation over $|V|$ is computationally huge! Any update we do or evaluation of the objective function would take $O(|V|)$ time which if we recall is in the millions.</p>
+<h4 id="Negative-Sampling"><a href="#Negative-Sampling" class="headerlink" title="Negative Sampling"></a>Negative Sampling</h4><ul>
+<li>context vectors not for all words, but only with a subset of K “negative” examples</li>
+<li>New Objective function using sigmoid</li>
+</ul>
+<p><img src="https://lena-voita.github.io/resources/lectures/word_emb/w2v/negative_sampling-min.png" alt="img" style="zoom:80%;"></p>
+<script type="math/tex; mode=display">
+J=-\sum_{(w, c) \in D} \log \frac{1}{1+\exp \left(-u_{w}^{T} v_{c}\right)}-\sum_{(w, c) \in \tilde{D}} \log \left(\frac{1}{1+\exp \left(u_{w}^{T} v_{c}\right)}\right)</script><h4 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h4><p>Hierarchical Softmax uses a binary tree where leaves are the words. The probability of a word being the output word is defined as the probability of a random walk from the root to that word’s leaf. Computational cost becomes $O(log(|V|))$ instead of $O(|V|)$.</p>
+<p><img src="http://building-babylon.net/wp-content/uploads/2017/07/hs4.png" alt="img" style="zoom:80%;"></p>
+<h4 id="Sum："><a href="#Sum：" class="headerlink" title="Sum："></a>Sum：</h4><p><strong>Reference papers/Notes/Blogs</strong>:</p>
+<p><a target="_blank" rel="noopener" href="https://arxiv.org/abs/1411.2738">word2vec Parameter Learning Explained</a></p>
+<p><a target="_blank" rel="noopener" href="http://building-babylon.net/2017/08/01/hierarchical-softmax/">Hierarchical Softmax – Building Babylon (building-babylon.net)</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/yyhhlancelot/article/details/100005022?spm=1001.2101.3001.6650.2&amp;utm_medium=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-2.pc_relevant_antiscanv2&amp;depth_1-utm_source=distribute.pc_relevant.none-task-blog-2~default~CTRLIST~Rate-2.pc_relevant_antiscanv2&amp;utm_relevant_index=5">个人总结：自然语言处理 word2vec(skip-gram/CBOW以及优化算法Hierarchical Softmax和Negative Sampling)_yyhhlancelot的博客-CSDN博客</a></p>
+<h3 id="Glove"><a href="#Glove" class="headerlink" title="Glove"></a>Glove</h3><h3 id="Evaluation-of-Word-Embeddings"><a href="#Evaluation-of-Word-Embeddings" class="headerlink" title="Evaluation of Word Embeddings"></a>Evaluation of Word Embeddings</h3><p>Reference: </p>
+<p><a target="_blank" rel="noopener" href="http://www.fanyeong.com/2018/02/19/glove-in-detail/">http://www.fanyeong.com/2018/02/19/glove-in-detail/</a></p>
+<h2 id="Text-Classification"><a href="#Text-Classification" class="headerlink" title="Text Classification"></a>Text Classification</h2><p><img src="https://lena-voita.github.io/resources/lectures/text_clf/general/generative_discriminative-min.png" alt="img"></p>
+<p>A classification model can be either generative or discriminative.</p>
+<ul>
+<li>generative models<br>Generative models learn joint probability distribution of data $p(x,y)=p(x|y)⋅p(y)$. To make a prediction given an input x, these models pick a class with the highest joint probability: $y=arg⁡max_k \ \ p(x|y=k)⋅p(y=k)$.</li>
+<li>discriminative models<br>Discriminative models are interested only in the conditional probability p(y|x), i.e. they learn only the border between classes. To make a prediction given an input x, these models pick a class with the highest conditional probability: $y=arg⁡max_k \ \ \ p(y=k|x)$.</li>
+</ul>
+<h4 id="Naive-Bayes-Classifier"><a href="#Naive-Bayes-Classifier" class="headerlink" title="Naive Bayes Classifier"></a>Naive Bayes Classifier</h4><p><img src="https://lena-voita.github.io/resources/lectures/text_clf/bayes/main_equation-min.png" alt="img"></p>
+<p><img src="https://lena-voita.github.io/resources/lectures/text_clf/bayes/is_generative-min.png" alt="img"></p>
+<h4 id="Maximum-Entropy-Classifier-aka-Logistic-Regression"><a href="#Maximum-Entropy-Classifier-aka-Logistic-Regression" class="headerlink" title="Maximum Entropy Classifier (aka Logistic Regression)"></a>Maximum Entropy Classifier (aka Logistic Regression)</h4><p><img src="https://lena-voita.github.io/resources/lectures/text_clf/maxent/idea-min.png" alt="img"></p>
+<h4 id="Text-Classification-with-Neural-Networks"><a href="#Text-Classification-with-Neural-Networks" class="headerlink" title="Text Classification with Neural Networks"></a>Text Classification with Neural Networks</h4><h4 id="SVM-for-Text-Classification"><a href="#SVM-for-Text-Classification" class="headerlink" title="SVM for Text Classification"></a>SVM for Text Classification</h4><h2 id="Language-Modeling"><a href="#Language-Modeling" class="headerlink" title="Language Modeling"></a>Language Modeling</h2><h2 id="Seq2Seq-and-Attention"><a href="#Seq2Seq-and-Attention" class="headerlink" title="Seq2Seq and Attention"></a>Seq2Seq and Attention</h2><p>不足点：</p>
+<h2 id="RNN-amp-LSTM"><a href="#RNN-amp-LSTM" class="headerlink" title="RNN &amp; LSTM"></a>RNN &amp; LSTM</h2><blockquote>
+<p>LSTM</p>
+<p><a target="_blank" rel="noopener" href="https://qr.ae/pvYzh5">https://qr.ae/pvYzh5</a></p>
+</blockquote>
+<h2 id="Transformer"><a href="#Transformer" class="headerlink" title="Transformer"></a>Transformer</h2><p><a target="_blank" rel="noopener" href="https://datascience.stackexchange.com/questions/104179/is-the-transformer-decoder-an-autoregressive-model">https://datascience.stackexchange.com/questions/104179/is-the-transformer-decoder-an-autoregressive-model</a></p>
+<p><a target="_blank" rel="noopener" href="https://ruder.io/state-of-transfer-learning-in-nlp/">https://ruder.io/state-of-transfer-learning-in-nlp/</a></p>
+<blockquote>
+<p>Transformer detailed understanding:</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/454482273">https://zhuanlan.zhihu.com/p/454482273</a></p>
+<p>What’s the role of feed forward network</p>
+<p><a target="_blank" rel="noopener" href="https://medium.com/synapse-dev/understanding-bert-transformer-attention-isnt-all-you-need-5839ebd396db">https://medium.com/synapse-dev/understanding-bert-transformer-attention-isnt-all-you-need-5839ebd396db</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.reddit.com/r/MachineLearning/comments/bnejs3/d_what_does_the_feedforward_neural_network_in/">https://www.reddit.com/r/MachineLearning/comments/bnejs3/d_what_does_the_feedforward_neural_network_in/</a></p>
+<p><a target="_blank" rel="noopener" href="https://vaclavkosar.com/ml/Feed-Forward-Self-Attendion-Key-Value-Memory">https://vaclavkosar.com/ml/Feed-Forward-Self-Attendion-Key-Value-Memory</a></p>
+<p><a target="_blank" rel="noopener" href="https://ai.stackexchange.com/a/17997">https://ai.stackexchange.com/a/17997</a></p>
+<p>Why we use the matrix $W_Q,W_K,W_V$ to get $Q,K,V$</p>
+<p><a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/463320">https://stats.stackexchange.com/a/463320</a></p>
+<p>The difference between <strong>BN</strong> and <strong>LN</strong></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/74516930">https://zhuanlan.zhihu.com/p/74516930</a></p>
+<p>Inductive bias</p>
+<p><a target="_blank" rel="noopener" href="https://www.baeldung.com/cs/ml-inductive-bias#1-bayesian-models">https://www.baeldung.com/cs/ml-inductive-bias#1-bayesian-models</a></p>
+</blockquote>
+<h2 id="Pytorch"><a href="#Pytorch" class="headerlink" title="Pytorch"></a>Pytorch</h2><blockquote>
+<p>Pytorch Basic</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=x9JiIFvlUwk">https://www.youtube.com/watch?v=x9JiIFvlUwk</a></p>
+<p>tensor.data</p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/68650467/17548344">https://stackoverflow.com/a/68650467/17548344</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_27825451/article/details/96837905">https://blog.csdn.net/qq_27825451/article/details/96837905</a></p>
+<p>reshape, view, transpose, permute</p>
+<p><a target="_blank" rel="noopener" href="https://jdhao.github.io/2019/07/10/pytorch_view_reshape_transpose_permute/#view-vs-transpose-1">https://jdhao.github.io/2019/07/10/pytorch_view_reshape_transpose_permute/#view-vs-transpose-1</a></p>
+<p><a target="_blank" rel="noopener" href="https://discuss.pytorch.org/t/difference-between-view-reshape-and-permute/54157/2">https://discuss.pytorch.org/t/difference-between-view-reshape-and-permute/54157/2</a></p>
+<p>embedding layer</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/sinat_40258777/article/details/122388863">https://blog.csdn.net/sinat_40258777/article/details/122388863</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_39540454/article/details/115215056">https://blog.csdn.net/qq_39540454/article/details/115215056</a></p>
+<p>Python global variable:</p>
+<p><a target="_blank" rel="noopener" href="https://www.yisu.com/zixun/224303.html">https://www.yisu.com/zixun/224303.html</a></p>
+<p>Python yield</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/mieleizhi0522/article/details/82142856">https://blog.csdn.net/mieleizhi0522/article/details/82142856</a></p>
+<p>Torchtext for nlp pre-process</p>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=KRgq4VnCr7I">https://www.youtube.com/watch?v=KRgq4VnCr7I</a></p>
+<p><a target="_blank" rel="noopener" href="https://openbayes.com/console/open-tutorials/containers/M10lgtS5Dep">https://openbayes.com/console/open-tutorials/containers/M10lgtS5Dep</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/nlpuser/article/details/88067167">https://blog.csdn.net/nlpuser/article/details/88067167</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/397919716">https://zhuanlan.zhihu.com/p/397919716</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/353795265">https://zhuanlan.zhihu.com/p/353795265</a></p>
+<p><a target="_blank" rel="noopener" href="https://pytorch.org/text/stable/vocab.html#vocab">https://pytorch.org/text/stable/vocab.html#vocab</a></p>
+<p>Torchtext version problem</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45520647/article/details/124050177">(47条消息) ImportError: cannot import name ‘Field‘ from ‘torchtext.data‘, No module named “legacy“_御用厨师的博客-CSDN博客_torchtext.legacy</a></p>
+</blockquote>
+<h2 id="Project"><a href="#Project" class="headerlink" title="Project"></a>Project</h2><h3 id="BiLSTM-CRF"><a href="#BiLSTM-CRF" class="headerlink" title="BiLSTM + CRF"></a>BiLSTM + CRF</h3><p><a target="_blank" rel="noopener" href="https://guillaumegenthial.github.io/sequence-tagging-with-tensorflow.html">https://guillaumegenthial.github.io/sequence-tagging-with-tensorflow.html</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">zxr</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://xurui314.github.io/2022/06/16/nlp-learning-recording/">https://xurui314.github.io/2022/06/16/nlp-learning-recording/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/Deep-Learning/">Deep Learning</a></div><div class="post_share"><div class="social-share" data-image="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/06/14/%E9%9A%8F%E4%BE%BF%E8%AE%B0%E8%AE%B0/"><img class="next-cover" src="https://s2.loli.net/2022/01/09/rihH9tKPQCcLD7e.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">随便记记</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/06/01/Multimodal-NER/" title="Multimodal NER"><img class="cover" src="https://s2.loli.net/2022/06/01/NGZoMHJQIyVS5Ab.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-01</div><div class="title">Multimodal NER</div></div></a></div><div><a href="/2021/08/15/两层神经网络识别手写数字/" title="两层神经网络识别手写数字"><img class="cover" src="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-15</div><div class="title">两层神经网络识别手写数字</div></div></a></div><div><a href="/2021/08/14/神经网络搭建准备内容/" title="神经网络搭建准备内容"><img class="cover" src="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2021-08-14</div><div class="title">神经网络搭建准备内容</div></div></a></div><div><a href="/2022/01/14/Machine-Learning-Coding/" title="Machine Learning Code"><img class="cover" src="https://s2.loli.net/2022/01/14/LaGcAPJX9QpgTBH.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-01-14</div><div class="title">Machine Learning Code</div></div></a></div><div><a href="/2022/02/10/MIT-ML/" title="MIT ML"><img class="cover" src="https://s2.loli.net/2022/01/14/ftJD3kOcUnPHpzN.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-10</div><div class="title">MIT ML</div></div></a></div></div></div><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info__name">zxr</div><div class="author-info__description">Think and Do like an MIT student</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">49</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">23</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XuRui314"><i class="fab fa-github"></i><span>This is zxr!🚀</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XuRui314" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://mail.qq.com/" target="_blank" title="Email-1977289398@qq.com"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">zxr的生活，math，编程记录,<div class="twopeople"><div class="container" style="height:200px;"><canvas class="illo" width="800" height="800" style="max-width: 200px; max-height: 200px; touch-action: none; width: 640px; height: 640px;"></canvas></div><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople1.js"></script><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/zdog.dist.js"></script><script id="rendered-js" src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople.js"></script><style>.twopeople{margin: 0;align-items: center;justify-content: center;text-align: center;}canvas{display: block;margin: 0 auto;cursor: move;}</style></div><div class="twopeople"></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#General-Procedure-Of-Preprocessing"><span class="toc-number">1.</span> <span class="toc-text">General Procedure Of Preprocessing</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Word-Embedding"><span class="toc-number">2.</span> <span class="toc-text">Word Embedding</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#One-hot-Vector"><span class="toc-number">2.1.</span> <span class="toc-text">One-hot Vector</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Improvement-Motivation"><span class="toc-number">2.2.</span> <span class="toc-text">Improvement Motivation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Count-Based-Methods"><span class="toc-number">2.3.</span> <span class="toc-text">Count-Based Methods</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SUM"><span class="toc-number">2.3.1.</span> <span class="toc-text">SUM:</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Word2Vec"><span class="toc-number">2.4.</span> <span class="toc-text">Word2Vec</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Improvement-Motivation-1"><span class="toc-number">2.4.1.</span> <span class="toc-text">Improvement Motivation</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Negative-Sampling"><span class="toc-number">2.4.2.</span> <span class="toc-text">Negative Sampling</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Hierarchical-Softmax"><span class="toc-number">2.4.3.</span> <span class="toc-text">Hierarchical Softmax</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Sum%EF%BC%9A"><span class="toc-number">2.4.4.</span> <span class="toc-text">Sum：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Glove"><span class="toc-number">2.5.</span> <span class="toc-text">Glove</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Evaluation-of-Word-Embeddings"><span class="toc-number">2.6.</span> <span class="toc-text">Evaluation of Word Embeddings</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Text-Classification"><span class="toc-number">3.</span> <span class="toc-text">Text Classification</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Naive-Bayes-Classifier"><span class="toc-number">3.0.1.</span> <span class="toc-text">Naive Bayes Classifier</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Maximum-Entropy-Classifier-aka-Logistic-Regression"><span class="toc-number">3.0.2.</span> <span class="toc-text">Maximum Entropy Classifier (aka Logistic Regression)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Text-Classification-with-Neural-Networks"><span class="toc-number">3.0.3.</span> <span class="toc-text">Text Classification with Neural Networks</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#SVM-for-Text-Classification"><span class="toc-number">3.0.4.</span> <span class="toc-text">SVM for Text Classification</span></a></li></ol></li></ol><li class="toc-item toc-level-2"><a class="toc-link" href="#Language-Modeling"><span class="toc-number">4.</span> <span class="toc-text">Language Modeling</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Seq2Seq-and-Attention"><span class="toc-number">5.</span> <span class="toc-text">Seq2Seq and Attention</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RNN-amp-LSTM"><span class="toc-number">6.</span> <span class="toc-text">RNN &amp; LSTM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Transformer"><span class="toc-number">7.</span> <span class="toc-text">Transformer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Pytorch"><span class="toc-number">8.</span> <span class="toc-text">Pytorch</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Project"><span class="toc-number">9.</span> <span class="toc-text">Project</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#BiLSTM-CRF"><span class="toc-number">9.1.</span> <span class="toc-text">BiLSTM + CRF</span></a></li></ol></li></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/nlp-learning-recording/" title="nlp learning recording"><img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="nlp learning recording"></a><div class="content"><a class="title" href="/2022/06/16/nlp-learning-recording/" title="nlp learning recording">nlp learning recording</a><time datetime="2022-06-16T04:00:43.000Z" title="Created 2022-06-16 12:00:43">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/14/%E9%9A%8F%E4%BE%BF%E8%AE%B0%E8%AE%B0/" title="随便记记"><img src="https://s2.loli.net/2022/01/09/rihH9tKPQCcLD7e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随便记记"></a><div class="content"><a class="title" href="/2022/06/14/%E9%9A%8F%E4%BE%BF%E8%AE%B0%E8%AE%B0/" title="随便记记">随便记记</a><time datetime="2022-06-14T04:24:03.000Z" title="Created 2022-06-14 12:24:03">2022-06-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/01/Multimodal-NER/" title="Multimodal NER"><img src="https://s2.loli.net/2022/06/01/NGZoMHJQIyVS5Ab.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Multimodal NER"></a><div class="content"><a class="title" href="/2022/06/01/Multimodal-NER/" title="Multimodal NER">Multimodal NER</a><time datetime="2022-06-01T15:26:34.000Z" title="Created 2022-06-01 23:26:34">2022-06-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/05/29/%E6%91%B8%E9%B1%BC%E5%AD%A6%E6%96%B9%E6%B3%95%E8%AE%BA/" title="摸鱼学方法论"><img src="https://s2.loli.net/2022/05/29/KyGgICA235bBLov.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摸鱼学方法论"></a><div class="content"><a class="title" href="/2022/05/29/%E6%91%B8%E9%B1%BC%E5%AD%A6%E6%96%B9%E6%B3%95%E8%AE%BA/" title="摸鱼学方法论">摸鱼学方法论</a><time datetime="2022-05-29T04:11:29.000Z" title="Created 2022-05-29 12:11:29">2022-05-29</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/03/17/%E5%B9%B2%E4%B8%80%E7%A5%A8%E5%A4%A7%E7%9A%84/" title="欲戴王冠，必承其重"><img src="https://s2.loli.net/2022/03/17/M1x5EhUukRDGXOQ.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="欲戴王冠，必承其重"></a><div class="content"><a class="title" href="/2022/03/17/%E5%B9%B2%E4%B8%80%E7%A5%A8%E5%A4%A7%E7%9A%84/" title="欲戴王冠，必承其重">欲戴王冠，必承其重</a><time datetime="2022-03-17T09:17:26.000Z" title="Created 2022-03-17 17:17:26">2022-03-17</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">©2020 - 2022 By zxr</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="github-badge"><a style="color: #fff" rel="license" href="https://hexo.io/" target="_blank" title="由 Hexo 强力驱动"><span class="badge-subject">Powered</span><span class="badge-value bg-blue">Hexo</span></a><a style="color: #fff" rel="license" href="https://gitee.com/" target="_blank" title="静态网页托管于 GitHub Pages 和 Coding Pages 和 Gitee Pages"><span class="badge-subject">Hosted</span><span class="badge-value bg-brightgreen">GitHub &amp; Coding &amp; Gitee</span></a><a style="color: #fff" rel="license" href="https://www.jsdelivr.com/" target="_blank" title="jsDelivr 提供 CDN 加速服务"><span class="badge-subject">CDN</span><span class="badge-value bg-orange">jsDelivr</span></a><a style="color: #fff" rel="license" href="https://jerryc.me" target="_blank" title="站点使用 Butterfly主题"><span class="badge-subject">Theme</span><span class="badge-value bg-blue">Butterfly</span></a><a style="color: #fff" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可"><span class="badge-subject"><i class="fa fa-copyright"></i></span><span class="badge-value bg-lightgrey">BY-NC-SA 4.0  </span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="Increase font size"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="Decrease font size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = '[object Object]'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://xurui314.github.io/2022/06/16/nlp-learning-recording/'
+    this.page.identifier = '2022/06/16/nlp-learning-recording/'
+    this.page.title = 'nlp learning recording'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script src="https://cdn.jsdelivr.net/gh/XuRui314/live2d-widget@1.0.1/autoload.js"></script><script src="/js/title.js"></script><script src="/dist/nochocolate.js"></script><div id="aplayer"></div><script type="text/javascript" src="/dist/APlayer.min.js"></script><script type="text/javascript" src="/dist/music.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax="">if(document.getElementById('recent-posts') && (location.pathname ==='all'|| 'all' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Math/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 zxrの数学世界 (11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/算法学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎮 zxrの算法学习 (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活趣闻/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱‍👓 zxrの生活趣闻 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/编程实例/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 zxrの编程学习 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活感悟/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🚴‍♂ zxrの生活感悟 (9)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Hexo/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💌 zxrのBlog记录 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://XuRui314.github.io/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style> <script data-pjax="">if(document.getElementById('recent-posts') && location.pathname =='/'){
+    
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg" alt="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-09-17</span><a class="blog-slider__title" href="2021/09/17/概率和测度/">概率和测度(ZJU大佬)</a><div class="blog-slider__text">来看看ZJU计科大佬解释概率和测度🥙</div><a class="blog-slider__button" href="2021/09/17/概率和测度/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg" alt="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-26</span><a class="blog-slider__title" href="2021/08/26/算法题目练习/">AcWing-Oj-刷题学习记录(基础算法)</a><div class="blog-slider__text">来看算法蒟蒻的丢人日常啊👩‍🦽</div><a class="blog-slider__button" href="2021/08/26/算法题目练习/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg" alt="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-15</span><a class="blog-slider__title" href="2021/08/15/两层神经网络识别手写数字/">两层神经网络识别手写数字</a><div class="blog-slider__text">识别手写数字最简单的实现🧦</div><a class="blog-slider__button" href="2021/08/15/两层神经网络识别手写数字/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg" alt="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-14</span><a class="blog-slider__title" href="2021/08/14/神经网络搭建准备内容/">神经网络搭建准备内容</a><div class="blog-slider__text">如何识别手写🔢，zxr带你一步一步实现🎼</div><a class="blog-slider__button" href="2021/08/14/神经网络搭建准备内容/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg" alt="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-12</span><a class="blog-slider__title" href="2021/08/12/xuperchain-solidity/">xuperchain&solidity</a><div class="blog-slider__text">区块链不止是挖币，还有v神和solidity🎈</div><a class="blog-slider__button" href="2021/08/12/xuperchain-solidity/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png" alt="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/FFT/">FFT的详解</a><div class="blog-slider__text">这么好看的FFT，信号狗都馋哭了💦</div><a class="blog-slider__button" href="2021/07/26/FFT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg" alt="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-09</span><a class="blog-slider__title" href="2021/08/09/炒鸡好理解的测度论/">炒鸡好理解的测度论</a><div class="blog-slider__text">三段字，让你读懂测度论</div><a class="blog-slider__button" href="2021/08/09/炒鸡好理解的测度论/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png" alt="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-27</span><a class="blog-slider__title" href="2021/07/27/FT/">傅里叶学习资料</a><div class="blog-slider__text">简单好学的傅里叶学习资料</div><a class="blog-slider__button" href="2021/07/27/FT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg" alt="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/hello-world/">大鸟转转转酒吧内部绝密档案</a><div class="blog-slider__text">不要点进来QAQ！</div><a class="blog-slider__button" href="2021/07/26/hello-world/">详情</a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载swiper')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.js"></script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper@0.18/swiper/swiperindex.js"></script>
+<style></style><script data-pjax="">function electric_clock_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img id="card-clock-loading" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-clock/clock/images/weather/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading" class="entered loading"></div></div></div></div></div>';
+                console.log('已挂载electric_clock')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            electric_clock_injector_config()
+        } </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.js"></script>
+  <script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-github-calendar@1.21/hexo_githubcalendar.js"></script>
+  <script data-pjax="">
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://python-github-calendar-api.vercel.app/api?XuRui314";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="XuRui314";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="height:100%;display: flex;align-items: center;justify-content: center;"><svg style="height:50px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:248px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><script async="" src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>
