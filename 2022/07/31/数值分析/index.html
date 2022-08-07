@@ -1,0 +1,840 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>数值分析 | XuRui-Blog</title><meta name="keywords" content="数值分析"><meta name="author" content="zxr"><meta name="copyright" content="zxr"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="上学期的笔记，图片很多没上传，有时间来弄 误差 固有误差：  从实际问题抽象出的数学模型——模型误差 通过测量得到模型中参数的值——观测误差  计算误差：(设计数值算法所需要关注的)  求近似解——方法误差（截断误差） 机器字长有限——舍入误差  绝对误差：(依赖量纲) $e^ = x^ - x$，其中$x$为精确值，$x^*$为$x$的近似值。 表征测量值和精确值之间的差异$|e^|$的上限记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数值分析">
+<meta property="og:url" content="https://xurui314.github.io/2022/07/31/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="XuRui-Blog">
+<meta property="og:description" content="上学期的笔记，图片很多没上传，有时间来弄 误差 固有误差：  从实际问题抽象出的数学模型——模型误差 通过测量得到模型中参数的值——观测误差  计算误差：(设计数值算法所需要关注的)  求近似解——方法误差（截断误差） 机器字长有限——舍入误差  绝对误差：(依赖量纲) $e^ = x^ - x$，其中$x$为精确值，$x^*$为$x$的近似值。 表征测量值和精确值之间的差异$|e^|$的上限记">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/11/30/b4sCamRDIcTvo6r.jpg">
+<meta property="article:published_time" content="2022-07-31T12:21:50.000Z">
+<meta property="article:modified_time" content="2022-08-07T03:31:06.638Z">
+<meta property="article:author" content="zxr">
+<meta property="article:tag" content="数值分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/11/30/b4sCamRDIcTvo6r.jpg"><link rel="shortcut icon" href="https://i.loli.net/2021/07/27/lSHRJbx7dYwTk8f.jpg"><link rel="canonical" href="https://xurui314.github.io/2022/07/31/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '数值分析',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-08-07 11:31:06'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/badge.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/dist/APlayer.min.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/bilibiliBanner.css" media="defer" onload="this.media='screen'"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiperstyle.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css">
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script async="" src="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">51</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">24</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">12</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://i.loli.net/2021/11/30/b4sCamRDIcTvo6r.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">XuRui-Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">数值分析</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-07-31T12:21:50.000Z" title="Created 2022-07-31 20:21:50">2022-07-31</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-08-07T03:31:06.638Z" title="Updated 2022-08-07 11:31:06">2022-08-07</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Math/">Math</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">613</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>2min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="数值分析"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('https://i.loli.net/2021/11/30/b4sCamRDIcTvo6r.jpg');"></div><article class="post-content" id="article-container"><blockquote>
+<p>上学期的笔记，图片很多没上传，有时间来弄</p>
+<h1 id="误差"><a href="#误差" class="headerlink" title="误差"></a>误差</h1></blockquote>
+<p><strong>固有误差</strong>：</p>
+<ul>
+<li>从实际问题抽象出的数学模型——模型误差</li>
+<li>通过测量得到模型中参数的值——观测误差</li>
+</ul>
+<p><strong>计算误差</strong>：(设计数值算法所需要关注的)</p>
+<ul>
+<li>求近似解——方法误差（截断误差）</li>
+<li>机器字长有限——舍入误差</li>
+</ul>
+<p><strong>绝对误差</strong>：(依赖量纲)</p>
+<p>$e^<em> = x^</em> - x$，其中$x$为精确值，$x^*$为$x$的近似值。</p>
+<p>表征测量值和精确值之间的差异$|e^<em>|$的上限记为$\epsilon^</em>$，称为<strong>绝对误差限</strong>。</p>
+<p>工程上常记为$x = x^<em> \pm \epsilon^</em>$</p>
+<p><strong>相对误差</strong>：(不依赖量纲)</p>
+<p>$e_r^<em> = {e^</em>\over x}$，但是通常$x$未知，估计$e_r^<em> = {e^</em>\over x} = {e^<em>\over x^</em>}$，$x$的相对误差上限定义为$\epsilon^<em>_r =  { {\epsilon^</em>_r} \over |x^*| }$ </p>
+<p>这样代换是合理的，${e^<em>\over x} $和$ {e^</em>\over x^*}$反映的是同一数量级上的误差。</p>
+<p><img src="https://s2.loli.net/2022/07/31/RS6rJfUjMAIqtig.png" alt="1.png" style="zoom:80%;"></p>
+<p><strong>有效数字</strong>：</p>
+<p>有效数字是用绝对误差界定义的，若$x$的某一近似值$x^<em>$的绝对误差界是某一位的半个单位(<strong>四舍五入规则</strong>)，则从这一位起直到左边第一个非零数字为止的所有数字都称为$x^</em>$的有效数字。</p>
+<p>这部分说人话就是这样的，真实数据按照<strong>四舍五入原则</strong>取得的小数就直接按照朴素的有效数字定义来看即可，比如$\pi = 3.1415926…$，然后$\pi^<em> = 3.1416$，正常按照四舍五入截取，然后这个有效数字的位数就是5位了，如果说不是按照四舍五入的原则，比如这里取$\pi^</em> = 3.1415$的话，有效数字的计算按照如下进行</p>
+<script type="math/tex; mode=display">
+x^* = \pm0.a_1a_2...a_n \times 10^m,a_1 \neq 0 \\
+\ |x-x^*| \leq 0.5 \times 10 ^ {m-n}</script><p>则称$x^*$为$n$位有效数字，精确到$10^{m-n}$。</p>
+<p>数值计算中应该注意的若干问题：</p>
+<ul>
+<li>防止有效数字的损失<ul>
+<li>避免相近两数相减</li>
+<li>避免大数吃小数</li>
+</ul>
+</li>
+<li>减少计算次数</li>
+<li>选用稳定的算</li>
+</ul>
+<h1 id="非线性方程和方程组的数值解法"><a href="#非线性方程和方程组的数值解法" class="headerlink" title="非线性方程和方程组的数值解法"></a>非线性方程和方程组的数值解法</h1><h3 id="二分法"><a href="#二分法" class="headerlink" title="二分法"></a>二分法</h3><p>A similar situation exists for discretization methods. The important parameter here for the <strong>convergence speed</strong> is <strong>not the iteration number <em>k</em></strong>, but the number of <strong>grid points and grid spacing</strong>. In this case, the number of grid points <em>n</em> in a discretization process is inversely proportional to the grid spacing.</p>
+<p>In this case, a sequence ${\displaystyle x_{n}}$ said to converge to <em>L</em> with order <em>q</em> if there exists a constant <em>C</em> such that</p>
+<script type="math/tex; mode=display">
+{\displaystyle |x_{n}-L|<Cn^{-q} \ \ {\text{ for all }}n.}</script><p>This is written as ${\displaystyle |x_{n}-L|={\mathcal {O}}(n^{-q})}$ using big O notation.</p>
+<p>比如二分法，其实误差的保证并不是靠迭代的数字保证的，而是靠区间的大小，也就是会出现前一次的误差其实是会比后一次小，但是区间在缩小，保证的误差界限也在缩小。</p>
+<p>对于给定精度$\epsilon$，可以估计二分法所需要的步数$n$:</p>
+<script type="math/tex; mode=display">
+{b-a \over 2^{n+1}} < \epsilon \Rightarrow n > {[ln^b - ln^a] \over ln^2 } - 1</script><p>这里多提一嘴，这个$n$步数实际在这个表达式里是用了$n+1$，原因是这样的，实际上计算二分区间不算一步，只有更新节点才算一步。也就是说刚开始是第0步，就可以计算出二分区间的大小。</p>
+<p><strong>评价</strong>：</p>
+<ul>
+<li>简单、对$f(x)$只要求连续</li>
+<li>但是无法求复根和偶重根，收敛慢，对$f(x)$的值利用不够</li>
+</ul>
+<h3 id="不动点法"><a href="#不动点法" class="headerlink" title="不动点法"></a>不动点法</h3><p>The <strong>intuition</strong> behind Fixed Point Iteration method: (Lipschitz continuous)</p>
+<p><img src="https://s2.loli.net/2022/07/31/oRFYuhq7Bzi5TOy.png" alt="2.png" style="zoom:80%;"></p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://math.stackexchange.com/a/721497/980786">https://math.stackexchange.com/a/721497/980786</a></p>
+</blockquote>
+<p><strong>The geometric graph of FPI</strong></p>
+<p><img src="https://s2.loli.net/2022/07/31/jAEKCRpyzF89kXH.png" alt="3.png" style="zoom:80%;"></p>
+<p><strong>单点迭代法收敛性</strong>：</p>
+<p>考虑方程$x = \phi(x) \in C[a, b]$，若</p>
+<ol>
+<li>当$x \in [a,b]$时，$\phi(x) \in [a, b]$；</li>
+<li>$\exists \ 0 \leq L \leq 1$使得$|\phi(x)’| \leq L \leq 1$对$\forall x \in [a, b]$成立<br>(这里条件换为Lipschitz continuous也可)</li>
+</ol>
+<p>则任取$x<em>0 \in [a,b]$，由$x</em>{i+1} = \phi(x<em>{i})$得到的序列${x_i}</em>{i=0}^\infin$收敛于$\phi(x)$在$[a,b]$上的唯一不动点$\alpha$，并且由误差估计式：</p>
+<ol>
+<li>$|\alpha - x<em>i| \leq {1\over {1-L}}|x</em>{i+1} - x_i|$</li>
+<li>$|\alpha - x<em>i| \leq {L^i\over {1-L}}|x</em>{1} - x_0|$</li>
+</ol>
+<blockquote>
+<p>这个证明是用了绝对值不等式，$|x<em>{k+1} - x_k|\geq |\alpha - x_k| - |\alpha - x</em>{k+1}| \geq |\alpha - x<em>k| - L|\alpha - x</em>{k}| $</p>
+<p>还有$|\alpha - x<em>i|$的放缩，以及$|x_i - x</em>{i-1}|$的放缩(中值定理)</p>
+</blockquote>
+<p>Here are definitions of <strong>linear convergence</strong> and <strong>locally convergent</strong></p>
+<p><img src="https://s2.loli.net/2022/07/31/HO5ycSDGJ1xEKhj.png" alt="6.png" style="zoom:80%;"></p>
+<p><img src="C:\Users\19772\Pictures\blog解释图片\image-20220517100929628.png" alt="image-20220517100929628" style="zoom:80%;"></p>
+<p><img src="https://s2.loli.net/2022/07/31/acr897fK1zC53VZ.png" alt="5.png" style="zoom:80%;"></p>
+<p><strong>单点迭代法的收敛阶</strong>：</p>
+<p><img src="https://s2.loli.net/2022/07/31/xSpLjcuvk65l3qK.png" alt="4.png" style="zoom:80%;"></p>
+<p>已知$x = \phi(x)$在$[a,b]$内仅有一个根，而当$x\in[a,b]$时，$|\phi’(x)| \geq L &gt; 1$，试问如何将$x = \phi(x)$化为适合于迭代的形式。（P36，3）</p>
+<blockquote>
+<p>转成反函数，因为不动点都是一样的，但是导数就变成倒数了，符合收敛性。</p>
+</blockquote>
+<h3 id="Newton迭代法"><a href="#Newton迭代法" class="headerlink" title="Newton迭代法"></a>Newton迭代法</h3><p>不妨先从intuitive的思考开始，求根问题的本质是什么，其实可以理解为给定一个函数，求$y=y<em>{target}$处对应的$x$取值，考虑连续且有足够阶导的情况，最naive的想法就是先在给定区间随便选取一点，再根据$y</em>{target}$和$y_{current}$一步一步”爬”到给定的高度，记录此时的$x$值，这种思想其实和梯度下降有点类似，但是问题在于step size是很难合适的选取以保证收敛（机器学习里面倒是有套收敛的理论，但是和目前讨论的问题是不一样的，此外补充一下，Newton下山法就是这种思想）。一种解决方法是可以用迭代的思想确定下一步的位置，但是对于迭代的sequence是要满足收敛性的。此时我们可以先观察图形得到intuition然后再去细致数学证明。</p>
+<p>对于$\text{Newton’s Method}$及其扩展$Householder’s Method$，intuition是在当前点去尽量拟合原函数，也就是取泰勒展开的的项，得到的多项式去求和$y_{target}$ 的交点，得到点$x$继续迭代。</p>
+<p>$Householder’s Method$的资料：</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=F9DFewL0mho">https://www.youtube.com/watch?v=F9DFewL0mho</a></p>
+</blockquote>
+<p><strong>Newton迭代法的局部收敛性</strong></p>
+<script type="math/tex; mode=display">
+x_0 = \text{initial guess}\\
+x_{i+1} = x_i - {f(x_i)\over f'(x_i)} \text{ for i  = 0, 1, 2,...}</script><p>牛顿迭代法是平方收敛的，</p>
+<script type="math/tex; mode=display">
+f(r) = f(x_i) + (r - x_i)f'(x_i) + {(r-x_i)^2 \over 2}f''(c_i)</script><p>令$f’(x_i) \neq 0$，通过移项化简可得</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+x_{i}-\frac{f\left(x_{i}\right)}{f^{\prime}\left(x_{i}\right)}-r &=\frac{\left(r-x_{i}\right)^{2}}{2} \frac{f^{\prime \prime}\left(c_{i}\right)}{f^{\prime}\left(x_{i}\right)} \\
+x_{i+1}-r &=e_{i}^{2} \frac{f^{\prime \prime}\left(c_{i}\right)}{2 f^{\prime}\left(x_{i}\right)} \\
+e_{i+1} &=e_{i}^{2}\left|\frac{f^{\prime \prime}\left(c_{i}\right)}{2 f^{\prime}\left(x_{i}\right)}\right|
+\end{aligned}</script><p>$c_i$ lies between r and $x_i$，it converges to $r$ as $x_i$ does</p>
+<script type="math/tex; mode=display">
+lim_{i \to \infty} {e_{i+1} \over e_i^2} = \left|\frac{f^{\prime \prime}\left(r\right)}{2 f^{\prime}\left(r\right)}\right|\</script><p><img src="https://s2.loli.net/2022/07/31/tAsVHaTDKdoZuQ8.png" alt="7.png" style="zoom:80%;"></p>
+<p><strong>Newton迭代法的非局部收敛</strong></p>
+<p>设$f(x)$在有根区间$[a,b]$上二阶导数存在，且满足</p>
+<ol>
+<li>$f(a)f(b) &lt; 0$</li>
+<li>$f’(x) \neq 0, x\in[a,b]$</li>
+<li>$f’’(x)$不变号，$x\in [a,b]$</li>
+<li>初值$x_0 \in [a, b]$且使$f’’(x_0)f(x_0) &gt;0$</li>
+</ol>
+<p>则$Newton$迭代序列${x_i}$收敛于$f(x) = 0$在$[a,b]$内的唯一根。</p>
+<p><strong>Newton迭代法的改进</strong>：</p>
+<p>Newton法不足：</p>
+<ol>
+<li>初值$x_0$不能偏离根太大，否则可能不收敛</li>
+<li>要计算导数值</li>
+<li>重根问题会寄</li>
+</ol>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/SanyHo/article/details/106365358">(46条消息) Newton牛顿法（二）| 收敛性和收敛速度 +初值的选取方法<em>Sany 何灿的博客-CSDN博客</em>收敛速度怎么求</a></p>
+<p>考虑到Newton迭代的形式本身就是一种特殊的FPI，所以就可以放弃二阶收敛的特性，进行改进，保证运算简化。</p>
+<ul>
+<li><p>简化Newton迭代法，就是把导数值换成了个常量$c$，相当于说就是FPI的一种特殊形式应用，是一阶收敛。</p>
+</li>
+<li><p>多点迭代法利用之前计算出的值来近似导数值，而不是像简单Newton法那样naive的替换，这样得到的局部收敛性是super-linear的，具体的收敛阶是黄金分割数。</p>
+</li>
+</ul>
+<p><strong>重根的情况</strong></p>
+<p>会退化成FPI：</p>
+<p><img src="https://s2.loli.net/2022/07/31/jhLsOUV3ZulG4cx.png" alt="9.png" style="zoom:80%;"></p>
+<p>如果是<strong>已知重根个数</strong>，可以这样来改进：</p>
+<p><img src="https://s2.loli.net/2022/07/31/JECTwiGDIgHRW63.png" alt="8.png" style="zoom:80%;"></p>
+<p>具体来说就是当成FPI来处理，然后让迭代式在根处一阶导为0，这样的<strong>FPI</strong>就是二阶收敛了。</p>
+<p><img src="https://s2.loli.net/2022/07/31/ZbtklnK26hPYwNx.png" alt="image-20220517113424420.png" style="zoom:80%;"></p>
+<blockquote>
+<p>提示一下这里的${f(x)f’’(x) \over [f’(x)]^2}$的处理，可以参考${f(x)\over f’(x)}$的那个展开，然后代换一下就欧克了。</p>
+</blockquote>
+<p>如果<strong>布吉岛重根个数</strong>，可以这样考虑，把求$f$的重根问题转换成求零一函数$u$的单根问题，然后就能用标准Newton迭代法了捏。</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220517114403968.png" alt="image-20220517114403968" style="zoom:67%;"></p>
+<p>设$\phi(x)$是方程$f(x) = 0$根$\alpha$的$p$阶迭代函数，那么$\psi(x)$是方程$f(x) = 0$的$p+1$阶迭代函数。</p>
+<script type="math/tex; mode=display">
+\psi(x) = \phi(x) - {f(\phi(x)) \over f'(x)}</script><blockquote>
+<p>这个证明用到了一个构造，就是如果是$p$阶迭代函数，就可以写成这样的形式$(x-\alpha) ^ {p}g(x) + \alpha$，其中$g(\alpha) \neq 0$。</p>
+<p>然后就是朴实无华的泰勒展开即可。</p>
+</blockquote>
+<p>迭代序列的收敛问题，数列收敛</p>
+<p>收敛阶数</p>
+<p>泰勒展开</p>
+<h1 id="线性方程组解法"><a href="#线性方程组解法" class="headerlink" title="线性方程组解法"></a>线性方程组解法</h1><p>$a^{(k)}$表示第$k$次消元后得到的结果，可以参考课本。</p>
+<p><strong>Direct</strong> method for solving systems of linear equations这部分真没啥好说的，看ppt吧，比较显而易见的东西了已经是。</p>
+<p>这里总结一下各种方法的计算技巧：</p>
+<ul>
+<li>Doolittle算法是$LU$中的$L$的对角为单位，按照行$\to$列的顺序去求解。</li>
+<li>Crout算法是$LU$中的$U$的对角为单位，按照列$\to$行的顺序去求解。</li>
+<li>Cholesky算法是按照列$\to$对角元素的顺序求解，计算一列再算下一个对角元素就行了，不需要计算行的。</li>
+<li>改进的Cholesky算法是按照先求$d$再去按列算$l_{i,j}$的顺序，求$d$的过程其实就类似于Cholesky算对角元素，然后再去算列。</li>
+<li>三对角追赶法，其实就拿Crout分解就行了，记住$\gamma_i = a_i$基本就完事了，然后按照行$\to$对角元素的顺序求解，那个给的公式可记可不记。</li>
+</ul>
+<h3 id="矩阵的条件数和误差分析"><a href="#矩阵的条件数和误差分析" class="headerlink" title="矩阵的条件数和误差分析"></a>矩阵的条件数和误差分析</h3><p>稍微讲一下迭代法吧：</p>
+<p>矩阵迭代消元可以看成一种FPI，但是有些不同的是对于equation不能孤立地去看，$x_{i+1}=\phi(x_i)$，因为方程组之间是联系的，所以当成一个整体用矩阵的性质来判断收敛性，或者可以说把$x$ vector当成一个整体来看，去研究收敛性。</p>
+<h3 id="Jacobi-Method"><a href="#Jacobi-Method" class="headerlink" title="Jacobi Method"></a>Jacobi Method</h3><p>这定义已经简单明了了，相当于是把具体的操作用矩阵的形式进行了描述。</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521225628176.png" alt="image-20220521225628176" style="zoom:80%;"></p>
+<p>这边给个例子：</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521230022035.png" alt="image-20220521230022035" style="zoom:80%;"></p>
+<p>收敛性：</p>
+<p>严格对角占优，谱分析里面经常出现的条件了属于是</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521225713623.png" alt="image-20220521225713623" style="zoom:80%;"></p>
+<h3 id="Gauss-Seidel"><a href="#Gauss-Seidel" class="headerlink" title="Gauss-Seidel"></a>Gauss-Seidel</h3><p>其实就是用更新过的值去迭代</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521230117546.png" alt="image-20220521230117546" style="zoom:80%;"></p>
+<p>这边也给个例子吧</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521225957854.png" alt="image-20220521225957854" style="zoom:80%;"></p>
+<h3 id="Successive-Over-Relaxation-SOR"><a href="#Successive-Over-Relaxation-SOR" class="headerlink" title="Successive Over-Relaxation (SOR)"></a>Successive Over-Relaxation (SOR)</h3><p><img src="C:\Users\19772\Pictures\计算方法\image-20220521231338424.png" alt="image-20220521231338424" style="zoom:80%;"></p>
+<p><img src="C:\Users\19772\AppData\Roaming\Typora\typora-user-images\image-20220521231355446.png" alt="image-20220521231355446" style="zoom:80%;"></p>
+<h3 id="收敛性"><a href="#收敛性" class="headerlink" title="收敛性"></a>收敛性</h3><p><img src="C:\Users\19772\Pictures\计算方法\image-20220521231905778.png" alt="image-20220521231905778" style="zoom:80%;"></p>
+<blockquote>
+<p>证明细节在这，感兴趣自己看看：<a target="_blank" rel="noopener" href="https://math.stackexchange.com/a/126496/980786">https://math.stackexchange.com/a/126496/980786</a></p>
+</blockquote>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220526224512482.png" alt="image-20220526224512482" style="zoom:80%;"></p>
+<p>这部分证明很多，建议是直接背ppt的结论就可以了。</p>
+<p><strong>Jacobi和Gauss-Seidel收敛性的充分条件</strong></p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521232252719.png" alt="image-20220521232252719" style="zoom:80%;"></p>
+<p><strong>SOR收敛性的充分条件</strong></p>
+<blockquote>
+<p>值得一提的是Gauss-Seidel本身也算是$\omega = 1$的情况。</p>
+</blockquote>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220526222135212.png" alt="image-20220526222135212" style="zoom:80%;"></p>
+<p><strong>Jacobi收敛性的充分必要条件</strong></p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220526224334036.png" alt="image-20220526224334036" style="zoom:80%;"></p>
+<blockquote>
+<p>或者按照迭代式收敛那个来，也就是看$\rho(D^{-1}(L+U)) &lt; 1$</p>
+</blockquote>
+<p>这个误差估计参考FPI的即可。</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220526222556827.png" alt="image-20220526222556827" style="zoom:80%;"></p>
+<p><strong>好题</strong></p>
+<p>26，31</p>
+<h3 id="程序设计"><a href="#程序设计" class="headerlink" title="程序设计"></a>程序设计</h3><p>Gaussian 列主元消元法</p>
+<figure class="highlight matlab"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">x</span> = <span class="title">Guass_Elimination</span><span class="params">(A, b)</span></span></span><br><span class="line">format long;</span><br><span class="line">n = <span class="built_in">size</span>(A, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span> : n - <span class="number">1</span></span><br><span class="line">    <span class="comment">% find pivot</span></span><br><span class="line">    [~, p] = <span class="built_in">max</span>(<span class="built_in">abs</span>(A(<span class="built_in">i</span>:n,<span class="built_in">i</span>)));</span><br><span class="line">    p = p + <span class="built_in">i</span> - <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span> A(p,<span class="built_in">i</span>) == <span class="number">0</span></span><br><span class="line">        fprintf(<span class="string">"Not Singular!"</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    temp = A(p, <span class="number">1</span>:n);</span><br><span class="line">    A(p, <span class="number">1</span>:n) = A(<span class="built_in">i</span>, <span class="number">1</span>:n);</span><br><span class="line">    A(<span class="built_in">i</span>, <span class="number">1</span>:n) = temp;</span><br><span class="line"></span><br><span class="line">    </span><br><span class="line">    temp = b(p);</span><br><span class="line">    b(p) = b(<span class="built_in">i</span>);</span><br><span class="line">    b(<span class="built_in">i</span>) = temp;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">% Elimination</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="built_in">i</span> + <span class="number">1</span> : n</span><br><span class="line">        m = A(<span class="built_in">j</span>, <span class="built_in">i</span>) / A(<span class="built_in">i</span>, <span class="built_in">i</span>);</span><br><span class="line">        A(<span class="built_in">j</span>, <span class="number">1</span>:n) = A(<span class="built_in">j</span>, :) - m * A(<span class="built_in">i</span>, :);</span><br><span class="line">        b(<span class="built_in">j</span>) = b(<span class="built_in">j</span>) - m * b(<span class="built_in">i</span>);</span><br><span class="line">    <span class="keyword">end</span> </span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">x = b;</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = n:<span class="number">-1</span>:<span class="number">1</span></span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="built_in">i</span>+<span class="number">1</span>:n</span><br><span class="line">        x(<span class="built_in">i</span>) = x(<span class="built_in">i</span>) - A(<span class="built_in">i</span>,<span class="built_in">j</span>)*x(<span class="built_in">j</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    x(<span class="built_in">i</span>) = x(<span class="built_in">i</span>) / A(<span class="built_in">i</span>,<span class="built_in">i</span>);</span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
+<h1 id="插值"><a href="#插值" class="headerlink" title="插值"></a>插值</h1><h2 id="拉格朗日插值法"><a href="#拉格朗日插值法" class="headerlink" title="拉格朗日插值法"></a>拉格朗日插值法</h2><h3 id="数学原理"><a href="#数学原理" class="headerlink" title="数学原理"></a><strong>数学原理</strong></h3><p>首先是插值的概念：对于点$(x<em>1,y_1),(x</em>,y_2),…,(x_n,y_n)$，函数$y=P(x)$满足$P(x_i) = y_i,1\leq i \leq n$，则称$P(x)$是这些点上的插值函数。</p>
+<p>其次为什么我们选用了多项式插值，这是因为</p>
+<ol>
+<li>多项式具有良好的数学性质，首先多项式插值有Main Theorem，也就是存在唯一性定理，保证了计算的唯一和有效性，而且有很多涉及多项式的数学理论可以使用，例如泰勒展开，方便收敛性证明和误差估计。</li>
+<li>其次多项式的计算对于计算机硬件来说是更加快速有效的，在实际应用中效果很好。</li>
+</ol>
+<p>对于数学性质，这里简单介绍一下唯一性：</p>
+<p>Let $(x_1, y_1),… , (x_n, y_n)$ be n points in the plane with distinct $x_i$. Then there exists one and only one polynomial $P$ of degree $ n − 1$ or less that satisfies $ P (x_i) = y_i$ for $ i = 1,…,n$</p>
+<p>接下来介绍拉格朗日插值法，既然已经有了存在唯一性定理，那么只要设计——出一种算法能获得不超过$n$次的多项式，最后的结果都是唯一的。</p>
+<p>拉格朗日插值法就是利用了一项对应一个插值的坐标点，</p>
+<script type="math/tex; mode=display">
+P_{n-1}\left(x_{k}\right)=y_{1} l_{1}\left(x_{k}\right)+\cdots+y_{n} l_{n}\left(x_{k}\right)</script><p>我们希望带入第$k$个点时，只有$l<em>k(x_k) = 1$，其余$l</em>{i,i\neq k}(x_k) = 0$，根据零点来构造$L_k(x)$多项式，利用带入$x_k$得到1的性质，得到对应的系数，因此不难得到表达式：</p>
+<script type="math/tex; mode=display">
+l_{k}(x)=\frac{\left(x-x_{1}\right) \cdots\left(x-x_{k-1}\right)\left(x-x_{k+1}\right) \cdots\left(x-x_{n}\right)}{\left(x_{k}-x_{1}\right) \cdots\left(x_{k}-x_{k-1}\right)\left(x_{k}-x_{k+1}\right) \cdots\left(x_{k}-x_{n}\right)}</script><p>这就是拉格朗日插值法的数学原理。</p>
+<p>考虑截断误差</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521095942613.png" alt="image-20220521095942613" style="zoom: 50%;"></p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521100015986.png" alt="image-20220521100015986" style="zoom: 67%;"></p>
+<p>误差估计可由此式推出：($n$个点的情况)</p>
+<script type="math/tex; mode=display">
+f(x)-P(x)=\frac{\left(x-x_{1}\right)\left(x-x_{2}\right) \cdots\left(x-x_{n}\right)}{n !} f^{(n)}(c)</script><p>但是通常来说不能确定$c$，而是给出一个$|f^n(c)|$的上界，作为误差估计的上界，另外当$f(x)$为任一个次数小于等于$n-1$的多项式时，根据误差表达式可知此插值多项式是精确成立的。</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p><strong>Lagrange interpolation</strong></p>
+<p>Input: vector $[x<em>1,x_2,…,x_n]$ and $[y_1,y_2,…,y_n]$, the test vector $[x</em>{test<em>1},x</em>{test<em>2},…,x</em>{test_k}]$</p>
+<p>Output: prediction $[y<em>{predict_1},y</em>{predict<em>2},…,y</em>{predict_k}]$</p>
+<figure class="highlight matlab"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[y_predict]</span> = <span class="title">LagrangeInterpolation</span><span class="params">(x_data,y_data,x_test)</span></span></span><br><span class="line"><span class="comment">% n+1 data points, find a n degree poLynomiaL interpoLation</span></span><br><span class="line">n = <span class="built_in">length</span>(x_data) - <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">% m is the length of the test data</span></span><br><span class="line">m = <span class="built_in">length</span>(x_test);</span><br><span class="line"><span class="comment">% k is the counter</span></span><br><span class="line">k = <span class="number">1</span>;</span><br><span class="line">y_predict = <span class="number">0</span>;</span><br><span class="line"><span class="comment">% index from 1 to n</span></span><br><span class="line"><span class="keyword">while</span> k &lt;= n+<span class="number">1</span> </span><br><span class="line">    L = <span class="built_in">ones</span>(<span class="number">1</span>,m);</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">1</span> : n + <span class="number">1</span></span><br><span class="line">        <span class="keyword">if</span>(k ~= <span class="built_in">j</span>)</span><br><span class="line">            L = L .* (x_test-x_data(<span class="built_in">j</span>))/(x_data(k) - x_data(<span class="built_in">j</span>));</span><br><span class="line">        <span class="keyword">end</span></span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">     y_predict = y_predict + L*y_data(k);</span><br><span class="line">     k = k + <span class="number">1</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% Output</span></span><br><span class="line">fprintf(<span class="string">"The answer is:\n"</span>);</span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span> : m</span><br><span class="line">    fprintf(<span class="string">"(%f, %f) "</span>,x_test(<span class="built_in">i</span>),y_predict(<span class="built_in">i</span>));</span><br><span class="line">fprintf(<span class="string">"\n"</span>);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"><span class="keyword">end</span></span><br></pre></td></tr></tbody></table></figure>
+<h2 id="Newton插值法"><a href="#Newton插值法" class="headerlink" title="Newton插值法"></a>Newton插值法</h2><p>Lagrange方法在需要增加节点时需要重新计算表达式，十分不方便，而Newton插值的思路就是希望每增加一个节点时，只附上一项上去即可。将$L_n(x)$改写为</p>
+<script type="math/tex; mode=display">
+c_0 + c_1(x-x_0) + c_2(x - x_0)(x - x_1) + ... + c_n(x - x_0)...(x - x_{n-1})</script><p>这个求解$c$的过程需要用到差商的概念，因为差商是涉及这种连乘的多项式形式和对应点的函数值。可以先带一个$x_0$和$x_1$进去，发现对应$c_0$应该是$f(x_0)$，$c_1$应该是${f(x_1) - f(x_0) \over x_1 - x_0}$，剩下可以用数学归纳法得出$c_k$其实就是$f[x_0,x_1,…,x_k]$。</p>
+<p><strong>差商</strong></p>
+<p>接下来介绍一下差商相关的知识：</p>
+<ul>
+<li><p>$k$阶差商必须由$k+1$个节点构成，规定$f(x_0)$为零阶差商。</p>
+</li>
+<li><p>差商的构造方法：$f[x<em>0, …,x</em>{k+1}]= {f[x<em>0, …x</em>{k-1},x<em>{k}] - f[x_0, …x</em>{k-1},x<em>{k+1}] \over x_k - x</em>{k+1}}$ ，比如说要构造$k+1$阶差商，只要在$x<em>0,…,x</em>{k+1}$这$k+2$个点中随便挑两组不同的$k+1$点组成$k$阶差商，然后相减，对应分母取缺的项之差即可。</p>
+</li>
+<li><p>差商是具有对称性的，差商的值是和$x_i$的顺序无关的。</p>
+</li>
+<li>$k$阶差商和$k$阶导数有一个关系式，等距情况下$k$阶差商和$k$阶差分就是差个系数的关系。</li>
+</ul>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521194617046.png" alt="image-20220521194617046" style="zoom: 67%;"></p>
+<p><strong>等距Newton插值法</strong></p>
+<p>$N<em>n(x) = f(x_n) + f[x_n,x</em>{n-1}](x-x_n) +…+f<a href="x-x_n">x_n,…,x_0</a>…(x-x_1)$</p>
+<p>前插的话是这样的：$f[x<em>0, x</em>{1}, …, x_{k}] = {\Delta^k f \over k!h^k}$</p>
+<p>后插的话是这样的：$f[x<em>n, x</em>{n-1}, …, x_{n-k}] = {\grad^k f \over k!h^k}$</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220521224127209.png" alt="image-20220521224127209" style="zoom: 45%;"></p>
+<p>然后把$x = x_n + th$，这里前插的话$t\in [0, n]$，后插的话$t \in[-n, 0]$，然后和对应前插后插式子带入$N_n(x)$即可。</p>
+<p>得到前插公式：$N<em>n(x) = N_n(x_0+th) = \sum</em>{k = 0} ^ n {t \choose k } \Delta^k f(x_0)$ </p>
+<p>后插公式：$N<em>n(x) = N_n(x_0+th) = \sum</em>{k = 0} ^ n (-1)^k{-t \choose k } \grad^k f(x_0)$ </p>
+<p>其实这里$(-1)^k{-t \choose k}$就是$t(t+1)(t + 2)…(t + k)$</p>
+<p>差分和函数值的关系：</p>
+<p>这里引入了一个平衡算子$I$和差分算子$E$，定义是$If(x) = f(x), Ef(x) = f(x + h)$。<br>那么很显然</p>
+<script type="math/tex; mode=display">
+\Delta^nf(x) = (E-I)^nf(x) = \sum_{j = 0} ^ n(-1)^{n-j}{n \choose j} E^jI^{n-j}f(x) =\sum_{j = 0} ^ n(-1)^{n-j}{n \choose j}f(x + jh) = \sum_{j = 0} ^ n(-1)^{j}{n \choose j}f(x + (n-j)h)</script><h1 id="函数逼近"><a href="#函数逼近" class="headerlink" title="函数逼近"></a>函数逼近</h1><blockquote>
+<p>建议看<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/138011852">https://zhuanlan.zhihu.com/p/138011852</a></p>
+</blockquote>
+<p>这里我先暂时不写了哈</p>
+<h1 id="积分"><a href="#积分" class="headerlink" title="积分"></a>积分</h1><p>这章讨论的都是基于插值的数值积分方法，由插值那章得到的理论可以直接套过来，比如代数精度，在数值积分上也有体现。</p>
+<p><img src="C:\Users\19772\AppData\Roaming\Typora\typora-user-images\image-20220523225156795.png" alt="image-20220523225156795" style="zoom:80%;"></p>
+<p><strong>Trapezoid method</strong></p>
+<script type="math/tex; mode=display">
+\int_{a}^{b} f(x) d x = {(b-a)\over 2}(f(a) + f(b)) -{(b-a)^3\over 12}f''(\epsilon)</script><p><strong>Simpson method</strong></p>
+<script type="math/tex; mode=display">
+\int_{a}^{b} f(x) d x = {(b-a)\over 6}(f(a) +4f({a+b \over 2})+ f(b)) -{(b-a)\over 180}({b-a\over 2})^4f''(\epsilon)</script><blockquote>
+<p>余项就是Language插值余项积分的结果</p>
+</blockquote>
+<h2 id="Newton-Cotes"><a href="#Newton-Cotes" class="headerlink" title="Newton-Cotes"></a>Newton-Cotes</h2><p>$n$为偶数对应的Newton-Cotes方法是$n+1$阶的原因是，最后一项$n$阶导数对应的那个项积分出来应该是0，因为区间对称而且是奇函数。</p>
+<p>加上了等距的条件后，上面的式子都可以对应进行简化，将完全与区间无关的部分计算出来，就是Cotes系数了。</p>
+<p><strong>composite Trapezoid method</strong></p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220527211248767.png" alt="image-20220527211248767" style="zoom:80%;"></p>
+<p><strong>composite Simpson method</strong> (integer)</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220527211309761.png" alt="image-20220527211309761" style="zoom:80%;"></p>
+<p>实际中去用的话可以这样去写：$n$个interval里面分别用composite rule，$h = {(b-a) \over n}$</p>
+<script type="math/tex; mode=display">
+T_n = {h\over 2} \sum_{k=1}^n[f(x_{k-1}) + f(x_k)]</script><script type="math/tex; mode=display">
+T_n = {h \over 6}\sum_{k=1}^n[f(x_{k-1}) + 4f(x_{k-{1\over 2}}) + f(x_{k})]</script><p><strong>数值稳定性</strong></p>
+<p>当Cotes系数全正时，该方法是稳定的。</p>
+<h2 id="龙贝格积分"><a href="#龙贝格积分" class="headerlink" title="龙贝格积分"></a>龙贝格积分</h2><h3 id="数学原理："><a href="#数学原理：" class="headerlink" title="数学原理："></a>数学原理：</h3><p><strong>Romberg Integration</strong>可以视为<strong>composite Trapezoid Rule</strong>和<strong>extrapolation</strong>的结合。</p>
+<p>所以首先从这两个方法谈起，受插值函数的启发，提出了<strong>Newton–Cotes formulas</strong>用于计算积分，也就是利用原来的等距插值多项式去积分，degree为1的情况就是<strong>Trapezoid Rule</strong>，degree为3的情况就是<strong>Simpson‘s Rule</strong>。但由插值那节可以得知，插值多项式并不是次数越高越好，所以对于一个较大区间的积分问题，可以分割为小区间的<strong>Trapezoid Rule</strong>或者<strong>Simpson‘s Rule</strong>，这也是就<strong>composite Trapezoid Rule</strong>和<strong>composite Simpson’s Rule</strong>的思路。</p>
+<p>对于这样得到的公式，还可以在误差上继续提升，这里就要用到<strong>extrapolation</strong>了，具体来说是<strong>Richardson’s Extrapolation</strong>，我们将误差视为高阶多项式，进行展开，然后利用步长更小的表达式迭代将误差缩小。</p>
+<p>以下是具体定义和公式：</p>
+<blockquote>
+<p>Definition: The <strong>degree of precision</strong> of a numerical integration method is the greatest integer k for which all degree k or less polynomials are integrated exactly by the method.</p>
+</blockquote>
+<p><strong>composite Trapezoid Rule</strong>:</p>
+<script type="math/tex; mode=display">
+\int_{a}^{b} f(x) d x=\frac{h}{2}\left(y_{0}+y_{m}+2 \sum_{i=1}^{m-1} y_{i}\right)-\frac{(b-a) h^{2}}{12} f^{\prime \prime}(c)</script><p>We can write it as:</p>
+<script type="math/tex; mode=display">
+\int_{a}^{b} f(x) d x=\frac{h}{2}\left(f(a)+f(b)+2 \sum_{i=1}^{n-1} f(x_{i})\right)-\sum_{j=1}^{\infin} a_{j}h^{2j}</script><p>ps: 这里写成这样书上只说了 By an alternative method, it can be shown that if $f ∈ C^∞[a, b]$, the Composite Trapezoidal rule can also be written with an error term in the form.</p>
+<p>具体的证明见以下资料：<a target="_blank" rel="noopener" href="https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.89.7042&amp;rep=rep1&amp;type=pdf">https://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.89.7042&amp;rep=rep1&amp;type=pdf</a></p>
+<p>Let $R<em>{j 1}=\frac{1}{2} R</em>{j-1,1}+h<em>{j} \sum</em>{i=1}^{2^{j-2}} f\left(a+(2 i-1) h_{j}\right)$</p>
+<blockquote>
+<p>这里说一下$2^{j-2}$的含义，第$j$次二分，那么原来的interval就被分为$2^{j-1}$个区间，而新增的节点数量，应该是$2^{j-1}+1 -(2^{j-2}+1) = 2^{j-2}$个，这些节点的分布也是按照了odd的次序，因此是$2i-1$。</p>
+</blockquote>
+<p>Then we can get</p>
+<script type="math/tex; mode=display">
+R_{j k}=\frac{4^{k-1} R_{j, k-1}-R_{j-1, k-1}}{4^{k-1}-1}</script><p>当计算得到的$|R<em>{i,i}- R</em>{i-1,i-1}| &lt; \epsilon$的时候，就是符合了预设的精度。</p>
+<h3 id="代码-1"><a href="#代码-1" class="headerlink" title="代码"></a>代码</h3><figure class="highlight matlab"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">R</span> = <span class="title">Romberg</span><span class="params">(f, a, b, n, epsilon)</span></span></span><br><span class="line"></span><br><span class="line">h = b-a;</span><br><span class="line">R = <span class="built_in">zeros</span>(n,n);</span><br><span class="line">R(<span class="number">1</span>,<span class="number">1</span>) = h/<span class="number">2</span> * double(f(a) + f(b));</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">2</span>:n</span><br><span class="line">    R(<span class="built_in">i</span>,<span class="number">1</span>) = <span class="number">1</span>/<span class="number">2</span> * (R(<span class="built_in">i</span><span class="number">-1</span>,<span class="number">1</span>) + h*sum(f(a + ((<span class="number">1</span>:<span class="number">2</span>^(<span class="built_in">i</span><span class="number">-2</span>))<span class="number">-0.5</span>)*h)));</span><br><span class="line">    <span class="keyword">for</span> <span class="built_in">j</span> = <span class="number">2</span>:<span class="built_in">i</span></span><br><span class="line">        R(<span class="built_in">i</span>,<span class="built_in">j</span>) = R(<span class="built_in">i</span>,<span class="built_in">j</span><span class="number">-1</span>) + (R(<span class="built_in">i</span>,<span class="built_in">j</span><span class="number">-1</span>)-R(<span class="built_in">i</span><span class="number">-1</span>,<span class="built_in">j</span><span class="number">-1</span>)) / (<span class="number">4</span>^(<span class="built_in">j</span><span class="number">-1</span>)<span class="number">-1</span>);</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">abs</span>(R(<span class="built_in">i</span>,<span class="built_in">i</span>) - R(<span class="built_in">i</span><span class="number">-1</span>,<span class="built_in">i</span><span class="number">-1</span>)) &lt; epsilon   </span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">end</span></span><br><span class="line">    </span><br><span class="line">    h = h/<span class="number">2</span>;</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">% remove the redundant 0 in the matrix</span></span><br><span class="line">R(:, all(R == <span class="number">0</span>, <span class="number">1</span>)) = [];</span><br><span class="line">R(all(R == <span class="number">0</span>, <span class="number">2</span>), :) = [];</span><br><span class="line">R = vpa(R,<span class="number">16</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+<h1 id="微分方程"><a href="#微分方程" class="headerlink" title="微分方程"></a>微分方程</h1><blockquote>
+<p>Latest update: 2022/5/2</p>
+</blockquote>
+<p>对于常微分方程问题，课本所提及的主要是一阶的，也就是$y’$和$f(x,y)$的关系。</p>
+<p><strong>Background:</strong> 解析解只能适用部分问题，大部分实际问题还没解决，数值计算的方法正可以解决这样的情景。</p>
+<p><strong>Motivation:</strong> 现在目前所有的只是$y_0$初值，$f(t,y)$也就是$y’$的表达式，还有$t$的区间。微分方程的解其实就是满足这样equation的函数，所以我们现在的目标可以定为逼近这样的函数，朴素的idea：由一点出发，通过导数移动小距离，一点一点逼近，将误差控制到足够小。因为我们考虑最后要求$\Delta w_i$和$\Delta y_i$足够近似，这样的话可以考虑导函数的插值积分，不同阶的插值其实就是对应<strong>Adams</strong>多步法。如果只是考虑一个点的话，那可以考虑用泰勒展开来逼近这点的局部。</p>
+<h2 id="单步法"><a href="#单步法" class="headerlink" title="单步法"></a>单步法</h2><p><strong>Euler’s Method</strong>就是基于这种思想最朴素的方法，利用了1阶的泰勒展开，或者说导函数一个点的插值，迭代式如下</p>
+<script type="math/tex; mode=display">
+w_0 = y_0 \\ w_{i+1} = w_i + hf (t_i,w_i)</script><p>但是这个初值问题解的<strong>Existence</strong>, <strong>uniqueness</strong>, and <strong>continuity for solutions</strong>还没确定，于是利用以下理论确定(具体证明省略)：</p>
+<blockquote>
+<p><strong>Start</strong></p>
+</blockquote>
+<hr>
+<p>A function $f (t , y)$ is <strong>Lipschitz continuous</strong> in the variable $y$ on the rectangle $S = [a,b] ×[α,β]$ if there exists a constant $L$ (called the <strong>Lipschitz constant</strong>) satisfying</p>
+<script type="math/tex; mode=display">
+|f (t , y_1) − f (t , y_2)| ≤ L|y_1 − y_2|</script><p>for each $(t , y_1), (t , y_2) $in $S$.</p>
+<blockquote>
+<p>A function that is Lipschitz continuous in y is continuous in y, but not necessarily differentiable.</p>
+</blockquote>
+<p>We can also change the condition a little bit:</p>
+<p>Suppose $f(t, y)$ is defined on a convex set $D\subset R^2$. If a constant $L&gt;0$ exists with</p>
+<script type="math/tex; mode=display">
+|{\partial f(t,y) \over \partial y }| \leq L,\text{for all } (t,y)\in D</script><p>then $f$ satisfies a Lipschitz condition on $D$ in the variable $y$ with Lipschitz constant $L$.</p>
+<p>Assume that $f (t , y)$ is Lipschitz continuous in the variable $y$ on the set $[a,b]×[α,β]$ and that $α&lt;y_a &lt; β$. Then there exists $c$ between $a$ and $b $ such that the initial value problem</p>
+<script type="math/tex; mode=display">
+\left\{\begin{array}{l}
+y^{\prime}=f(t, y) \\
+y(a)=y_{a} \\
+t \text { in }[a, c]
+\end{array}\right.</script><p>has exactly one solution $y(t)$. Moreover, if $f$ is Lipschitz on $[a,b] × (−∞,∞)$, then there exists exactly one solution on $[a,b]$.</p>
+<hr>
+<blockquote>
+<p><strong>End</strong></p>
+</blockquote>
+<p>然后也可以顺便推出<strong>Euler’s Method</strong>的误差</p>
+<script type="math/tex; mode=display">
+|Y(t)-Z(t)| \leq e^{L(t-a)}|Y(a)-Z(a)|</script><p>其中的$Y(a)$和$Z(a)$是两个不同的初值条件。</p>
+<p>对于实际序列来说</p>
+<script type="math/tex; mode=display">
+\left|y\left(t_{i}\right)-w_{i}\right| \leq \frac{h M}{2 L}\left[e^{L\left(t_{i}-a\right)}-1\right]</script><blockquote>
+<p>详见<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1gv411j7rd?p=82">here</a></p>
+</blockquote>
+<p>但是这里有个问题在于有时$h$必须要取很小才能得到比较好的结果，那能不能在这个误差的基础上优化，也就是误差上界是$h^2$甚至更高的多项式，这样收敛就更快了。</p>
+<p>由<strong>local truncation(one step error)</strong> $y(t<em>{i+1}) - y(t</em>{i})$启发，提出了<strong>Taylor method</strong>，也就是原来的$w_{i+1}$再多展开多阶：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+w_{0} &=\alpha \\
+w_{i+1} &=w_{i}+h T^{(n)}\left(t_{i}, w_{i}\right), \quad i=0,1, \ldots, N-1
+\end{aligned}</script><p>where</p>
+<script type="math/tex; mode=display">
+T^{(n)}\left(t_{i}, w_{i}\right)=f\left(t_{i}, w_{i}\right)+\frac{h}{2} f^{\prime}\left(t_{i}, 
+w_{i}\right)+\cdots+\frac{h^{(n-1)}}{n !} f^{(n-1)}\left(t_{i}, w_{i}\right)</script><p>具体来说是二元函数的泰勒展开：(注意这里的$f$可以李姐为上面的$y$)</p>
+<blockquote>
+<p>泰勒展开和全微分差别留意一下</p>
+</blockquote>
+<script type="math/tex; mode=display">
+\begin{aligned}
+f(t, y) &=P_{n}(t, y)+R_{n}(t, y) \\
+P_{n}(t, y) &=f\left(t_{0}, y_{0}\right)+\left[\left(t-t_{0}\right) \frac{\partial f}{\partial t}\left(t_{0}, y_{0}\right)+\left(y-y_{0}\right) \frac{\partial f}{\partial y}\left(t_{0}, y_{0}\right)\right] \\
+&+\left[\frac{\left(t-t_{0}\right)^{2}}{2} \frac{\partial^{2} f}{\partial t^{2}}\left(t_{0}, y_{0}\right)+\left(t-t_{0}\right)\left(y-y_{0}\right) \frac{\partial^{2} f}{\partial t \partial y}\left(t_{0}, y_{0}\right)\right.\\
+&\left.+\frac{\left(y-y_{0}\right)^{2}}{2} \frac{\partial^{2} f}{\partial y^{2}}\left(t_{0}, y_{0}\right)\right]+\cdots \\
+&+\left[\frac{1}{n !} \sum_{j=0}^{n}\left(\begin{array}{c}
+n \\
+j
+\end{array}\right)\left(t-t_{0}\right)^{n-j}\left(y-y_{0}\right)^{j} \frac{\partial^{n} f}{\partial t^{n-j} \partial y^{j}}\left(t_{0}, y_{0}\right)\right]
+\end{aligned}</script><p>这样确实增加了准确度，但是求导对于数值求解是复杂的，现在将导数换为由已知的$f(t,y)$和$t$的组合来去approximate，也就是展开$ a_1f(t + \alpha_1, y + \beta_1)$，求解能大大简化，针对于二阶展开的情况，</p>
+<script type="math/tex; mode=display">
+f(t + \alpha_1, y + \beta_1) = f(t, y) + \alpha_1f_t(t,y) + \beta_1f_y(t,y) + R</script><script type="math/tex; mode=display">
+T^{(2)}(t,y) = f(t,y) + {h\over 2}f'(t,y) = f(t,y) + {h\over 2}f_t(t,y) + {h\over 2}f_y(t,y)f(t,y)</script><p>match coefficients:(get mid-point method)</p>
+<script type="math/tex; mode=display">
+\alpha_1 = {h \over 2}, \beta_1 = {h \over 2}f(t, y)</script><p>More generally, we get this form</p>
+<script type="math/tex; mode=display">
+w_{i+1}=w_{i}+h\left(1-\frac{1}{2 \alpha}\right) f\left(t_{i}, w_{i}\right)+\frac{h}{2 \alpha} f\left(t_{i}+\alpha h, w_{i}+\alpha h f\left(t_{i}, w_{i}\right)\right)</script><p>set $\alpha = 1$就是<strong>Explicit Trapezoid Method</strong></p>
+<script type="math/tex; mode=display">
+w_0 = y_0\\
+w_{i+1} = w_i + {h\over2}(f (t_i,w_i) + f (t_i + h,w_i + hf (t_i,w_i))).</script><p>set $\alpha = 1/2$就是<strong>Midpoint Method</strong></p>
+<p>而四阶龙格库塔其实就是三阶展开的情况：</p>
+<script type="math/tex; mode=display">
+\begin{aligned}
+u_{0} &=\alpha \\
+k_{1} &=h f\left(t_{i}, u_{i}\right) \\
+k_{2} &=h f\left(t_{i}+\frac{h}{2}, w_{i}+\frac{1}{2} k_{1}\right) \\
+k_{3} &=h f\left(t_{i}+\frac{h}{2}, w_{i}+\frac{1}{2} k_{2}\right) \\
+k_{4} &=h f\left(t_{i+1}, w_{i}+k_{3}\right) \\
+w_{i+1} &=w_{i}+\frac{1}{6}\left(k_{1}+2 k_{2}+2 k_{3}+k_{4}\right)
+\end{aligned}</script><h3 id="单步法的收敛性"><a href="#单步法的收敛性" class="headerlink" title="单步法的收敛性"></a>单步法的收敛性</h3><p><strong>Definition:</strong></p>
+<p>A one-step difference-equation with local truncation error $\tau(h)$ is said to be <strong><em>consistent</em></strong> if </p>
+<script type="math/tex; mode=display">
+\lim_{h \to 0}  \max_{1 \leq i \leq N}|\tau_i(h)| = 0</script><p>A one-step difference equation is said to be <strong><em>convergent</em></strong> if </p>
+<script type="math/tex; mode=display">
+\lim_{h \to 0}  \max_{1 \leq i \leq N}|w_i - y(t_i)| = 0</script><p>where $y_i = y(t_i)$ is the exact solution and $w_i$ the approximation.</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220518234345523.png" alt="image-20220518234345523" style="zoom:80%;"></p>
+<p>We can just take the mid-point method for example:</p>
+<p>If $f$ is Lipschitz with constant $L$, </p>
+<script type="math/tex; mode=display">
+|\Phi(t, w, h) - \Phi(t, \bar w, h)| \\
+= |f(t+ {h\over 2}, w + {h\over 2}f(t, w)) - f(t+ {h\over 2}, \bar w + {h\over 2}f(t, \bar w))| \\
+\leq L |w + {h\over 2}f(t, w) -  \bar w + {h\over 2}f(t, \bar w)| \\
+\leq L(||w- \bar w| + {h \over 2} L|w- \bar w||) \leq (L + {hL^2 \over 2})|w - \bar w|</script><p>Then we can get $\Phi$ is also Lipschitz.</p>
+<p><strong>Local truncation error theorem</strong></p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220519095834966.png" alt="image-20220519095834966" style="zoom:80%;"></p>
+<h3 id="Taylor-Method收敛性"><a href="#Taylor-Method收敛性" class="headerlink" title="Taylor Method收敛性"></a>Taylor Method收敛性</h3><p>对于<strong>Taylor Method</strong>的误差是这样的：</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220519095000831.png" alt="image-20220519095000831" style="zoom:80%;"></p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220519095032583.png" alt="image-20220519095032583" style="zoom:80%;"></p>
+<h3 id="RK-method收敛性"><a href="#RK-method收敛性" class="headerlink" title="RK method收敛性"></a>RK method收敛性</h3><p>对于<strong>RK method</strong>的误差是这样的：</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220519105958689.png" alt="image-20220519105958689" style="zoom:80%;"></p>
+<p>这个$\alpha_r$就太复杂了，这里其实只要记住作为Taylor method的变体就行，局部截断误差的阶其实都差不多</p>
+<p><img src="C:\Users\19772\Pictures\计算方法\image-20220519110243281.png" alt="image-20220519110243281" style="zoom:80%;"></p>
+<p>然后对于实际也不可能真这么算局部截断误差，可以考虑说利用已知的值和近似来估计截断误差的值，下面是解释，比较简单直白了。</p>
+<p><img src="C:\Users\19772\AppData\Roaming\Typora\typora-user-images\image-20220519111520186.png" alt="image-20220519111520186" style="zoom:80%;"></p>
+<h2 id="多步法"><a href="#多步法" class="headerlink" title="多步法"></a>多步法</h2><p><strong>多步法的优势</strong>：Multistep methods can achieve the same order with less computational effort—usually just one function evaluation per step.</p>
+<blockquote>
+<p><strong>Reason</strong>: After the fifirst few steps, only one new evaluation of the right-hand side function need to be made. For one-step methods, it is typical for several function evaluations to be needed. Fourth-order Runge–Kutta, for example, needs four evaluations per step, while the fourth-order Adams–Bashforth Method needs only one after the start-up phase.</p>
+</blockquote>
+<h3 id="线性多步法"><a href="#线性多步法" class="headerlink" title="线性多步法"></a><strong>线性多步法</strong></h3><p>线性多步法的intuition很简单，就是利用泰勒展开的逼近，可以得到足够阶数的截断局部误差。</p>
+<p>公式推导的过程十分朴实无华，左右两边泰勒展开即可</p>
+<script type="math/tex; mode=display">
+w_{i+1} = a_1w_i + a_2w_{i−1} + h[b_0f_{i+1} + b_1f_i + b_2f_{i−1}].</script><script type="math/tex; mode=display">
+\begin{aligned}
+&w_{i+1}=a_{1} w_{i}+a_{2} w_{i-1}+h\left[b_{0} f_{i+1}+b_{1} f_{i}+b_{2} f_{i-1}\right]\\
+&=a_{1}\left[y_{i}\right]\\
+&+a_{2}\left[y_{i}-h y_{i}^{\prime}+\frac{h^{2}}{2} y_{i}^{\prime \prime}-\frac{h^{3}}{6} y_{i}^{\prime \prime \prime}+\frac{h^{4}}{24} y_{i}^{\prime \prime \prime \prime}-\cdots\right]\\
+&+b_{0}\left[h y_{i}^{\prime}+h^{2} y_{i}^{\prime \prime}+\frac{h^{3}}{2} y_{i}^{\prime \prime \prime}+\frac{h^{4}}{6} y_{i}^{\prime \prime \prime \prime}+\cdots\right]\\
+&+b_{1}\left[\quad h y_{i}^{\prime}\right]\\
+&+b_{2}\left[h y_{i}^{\prime}-h^{2} y_{i}^{\prime \prime}+\frac{h^{3}}{2} y_{i}^{\prime \prime \prime}-\frac{h^{4}}{6} y_{i}^{\prime \prime \prime \prime}+\cdots\right] \text {. }
+\end{aligned}</script><p>可以得到。</p>
+<script type="math/tex; mode=display">
+w_{i+1} = (a_1 + a_2)y_i + (b_0 + b_1 + b_2 − a_2)hy_i' + (a_2 − 2b_2 + 2b_0){h^2\over2}y_i'' + (−a_2 + 3b_0 + 3b_2){h^3\over6}y_i''' + (a_2 + 4b_0 − 4b_2){h^4\over24}y_i'''' + ···</script><p>这里面的$b_0$为1 or 0 对应的是隐式和显式。</p>
+<script type="math/tex; mode=display">
+y_{i+1} = y_i + hy_i' + {h^2\over2}y_i'' + {h^3\over6}y_i''' +{h^4\over24}y_i'''' + ···</script><p>对于$w<em>{i+1} - y</em>{i+1}$控制参数即可。</p>
+<h3 id="Adams方法"><a href="#Adams方法" class="headerlink" title="Adams方法"></a>Adams方法</h3><p>intuition在开头就说了，这里是用$Newton$插值得到积分作为$\Delta y$去逼近。根据前$p+1$个数据点构造$f(x,y(x))$的$Newton$向后$p$次插值多项式</p>
+<script type="math/tex; mode=display">
+N_p(x) = \sum_{i=0}^p{ m+i-1 \choose i } \grad^if_n</script><p>其中$x = x_n + mh,0\leq m\leq 1$</p>
+<p>用$N<em>p(x)$代替$f(x,y(x))$在$[x_n,x</em>{n+1}]$上数值积分，令$y<em>{n-i}=y(x</em>{n-i})$，此时$f<em>{n-i} = f(x</em>{n-i},y_{n-i})$</p>
+<script type="math/tex; mode=display">
+y_{n+1} = y_n + h\sum_{i=0}^p a_i \grad^if_n</script><script type="math/tex; mode=display">
+a_i = \int_0^1 { m+i-1 \choose i } dm</script><blockquote>
+<p>这块$Newton$后插不熟的建议remake一下捏。</p>
+<p>提示一下：$N<em>n(x) = f(x_n) + f[x_n,x</em>{n-1}](x-x_n) +…+f<a href="x-x_n">x_n,…,x_0</a>…(x-x_1)$</p>
+<p>后插的话是这样的：$f[x<em>n, x</em>{n-1}, …, x_{n-k}] = {\grad^k f \over k!h^k}$</p>
+<p>然后把$x = x_n + mh$和上式带入$N_n(x)$即可。</p>
+</blockquote>
+<h3 id="线性多步法的收敛性"><a href="#线性多步法的收敛性" class="headerlink" title="线性多步法的收敛性"></a>线性多步法的收敛性</h3><p><strong>root condition</strong></p>
+<p><img src="C:\Users\19772\AppData\Roaming\Typora\typora-user-images\image-20220519115508875.png" alt="image-20220519115508875" style="zoom:80%;"></p>
+<p><img src="C:\Users\19772\AppData\Roaming\Typora\typora-user-images\image-20220519115544190.png" alt="image-20220519115544190" style="zoom:80%;"></p>
+<p>然后对于这个consistent，可以用两个特征多项式的关系，$\rho$代表$w_i$的特征多项式，$\sigma$代表$f_i$的特征多项式，然后</p>
+<script type="math/tex; mode=display">
+\rho(1) = 0, \rho'(1) = \sigma(1)</script><p>是线性多步法相容的充分必要条件。</p>
+<h2 id="代码-2"><a href="#代码-2" class="headerlink" title="代码"></a>代码</h2><p><strong>四阶龙格库塔</strong></p>
+<figure class="highlight matlab"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="params">[y_ans]</span> = <span class="title">Runge_Kutta</span><span class="params">(a, b,y_0 ,n ,f )</span></span></span><br><span class="line">h = (b-a)/n;</span><br><span class="line">x_0 = a;</span><br><span class="line"></span><br><span class="line">y_ans = <span class="built_in">ones</span>(<span class="number">1</span>, n);</span><br><span class="line">y_ans(<span class="number">1</span>, <span class="number">1</span>) = y_0;</span><br><span class="line">fprintf(<span class="string">"(%f, %f)\n"</span>,x_0, y_0);</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> <span class="built_in">i</span> = <span class="number">1</span>:n</span><br><span class="line">    k_1 = h * double(f(x_0, y_0));</span><br><span class="line">    k_2 = h * double(f(x_0 + h/<span class="number">2</span>, y_0 + k_1 / <span class="number">2</span>));</span><br><span class="line">    k_3 = h * double(f(x_0 + h/<span class="number">2</span>, y_0 + k_2 / <span class="number">2</span>));</span><br><span class="line">    k_4 = h * double(f(x_0 + h, y_0 + k_3));</span><br><span class="line">    </span><br><span class="line">    x_0 = x_0 + h;</span><br><span class="line">    y_0 = y_0 + <span class="number">1</span>/<span class="number">6</span> * (k_1 + <span class="number">2</span> * k_2 + <span class="number">2</span> * k_3 + k_4);</span><br><span class="line">    y_ans(<span class="number">1</span>, <span class="built_in">i</span>+<span class="number">1</span>) = y_0;</span><br><span class="line">    fprintf(<span class="string">"(%f, %f)\n"</span>,x_0, y_0);</span><br><span class="line"><span class="keyword">end</span></span><br><span class="line"></span><br></pre></td></tr></tbody></table></figure>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">zxr</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://xurui314.github.io/2022/07/31/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">https://xurui314.github.io/2022/07/31/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></div><div class="post_share"><div class="social-share" data-image="https://i.loli.net/2021/11/30/b4sCamRDIcTvo6r.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/07/04/%E5%A4%A7%E4%BA%8C%E7%BB%93%E6%9D%9F%E5%93%A9/"><img class="next-cover" src="https://s2.loli.net/2022/07/04/lB8XpGKAxhDuoHc.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">大二结束哩</div></div></a></div></nav><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info__name">zxr</div><div class="author-info__description">Think and Do like an MIT student</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">51</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">24</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">12</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XuRui314"><i class="fab fa-github"></i><span>This is zxr!🚀</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XuRui314" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://mail.qq.com/" target="_blank" title="Email-1977289398@qq.com"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">zxr的生活，math，编程记录,<div class="twopeople"><div class="container" style="height:200px;"><canvas class="illo" width="800" height="800" style="max-width: 200px; max-height: 200px; touch-action: none; width: 640px; height: 640px;"></canvas></div><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople1.js"></script><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/zdog.dist.js"></script><script id="rendered-js" src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople.js"></script><style>.twopeople{margin: 0;align-items: center;justify-content: center;text-align: center;}canvas{display: block;margin: 0 auto;cursor: move;}</style></div><div class="twopeople"></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AF%E5%B7%AE"><span class="toc-number">1.</span> <span class="toc-text">误差</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%9D%9E%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E5%92%8C%E6%96%B9%E7%A8%8B%E7%BB%84%E7%9A%84%E6%95%B0%E5%80%BC%E8%A7%A3%E6%B3%95"><span class="toc-number">2.</span> <span class="toc-text">非线性方程和方程组的数值解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E5%88%86%E6%B3%95"><span class="toc-number">2.0.1.</span> <span class="toc-text">二分法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%8A%A8%E7%82%B9%E6%B3%95"><span class="toc-number">2.0.2.</span> <span class="toc-text">不动点法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Newton%E8%BF%AD%E4%BB%A3%E6%B3%95"><span class="toc-number">2.0.3.</span> <span class="toc-text">Newton迭代法</span></a></li></ol></li></ol><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E6%96%B9%E7%A8%8B%E7%BB%84%E8%A7%A3%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">线性方程组解法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E7%9A%84%E6%9D%A1%E4%BB%B6%E6%95%B0%E5%92%8C%E8%AF%AF%E5%B7%AE%E5%88%86%E6%9E%90"><span class="toc-number">3.0.1.</span> <span class="toc-text">矩阵的条件数和误差分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Jacobi-Method"><span class="toc-number">3.0.2.</span> <span class="toc-text">Jacobi Method</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gauss-Seidel"><span class="toc-number">3.0.3.</span> <span class="toc-text">Gauss-Seidel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Successive-Over-Relaxation-SOR"><span class="toc-number">3.0.4.</span> <span class="toc-text">Successive Over-Relaxation (SOR)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">3.0.5.</span> <span class="toc-text">收敛性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1"><span class="toc-number">3.0.6.</span> <span class="toc-text">程序设计</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8F%92%E5%80%BC"><span class="toc-number">4.</span> <span class="toc-text">插值</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E6%8F%92%E5%80%BC%E6%B3%95"><span class="toc-number">4.1.</span> <span class="toc-text">拉格朗日插值法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86"><span class="toc-number">4.1.1.</span> <span class="toc-text">数学原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-number">4.1.2.</span> <span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Newton%E6%8F%92%E5%80%BC%E6%B3%95"><span class="toc-number">4.2.</span> <span class="toc-text">Newton插值法</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%80%BC%E8%BF%91"><span class="toc-number">5.</span> <span class="toc-text">函数逼近</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A7%AF%E5%88%86"><span class="toc-number">6.</span> <span class="toc-text">积分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Newton-Cotes"><span class="toc-number">6.1.</span> <span class="toc-text">Newton-Cotes</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BE%99%E8%B4%9D%E6%A0%BC%E7%A7%AF%E5%88%86"><span class="toc-number">6.2.</span> <span class="toc-text">龙贝格积分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86%EF%BC%9A"><span class="toc-number">6.2.1.</span> <span class="toc-text">数学原理：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-1"><span class="toc-number">6.2.2.</span> <span class="toc-text">代码</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="toc-number">7.</span> <span class="toc-text">微分方程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%95%E6%AD%A5%E6%B3%95"><span class="toc-number">7.1.</span> <span class="toc-text">单步法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%AD%A5%E6%B3%95%E7%9A%84%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">7.1.1.</span> <span class="toc-text">单步法的收敛性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Taylor-Method%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">7.1.2.</span> <span class="toc-text">Taylor Method收敛性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#RK-method%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">7.1.3.</span> <span class="toc-text">RK method收敛性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E6%AD%A5%E6%B3%95"><span class="toc-number">7.2.</span> <span class="toc-text">多步法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%A4%9A%E6%AD%A5%E6%B3%95"><span class="toc-number">7.2.1.</span> <span class="toc-text">线性多步法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Adams%E6%96%B9%E6%B3%95"><span class="toc-number">7.2.2.</span> <span class="toc-text">Adams方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%A4%9A%E6%AD%A5%E6%B3%95%E7%9A%84%E6%94%B6%E6%95%9B%E6%80%A7"><span class="toc-number">7.2.3.</span> <span class="toc-text">线性多步法的收敛性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81-2"><span class="toc-number">7.3.</span> <span class="toc-text">代码</span></a></li></ol></li></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/07/31/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" title="数值分析"><img src="https://i.loli.net/2021/11/30/b4sCamRDIcTvo6r.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数值分析"></a><div class="content"><a class="title" href="/2022/07/31/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/" title="数值分析">数值分析</a><time datetime="2022-07-31T12:21:50.000Z" title="Created 2022-07-31 20:21:50">2022-07-31</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/07/04/%E5%A4%A7%E4%BA%8C%E7%BB%93%E6%9D%9F%E5%93%A9/" title="大二结束哩"><img src="https://s2.loli.net/2022/07/04/lB8XpGKAxhDuoHc.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="大二结束哩"></a><div class="content"><a class="title" href="/2022/07/04/%E5%A4%A7%E4%BA%8C%E7%BB%93%E6%9D%9F%E5%93%A9/" title="大二结束哩">大二结束哩</a><time datetime="2022-07-04T10:23:15.000Z" title="Created 2022-07-04 18:23:15">2022-07-04</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/16/nlp-learning-recording/" title="nlp learning recording"><img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="nlp learning recording"></a><div class="content"><a class="title" href="/2022/06/16/nlp-learning-recording/" title="nlp learning recording">nlp learning recording</a><time datetime="2022-06-16T04:00:43.000Z" title="Created 2022-06-16 12:00:43">2022-06-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/14/%E9%9A%8F%E4%BE%BF%E8%AE%B0%E8%AE%B0/" title="随便记记"><img src="https://s2.loli.net/2022/01/09/rihH9tKPQCcLD7e.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="随便记记"></a><div class="content"><a class="title" href="/2022/06/14/%E9%9A%8F%E4%BE%BF%E8%AE%B0%E8%AE%B0/" title="随便记记">随便记记</a><time datetime="2022-06-14T04:24:03.000Z" title="Created 2022-06-14 12:24:03">2022-06-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/06/01/Multimodal-NER/" title="Multimodal NER"><img src="https://s2.loli.net/2022/06/01/NGZoMHJQIyVS5Ab.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Multimodal NER"></a><div class="content"><a class="title" href="/2022/06/01/Multimodal-NER/" title="Multimodal NER">Multimodal NER</a><time datetime="2022-06-01T15:26:34.000Z" title="Created 2022-06-01 23:26:34">2022-06-01</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">©2020 - 2022 By zxr</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="github-badge"><a style="color: #fff" rel="license" href="https://hexo.io/" target="_blank" title="由 Hexo 强力驱动"><span class="badge-subject">Powered</span><span class="badge-value bg-blue">Hexo</span></a><a style="color: #fff" rel="license" href="https://gitee.com/" target="_blank" title="静态网页托管于 GitHub Pages 和 Coding Pages 和 Gitee Pages"><span class="badge-subject">Hosted</span><span class="badge-value bg-brightgreen">GitHub &amp; Coding &amp; Gitee</span></a><a style="color: #fff" rel="license" href="https://www.jsdelivr.com/" target="_blank" title="jsDelivr 提供 CDN 加速服务"><span class="badge-subject">CDN</span><span class="badge-value bg-orange">jsDelivr</span></a><a style="color: #fff" rel="license" href="https://jerryc.me" target="_blank" title="站点使用 Butterfly主题"><span class="badge-subject">Theme</span><span class="badge-value bg-blue">Butterfly</span></a><a style="color: #fff" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可"><span class="badge-subject"><i class="fa fa-copyright"></i></span><span class="badge-value bg-lightgrey">BY-NC-SA 4.0  </span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="Increase font size"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="Decrease font size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = '[object Object]'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://xurui314.github.io/2022/07/31/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/'
+    this.page.identifier = '2022/07/31/数值分析/'
+    this.page.title = '数值分析'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script src="https://cdn.jsdelivr.net/gh/XuRui314/live2d-widget@1.0.1/autoload.js"></script><script src="/js/title.js"></script><script src="/dist/nochocolate.js"></script><div id="aplayer"></div><script type="text/javascript" src="/dist/APlayer.min.js"></script><script type="text/javascript" src="/dist/music.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax="">if(document.getElementById('recent-posts') && (location.pathname ==='all'|| 'all' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Math/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 zxrの数学世界 (12)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/算法学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎮 zxrの算法学习 (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活趣闻/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱‍👓 zxrの生活趣闻 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/编程实例/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 zxrの编程学习 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活感悟/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🚴‍♂ zxrの生活感悟 (9)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Hexo/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💌 zxrのBlog记录 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://XuRui314.github.io/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style> <script data-pjax="">if(document.getElementById('recent-posts') && location.pathname =='/'){
+    
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg" alt="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-09-17</span><a class="blog-slider__title" href="2021/09/17/概率和测度/">概率和测度(ZJU大佬)</a><div class="blog-slider__text">来看看ZJU计科大佬解释概率和测度🥙</div><a class="blog-slider__button" href="2021/09/17/概率和测度/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg" alt="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-26</span><a class="blog-slider__title" href="2021/08/26/算法题目练习/">AcWing-Oj-刷题学习记录(基础算法)</a><div class="blog-slider__text">来看算法蒟蒻的丢人日常啊👩‍🦽</div><a class="blog-slider__button" href="2021/08/26/算法题目练习/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg" alt="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-15</span><a class="blog-slider__title" href="2021/08/15/两层神经网络识别手写数字/">两层神经网络识别手写数字</a><div class="blog-slider__text">识别手写数字最简单的实现🧦</div><a class="blog-slider__button" href="2021/08/15/两层神经网络识别手写数字/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg" alt="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-14</span><a class="blog-slider__title" href="2021/08/14/神经网络搭建准备内容/">神经网络搭建准备内容</a><div class="blog-slider__text">如何识别手写🔢，zxr带你一步一步实现🎼</div><a class="blog-slider__button" href="2021/08/14/神经网络搭建准备内容/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg" alt="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-12</span><a class="blog-slider__title" href="2021/08/12/xuperchain-solidity/">xuperchain&solidity</a><div class="blog-slider__text">区块链不止是挖币，还有v神和solidity🎈</div><a class="blog-slider__button" href="2021/08/12/xuperchain-solidity/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png" alt="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/FFT/">FFT的详解</a><div class="blog-slider__text">这么好看的FFT，信号狗都馋哭了💦</div><a class="blog-slider__button" href="2021/07/26/FFT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg" alt="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-09</span><a class="blog-slider__title" href="2021/08/09/炒鸡好理解的测度论/">炒鸡好理解的测度论</a><div class="blog-slider__text">三段字，让你读懂测度论</div><a class="blog-slider__button" href="2021/08/09/炒鸡好理解的测度论/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png" alt="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-27</span><a class="blog-slider__title" href="2021/07/27/FT/">傅里叶学习资料</a><div class="blog-slider__text">简单好学的傅里叶学习资料</div><a class="blog-slider__button" href="2021/07/27/FT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg" alt="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/hello-world/">大鸟转转转酒吧内部绝密档案</a><div class="blog-slider__text">不要点进来QAQ！</div><a class="blog-slider__button" href="2021/07/26/hello-world/">详情</a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载swiper')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.js"></script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper@0.18/swiper/swiperindex.js"></script>
+<style></style><script data-pjax="">function electric_clock_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img id="card-clock-loading" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-clock/clock/images/weather/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading" class="entered loading"></div></div></div></div></div>';
+                console.log('已挂载electric_clock')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            electric_clock_injector_config()
+        } </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.js"></script>
+  <script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-github-calendar@1.21/hexo_githubcalendar.js"></script>
+  <script data-pjax="">
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://python-github-calendar-api.vercel.app/api?XuRui314";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="XuRui314";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="height:100%;display: flex;align-items: center;justify-content: center;"><svg style="height:50px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:248px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><script async="" src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>
