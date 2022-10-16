@@ -1,0 +1,504 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>你真的理解PCA么 | XuRui-Blog</title><meta name="keywords" content="数值分析"><meta name="author" content="zxr"><meta name="copyright" content="zxr"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="你好，这是一份关于PCA的介绍指南，希望看完全文后你能对PCA和他的小伙伴们有个全新的认识😃  still updating  前言  说起来写这篇文章原因，一方面是自己留个复习的记录，对PCA做个了结😋，之前总是处于复习完又忘掉，不是很有自己的体系，这次要建立一个全面而清晰的总结。另一方面是我自己本身就对PCA相关的理论有过思考和尝试，算是接触比较多。  事实上，对于某个专题写文章不是特别的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="你真的理解PCA么">
+<meta property="og:url" content="https://xurui314.github.io/2022/10/16/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3PCA%E4%B9%88/index.html">
+<meta property="og:site_name" content="XuRui-Blog">
+<meta property="og:description" content="你好，这是一份关于PCA的介绍指南，希望看完全文后你能对PCA和他的小伙伴们有个全新的认识😃  still updating  前言  说起来写这篇文章原因，一方面是自己留个复习的记录，对PCA做个了结😋，之前总是处于复习完又忘掉，不是很有自己的体系，这次要建立一个全面而清晰的总结。另一方面是我自己本身就对PCA相关的理论有过思考和尝试，算是接触比较多。  事实上，对于某个专题写文章不是特别的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2022/10/16/7S4fnGCBTi5jxtN.jpg">
+<meta property="article:published_time" content="2022-10-16T15:27:37.000Z">
+<meta property="article:modified_time" content="2022-10-16T15:41:53.621Z">
+<meta property="article:author" content="zxr">
+<meta property="article:tag" content="数值分析">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/10/16/7S4fnGCBTi5jxtN.jpg"><link rel="shortcut icon" href="https://i.loli.net/2021/07/27/lSHRJbx7dYwTk8f.jpg"><link rel="canonical" href="https://xurui314.github.io/2022/10/16/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3PCA%E4%B9%88/"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '你真的理解PCA么',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-16 23:41:53'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/badge.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/dist/APlayer.min.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/bilibiliBanner.css" media="defer" onload="this.media='screen'"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiperstyle.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css">
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script async="" src="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">56</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">25</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/10/16/7S4fnGCBTi5jxtN.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">XuRui-Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">你真的理解PCA么</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-10-16T15:27:37.000Z" title="Created 2022-10-16 23:27:37">2022-10-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-10-16T15:41:53.621Z" title="Updated 2022-10-16 23:41:53">2022-10-16</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/Math/">Math</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">3.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>10min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="你真的理解PCA么"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('https://s2.loli.net/2022/10/16/7S4fnGCBTi5jxtN.jpg');"></div><article class="post-content" id="article-container"><p>你好，这是一份关于PCA的介绍指南，希望看完全文后你能对PCA和他的小伙伴们有个全新的认识😃</p>
+<blockquote>
+<p>still updating</p>
+</blockquote>
+<h2 id="前言">前言</h2>
+<blockquote>
+<p>说起来写这篇文章原因，一方面是自己留个复习的记录，对PCA做个了结😋，之前总是处于复习完又忘掉，不是很有自己的体系，这次要建立一个全面而清晰的总结。另一方面是我自己本身就对PCA相关的理论有过思考和尝试，算是接触比较多。</p>
+</blockquote>
+<p>事实上，对于某个专题写文章不是特别的容易，如何保证介绍的精准全面，又不被参考的资料影响，兼容自己的见解与特色，我想这是决定最后文章质量的关键要素吧 :)</p>
+<p>zxr和PCA的渊源是在高中的时候，当时学完最小二乘以后我就在思考一个问题，如果把误差定义为点到直线a的距离，这样的话怎么求解？当时我自己确实也是试了，奈何数学功底太差，最后也就不了了之，但是这个问题确实是被我带到了大学，在MIT 18.06线代的课程中，我第一次知道了答案，也是这个时候，我接触到了PCA。</p>
+<blockquote>
+<p>其实是问过hjb的，他说求导就可以，但也没写给我看，懂不懂FDUer口算的含金量👍</p>
+</blockquote>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/81/Total_least_squares.svg/1024px-Total_least_squares.svg.png" alt="img" style="zoom:33%;">
+<p>在后续的ML学习中，我发现PCA这个方法在不同的板块都会有对应的新形式，甚至对于PCA及其变体的学习，就反映了机器学习的一般框架模式，颇有一种“见一叶而知深秋,窥一斑而见全豹”的感觉。</p>
+<h2 id="Intuition">Intuition</h2>
+<p>对于现实中记录的数据，当我们想要从中发现新规律或者想要挖掘信息的时候，往往需要考虑数据的分布情况，因为实际上记录的维度可能存在冗余，事实上，很多情况下，数据都是分布在远小于原空间维度的流形上。举个栗子，观察下面的几张手写数字，不难看出对于这种图像的数据集，只有三个变化的自由度（degrees of freedom），对应于垂直平移、水平平移和旋转。于是，数据点会位于数据空间的⼀个⼦空间中，它的本质维度（intrinsic dimensionality）等于3。</p>
+<img src="https://s2.loli.net/2022/10/16/XdTi9EJDSWhcH5G.png" alt="image-20221009114150411.png" style="zoom:80%;">
+<p>另⼀个例子来源于石油流数据集，其中只有两个自由度，对应于管道中石油的比例和水的比例（之后就可以确定天然气的比例）。虽然数据空间由12个度量组成，但是⼀组数据点会近似位于这个空间内的⼀个⼆维流形当中。在这种情况下，流形由几个不同的片段组成，对应于不同的流的形式，每⼀个片段都是⼀个（带有噪声的）连续⼆维流形。如果我们的目标是数据压缩，或者对概率密度建模，那么利用这个流形结构是很有用的。</p>
+<p>在实际应用中，数据点不会被精确限制在⼀个光滑的低维流形中，我们可以将数据点关于流形的偏移看做噪声。我们的目标就是去寻找这样的一种数据”最佳“呈现方式，而这存在至少<strong>两个视角</strong>去分析：第一种是用原数据进行变换，得到对应假设下的最优表示，去除冗余和噪声。第二种则是从生成的角度，其中我们首先根据某种隐变量的概率分布在流形中选择⼀个点，然后通过添加噪声的方式生成观测数据点。噪声服从给定隐变量下的数据变量的某个条件概率分布。</p>
+<p>但无论是基于哪种视角提出的方法，都是遵循一定假设，符合某种物理实际情况的，PCA也不例外。现在就让我们跳出Big Picture的感知，从现实遇到的一些特定问题来引出PCA的故事 :)</p>
+<h2 id="Introduction">Introduction</h2>
+<img src="https://s2.loli.net/2022/10/16/M29pjCVdPTDimzI.png" alt="image-20221008165126460.png" style="zoom:80%;">
+<p>想象一下你回到了高中时代，这节物理实验课的主题是弹簧，你用了3台摄像机记录了弹簧伸缩的过程，所以你现在得到了3组数据，每组都记录了2维的坐标，所以整体上你拥有了维度是6的若干个采样点。</p>
+<p style=""><img src="https://math.now.sh?from=%5Cvec%7BX%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bc%7D%0Ax_A%20%5C%5C%0Ay_A%20%5C%5C%0Ax_B%20%5C%5C%0Ay_B%20%5C%5C%0Ax_C%20%5C%5C%0Ay_C%0A%5Cend%7Barray%7D%5Cright%5D%0A"></p><p>现在你的老板要求你挖掘弹簧伸缩遵循的背后规律，<em>how do you get from this data set to a simple equation of x?</em></p>
+<p>显然如果直接利用这个6维的数据来说明一个维度的变化规律，相对会很繁琐，所以是要对原数据去进行一些预处理的，我们需要考虑的因素有：数据的噪音和数据的冗余性。</p>
+<p>因为理论上上弹簧的运动轨迹肯定是条直线，所以要对实际数据去噪，这个思路就是寻找方差最大的轴，方差最大对应的信息保留通常也是最大的。</p>
+<img src="https://s2.loli.net/2022/10/16/jsbSnTJkxwNIUao.png" alt="image-20221009144351145.png" style="zoom:80%;">
+<p>其次是数据记录的冗余性，记录的3组数据实际上是强相关的，而且对于每组数据里面的坐标变量，也会存在一定的相关性，我们的目标就是去发现并消除这种冗余性，这里我们只去消除<strong>correlation</strong>（如果是<strong>independence</strong>的话就是ICA的思想了）。</p>
+<img src="https://s2.loli.net/2022/10/16/JoD6qLc8UKjaYwM.png" alt="image-20221009144706680.png" style="zoom:80%;">
+<p>我们考虑的情况框定在线性假设下，这使得我们的目标变为：</p>
+<blockquote>
+<p><em>Is there another basis, which is a linear combination of the original basis, that best re-expresses our data set?</em></p>
+</blockquote>
+<p>更好的数据表示应该是在原数据空间中选择一组更好的基，使得数据在这组基的表示下相关性最小，并且我们可以按照方差的大小来对基进行筛选，达到降噪的效果，得到更好的数据表示。</p>
+<h2 id="Linear-Algebra">Linear Algebra</h2>
+<blockquote>
+<p>博主贴心地准备好了数学扶贫资料，这里是PCA所涉及到的线性代数内容，如果你已经了解，那就可以直接看下一章节~</p>
+</blockquote>
+<blockquote>
+<p>向量 <img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D" style="display:inline-block;margin: 0;"> 默认都是column vector，数据矩阵的维度是<img src="https://math.now.sh?inline=%28D%2CN%29" style="display:inline-block;margin: 0;">的，也记作<img src="https://math.now.sh?inline=%28d%2Cn%29" style="display:inline-block;margin: 0;">。</p>
+</blockquote>
+<h3 id="协方差矩阵">协方差矩阵</h3>
+<p>数据矩阵表示如下：</p>
+<p style=""><img src="https://math.now.sh?from=X_%7BD%20%5Ctimes%20N%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcccc%7D%0Ax_%7B11%7D%20%26%20x_%7B12%7D%20%26%20%5Ccdots%20%26%20x_%7B1%20n%7D%20%5C%5C%0Ax_%7B21%7D%20%26%20x_%7B22%7D%20%26%20%5Ccdots%20%26%20x_%7B2%20n%7D%20%5C%5C%0A%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%5C%5C%0Ax_%7Bd%201%7D%20%26%20x_%7Bd%202%7D%20%26%20%5Ccdots%20%26%20x_%7Bd%20n%7D%0A%5Cend%7Barray%7D%5Cright%5D%3D%5Cleft%5B%5Cmathbf%7Bx%7D_1%2C%20%5Cmathbf%7Bx%7D_2%2C%20%5Cldots%2C%20%5Cmathbf%7Bx%7D_n%5Cright%5D%20%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bc%7D%0A%5Cmathbf%7Bu%7D_1%20%5C%5C%0A%5Cmathbf%7Bu%7D_2%20%5C%5C%0A%5Cvdots%0A%5C%5C%0A%5Cmathbf%7Bu%7D_d%0A%5Cend%7Barray%7D%5Cright%5D%0A"></p><p><img src="https://math.now.sh?inline=%5Cmathbf%7Bu%7D_i" style="display:inline-block;margin: 0;">和<img src="https://math.now.sh?inline=%5Cmathbf%7Bu%7D_j" style="display:inline-block;margin: 0;">是两个随机变量，则它们的协方差定义为：</p>
+<p style=""><img src="https://math.now.sh?from=%5Coperatorname%7Bcov%7D%28%5Cmathbf%7Bu%7D_i%2C%20%5Cmathbf%7Bu%7D_j%29%3DE%5Cleft%5B%5Cleft(%5Cmathbf%7Bu%7D_i-%5Cmu_i%5Cright)%5Cleft(%5Cmathbf%7Bu%7D_j-%5Cmu_j%5Cright)%5Cright%5D%0A"></p><p>这个定义和方差很像，只不过是描述的是变量之间的关系，而不是变量本身分布。</p>
+<p><img src="https://math.now.sh?inline=%5Cmathbf%7Bu%7D_i" style="display:inline-block;margin: 0;">和<img src="https://math.now.sh?inline=%5Cmathbf%7Bu%7D_j" style="display:inline-block;margin: 0;">的相关系数定义如下：</p>
+<p style=""><img src="https://math.now.sh?from=%5Crho_%7B%5Cmathbf%7Bu%7D_i%2C%20%5Cmathbf%7Bu%7D_j%7D%3D%5Cfrac%7B%5Csigma_%7B%5Cmathbf%7Bu%7D_i%2C%20%5Cmathbf%7Bu%7D_j%7D%7D%7B%5Csqrt%7B%5Csigma_%7B%5Cmathbf%7Bu%7D_i%2C%20%5Cmathbf%7Bu%7D_i%7D%20%5Csigma_%7B%5Cmathbf%7Bu%7D_j%2C%20%5Cmathbf%7Bu%7D_j%7D%7D%7D%0A"></p><p>协方差矩阵是针对维度间的，而不是样本间的，所以最后求出来的协方差矩阵维度是<img src="https://math.now.sh?inline=%28D%2CD%29" style="display:inline-block;margin: 0;">的。</p>
+<p style=""><img src="https://math.now.sh?from=%5Cbegin%7Baligned%7D%0A%26%5Chat%7B%5CSigma%7D%3D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcccc%7D%0A%5Coperatorname%7Bcov%7D%5Cleft%28%5Cmathbf%7Bu%7D_1%2C%20%5Cmathbf%7Bu%7D_1%5Cright%29%20%26%20%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_1%2C%20%5Cmathbf%7Bu%7D_2%5Cright)%20%26%20%5Ccdots%20%26%20%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_1%2C%20%5Cmathbf%7Bu%7D_d%5Cright)%20%5C%5C%0A%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_2%2C%20%5Cmathbf%7Bu%7D_1%5Cright)%20%26%20%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_2%2C%20%5Cmathbf%7Bu%7D_2%5Cright)%20%26%20%5Ccdots%20%26%20%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_2%2C%20%5Cmathbf%7Bu%7D_d%5Cright)%20%5C%5C%0A%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%5C%5C%0A%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_d%2C%20%5Cmathbf%7Bu%7D_1%5Cright)%20%26%20%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_d%2C%20%5Cmathbf%7Bu%7D_2%2C%5Cright)%20%26%20%5Ccdots%20%26%20%5Coperatorname%7Bcov%7D%5Cleft(%5Cmathbf%7Bu%7D_d%2C%20%5Cmathbf%7Bu%7D_d%5Cright)%0A%5Cend%7Barray%7D%5Cright%5D%5C%5C%0A%26%3D%5Cfrac%7B1%7D%7Bn-1%7D%5Cleft%5B%5Cbegin%7Barray%7D%7Bcccc%7D%0A%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%20%26%20%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7B1%20i%7D-%5Cbar%7Bx%7D_1%5Cright)%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%20%26%20%5Cldots%20%26%20%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7B1%20i%7D-%5Cbar%7Bx%7D_1%5Cright)%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_d%5Cright)%20%5C%5C%0A%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7B2%20i%7D-%5Cbar%7Bx%7D_2%5Cright)%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%20%26%20%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%20%26%20%5Cldots%20%26%20%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_d%5Cright)%20%5C%5C%0A%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%5C%5C%0A%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7Bd%20i%7D-%5Cbar%7Bx%7D_n%5Cright)%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%20%26%20%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_n%5Cright)%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%20%26%20%5Cldots%20%26%20%5Csum_%7Bi%3D1%7D%5En%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_n%5Cright)%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_d%5Cright)%0A%5Cend%7Barray%7D%5Cright%5D%5C%5C%0A%26%3D%5Cfrac%7B1%7D%7Bn-1%7D%5Csum_%7Bi%3D1%7D%5En%5Cleft%5B%5Cbegin%7Barray%7D%7Bcccc%7D%0A%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%20%26%20%5Cleft(x_%7B1%20i%7D-%5Cbar%7Bx%7D_1%5Cright)%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%20%26%20%5Cldots%20%26%20%5Cleft(x_%7B1%20i%7D-%5Cbar%7Bx%7D_1%5Cright)%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_d%5Cright)%20%5C%5C%0A%5Cleft(x_%7B2%20i%7D-%5Cbar%7Bx%7D_2%5Cright)%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%20%26%20%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%20%26%20%5Cldots%20%26%20%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_d%5Cright)%20%5C%5C%0A%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%26%20%5Cvdots%20%5C%5C%0A%5Cleft(x_%7Bd%20i%7D-%5Cbar%7Bx%7D_d%5Cright)%5Cleft(x_%7B1%20i%7D-%5Cbar%7B%5Cmu%7D_1%5Cright)%20%26%20%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_d%5Cright)%5Cleft(x_%7B2%20i%7D-%5Cbar%7B%5Cmu%7D_2%5Cright)%20%26%20%5Cldots%20%26%20%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_n%5Cright)%5Cleft(x_%7Bd%20i%7D-%5Cbar%7B%5Cmu%7D_d%5Cright)%0A%5Cend%7Barray%7D%5Cright%5D%5C%5C%0A%26%3D%5Cfrac%7B1%7D%7Bn-1%7D%20%5Csum_%7Bi%3D1%7D%5En%5Cleft(%5Cmathbf%7Bx%7D_i-%5Cbar%7B%5Cmathbf%7Bx%7D%7D%5Cright)%5Cleft(%5Cmathbf%7Bx%7D_i-%5Cbar%7B%5Cmathbf%7Bx%7D%7D%5Cright)%5ET%0A%5Cend%7Baligned%7D%0A"></p><blockquote>
+<p>上面用<img src="https://math.now.sh?inline=n-1" style="display:inline-block;margin: 0;">的原因是无偏估计，有兴趣可以自己找些资料看，这里推荐mit 6.041概率论。</p>
+</blockquote>
+<p>接下来介绍协方差矩阵和相关系数矩阵的关系：</p>
+<p><img src="https://math.now.sh?inline=P%3A" style="display:inline-block;margin: 0;"> <code>correlation matrix</code>， <img src="https://math.now.sh?inline=%5CSigma%3A" style="display:inline-block;margin: 0;"> <code>covariance matrix</code>， <img src="https://math.now.sh?inline=V%3A" style="display:inline-block;margin: 0;"> <code>diagonal variance matrix</code><br>
+上式中的矩阵 <img src="https://math.now.sh?inline=V" style="display:inline-block;margin: 0;"> 是包含了每一个attribute的方差的对角矩阵。</p>
+<p style=""><img src="https://math.now.sh?from=V%3D%5Coperatorname%7Bdiag%7D%5Cleft%28%5Cleft%5B%5Csigma_%7B%5Cmathbf%7Bu%7D_1%20%5Cmathbf%7Bu%7D_1%7D%5E2%2C%20%5Csigma_%7B%5Cmathbf%7Bu%7D_2%20%5Cmathbf%7Bu%7D_2%7D%5E2%2C%20%5Cldots%2C%20%5Csigma_%7B%5Cmathbf%7Bu%7D_d%20%5Cmathbf%7Bu%7D_d%7D%5E2%5Cright%5D%5Cright%29%0A"></p><p>那么，相关矩阵 <img src="https://math.now.sh?inline=P" style="display:inline-block;margin: 0;"> 和协方差矩阵 <img src="https://math.now.sh?inline=%5CSigma" style="display:inline-block;margin: 0;"> 的关系如下:</p>
+<p style=""><img src="https://math.now.sh?from=%5Cbegin%7Baligned%7D%0A%26V%5E%7B-1%20%2F%202%7D%20%5CSigma%20V%5E%7B-1%20%2F%202%7D%3DP%20%5C%5C%0A%26%5CSigma%3DV%5E%7B1%20%2F%202%7D%20P%20V%5E%7B1%20%2F%202%7D%0A%5Cend%7Baligned%7D%0A"></p><p>可以发现，消除变量间相关性其实也是等价于变量间协方差的值为0，所以这也是为什么后面我们就用协方差去分析。</p>
+<h3 id="SVD分解">SVD分解</h3>
+<p>参考18.06的引入，对于一般的矩阵<img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D_%7Bn%5Ctimes%20n%7D" style="display:inline-block;margin: 0;">，如果<img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D" style="display:inline-block;margin: 0;">有<img src="https://math.now.sh?inline=n" style="display:inline-block;margin: 0;">个线性无关的特征向量，那么可以得到特征值分解<img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D%3D%5Cmathbf%7BS%5E%7B-1%7D%20%5CLambda%20S%7D" style="display:inline-block;margin: 0;">，而对于实对称矩阵，可以分解为正交矩阵和对角矩阵乘积的形式<img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D%3D%5Cmathbf%7BQ%20D%20Q%7D%5ET" style="display:inline-block;margin: 0;">，那么会不会存在一种对角正交的分解，对于一般的矩阵也是适用的呢？其实SVD就是反映了这样性质，下面我会逐步引入介绍 :)。</p>
+<p>首先介绍一下比较一般的特征值分解：</p>
+<p>给定矩阵 <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D_%7Bn%5Ctimes%20n%7D" style="display:inline-block;margin: 0;">的<img src="https://math.now.sh?inline=n" style="display:inline-block;margin: 0;"> 个线性无关的特征向量，按列组成方阵，即:</p>
+<p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BS%7D%3A%5Cleft%5B%5Cmathbf%7Bx%7D_1%2C%20%5Cmathbf%7Bx%7D_2%2C%20%5Cldots%2C%20%5Cmathbf%7Bx%7D_n%5Cright%5D%0A"></p><p>那么有</p>
+<p style=""><img src="https://math.now.sh?from=%5Cbegin%7Baligned%7D%0A%5Cmathbf%7BA%20S%7D%20%26%3D%5Cmathbf%7BA%7D%5Cleft%5B%5Cmathbf%7Bx%7D_1%2C%20%5Cmathbf%7Bx%7D_2%2C%20%5Cldots%2C%20%5Cmathbf%7Bx%7D_n%5Cright%5D%20%5C%5C%0A%26%3D%5Cleft%5B%5Clambda_1%20%5Cmathbf%7Bx%7D_1%2C%20%5Clambda_2%20%5Cmathbf%7Bx%7D_2%2C%20%5Cldots%2C%20%5Clambda_n%20%5Cmathbf%7Bx%7D_n%5Cright%5D%20%5C%5C%0A%26%3D%5Cleft%5B%5Cmathbf%7Bx%7D_1%2C%20%5Cmathbf%7Bx%7D_2%2C%20%5Cldots%2C%20%5Cmathbf%7Bx%7D_n%5Cright%5D%20%5Cmathbf%7B%5CLambda%7D%20%5C%5C%0A%26%3D%5Cmathbf%7BS%20%5CLambda%7D%20%0A%5Cend%7Baligned%7D%0A"></p><p>其中 <img src="https://math.now.sh?inline=%5CLambda" style="display:inline-block;margin: 0;"> 为特征值组成的对角矩阵，因为假设组成特征向量矩阵 <img src="https://math.now.sh?inline=S" style="display:inline-block;margin: 0;"> 的 <img src="https://math.now.sh?inline=n" style="display:inline-block;margin: 0;"> 个特征向量线性无关，所 以 <img src="https://math.now.sh?inline=S" style="display:inline-block;margin: 0;"> 可逆，从上式中就可以推导出对角化以及特征值分解的公式:</p>
+<p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BS%5E%7B-1%7D%20A%20S%7D%3D%20%5Cmathbf%7B%5CLambda%7D%0A"></p><p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BA%7D%3D%5Cmathbf%7BS%5E%7B-1%7D%20%5CLambda%20S%7D%0A"></p><p>接下来介绍一下对阵矩阵的特征值分解：</p>
+<p>对于实对称矩阵 <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D" style="display:inline-block;margin: 0;">，存在实数<img src="https://math.now.sh?inline=%5Clambda" style="display:inline-block;margin: 0;"> 和向量 <img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D" style="display:inline-block;margin: 0;"> 使得</p>
+<p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BA%20x%7D%3D%5Clambda%20%5Cmathbf%7Bx%7D%0A"></p><p><img src="https://math.now.sh?inline=%5Clambda" style="display:inline-block;margin: 0;">是 <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D" style="display:inline-block;margin: 0;"> 的一个特征值，<img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D" style="display:inline-block;margin: 0;"> 是对应的特征向量。如果 <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D" style="display:inline-block;margin: 0;"> 有两个不同的特征值 <img src="https://math.now.sh?inline=%5Clambda_1" style="display:inline-block;margin: 0;"> 和<img src="https://math.now.sh?inline=%5Clambda_2%2C%20%5Clambda_1%20%5Cneq%20%5Clambda_2" style="display:inline-block;margin: 0;">, 对应的特征向量分别是 <img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D_1" style="display:inline-block;margin: 0;"> 和 <img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D_2" style="display:inline-block;margin: 0;"> ,</p>
+<p style=""><img src="https://math.now.sh?from=%5Clambda_1%20%5Cmathbf%7Bx%7D_1%5ET%20%5Cmathbf%7Bx%7D_2%3D%5Cmathbf%7Bx%7D_1%5ET%20%5Cmathbf%7BA%7D%5ET%20%5Cmathbf%7Bx%7D_2%3D%5Cmathbf%7Bx%7D_1%5ET%20%5Cmathbf%7BA%7D%20%5Cmathbf%7Bx%7D_2%3D%5Clambda_2%20%5Cmathbf%7Bx%7D_1%5ET%20%5Cmathbf%7Bx%7D_2%0A"></p><p>由于<img src="https://math.now.sh?inline=%5Clambda_1%20%5Cneq%20%5Clambda_2" style="display:inline-block;margin: 0;">, 我们可以得到 <img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D_1%5ET%20%5Cmathbf%7Bx%7D_2%3D0" style="display:inline-block;margin: 0;">, i.e., <img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D_1" style="display:inline-block;margin: 0;"> 和 <img src="https://math.now.sh?inline=%5Cmathbf%7Bx%7D_2" style="display:inline-block;margin: 0;"> 是正交的。<br>
+对于<img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D%20%5Cin%20%5Cmathcal%7BR%7D%5E%7Bn%20%5Ctimes%20n%7D" style="display:inline-block;margin: 0;">, 我们可以找到 <img src="https://math.now.sh?inline=n" style="display:inline-block;margin: 0;"> 个特征值以及 <img src="https://math.now.sh?inline=n" style="display:inline-block;margin: 0;"> 个特征向量，所以， <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D" style="display:inline-block;margin: 0;"> 可以被分解为</p>
+<p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BA%7D%3D%5Cmathbf%7BQ%20D%20Q%7D%5ET%0A"></p><p><img src="https://math.now.sh?inline=%5Cmathbf%7BQ%7D" style="display:inline-block;margin: 0;"> 是个正交矩阵 (i.e., <img src="https://math.now.sh?inline=%5Cmathbf%7BQ%7D%20%5Cmathbf%7BQ%7D%5ET%3D%5Cmathbf%7BI%7D" style="display:inline-block;margin: 0;"> ) ，<img src="https://math.now.sh?inline=%5Cmathbf%7BD%7D%3D%5Coperatorname%7Bdiag%7D%5Cleft%28%5Clambda_1%2C%20%5Clambda_2%2C%20%5Ccdots%2C%20%5Clambda_n%5Cright%29" style="display:inline-block;margin: 0;">. 我们可以将 <img src="https://math.now.sh?inline=%5Cmathbf%7BQ%7D" style="display:inline-block;margin: 0;"> 表示成列向量形式：</p>
+<p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BQ%7D%3D%5Cleft%28%5Cmathbf%7Bq%7D_1%2C%20%5Cmathbf%7Bq%7D_2%2C%20%5Ccdots%2C%20%5Cmathbf%7Bq%7D_n%5Cright%29%0A"></p><p>那么：</p>
+<p style=""><img src="https://math.now.sh?from=%5Cbegin%7Baligned%7D%0A%5Cmathbf%7BA%7D%3D%5Cmathbf%7BQ%20D%20Q%7D%5ET%20%26%3D%5Cleft%28%5Cmathbf%7Bq%7D_1%2C%20%5Cmathbf%7Bq%7D_2%2C%20%5Ccdots%2C%20%5Cmathbf%7Bq%7D_n%5Cright%29%5Cleft(%5Cbegin%7Barray%7D%7Blll%7D%0A%5Clambda_1%20%26%20%26%20%5C%5C%0A%26%20%5Clambda_2%20%26%20%5C%5C%0A%26%20%26%20%5C%5C%0A%26%20%26%20%5Clambda_n%0A%5Cend%7Barray%7D%5Cright)%5Cleft(%5Cbegin%7Barray%7D%7Bc%7D%0A%5Cmathbf%7Bq%7D_1%5ET%20%5C%5C%0A%5Cmathbf%7Bq%7D_2%5ET%20%5C%5C%0A%5Cvdots%20%5C%5C%0A%5Cmathbf%7Bq%7D_n%5ET%0A%5Cend%7Barray%7D%5Cright)%20%5C%5C%0A%26%3D%5Cleft(%5Clambda_1%20%5Cmathbf%7Bq%7D_1%2C%20%5Clambda_2%20%5Cmathbf%7Bq%7D_2%2C%20%5Ccdots%2C%20%5Clambda_n%20%5Cmathbf%7Bq%7D_n%5Cright)%5Cleft(%5Cbegin%7Barray%7D%7Bc%7D%0A%5Cmathbf%7Bq%7D_1%5ET%20%5C%5C%0A%5Cmathbf%7Bq%7D_2%5ET%20%5C%5C%0A%5Cvdots%20%5C%5C%0A%5Cmathbf%7Bq%7D_n%5ET%0A%5Cend%7Barray%7D%5Cright)%20%5C%5C%0A%26%3D%5Csum_%7Bi%3D1%7D%5En%20%5Clambda_i%20%5Cmathbf%7Bq%7D_i%20%5Cmathbf%7Bq%7D_i%5ET%0A%5Cend%7Baligned%7D%0A"></p><p>这里<img src="https://math.now.sh?inline=%5Cleft%5C%7B%5Cmathbf%7Bq%7D_i%5Cright%5C%7D_%7Bi%3D1%7D%5En" style="display:inline-block;margin: 0;"> 是<img src="https://math.now.sh?inline=%5Cmathcal%7BR%7D%5En" style="display:inline-block;margin: 0;">的一组正交基。</p>
+<p>那么SVD其实就是这样的一种矩阵分解技术，对于任意的矩阵都可以找到对应的正交对角分解，具体的推导由来可以看：<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/114550672">link</a>，由<img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D%5Cmathbf%7BA%5ET%7D" style="display:inline-block;margin: 0;">和<img src="https://math.now.sh?inline=%5Cmathbf%7BA%5ET%20A%7D" style="display:inline-block;margin: 0;">的特征值和特征向量引出的构造性证明。</p>
+<p>根据矩阵乘法的几何意义，每个线性变换都可以分解为如下的旋转拉伸旋转操作，实际上可以变换到高维空间（<img src="https://math.now.sh?inline=U" style="display:inline-block;margin: 0;">和<img src="https://math.now.sh?inline=V" style="display:inline-block;margin: 0;">的维度可以是不同的，因此最后<img src="https://math.now.sh?inline=U" style="display:inline-block;margin: 0;">的变换是可以到高维的subspace），这里只展示二维的过程。</p>
+<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bb/Singular-Value-Decomposition.svg/1920px-Singular-Value-Decomposition.svg.png" style="zoom: 25%;">
+<p>可以将矩阵 <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D" style="display:inline-block;margin: 0;"> 视为一种线性变换操作，将其行空间中的一个向量 <img src="https://math.now.sh?inline=%5Cmathbf%7Bv%7D%201" style="display:inline-block;margin: 0;">,变为其列空间中的向量 <img src="https://math.now.sh?inline=%5Cmathbf%7Bu%7D_1%3D%5Cmathbf%7BA%7D%20%5Cmathbf%7Bv%7D_1" style="display:inline-block;margin: 0;"> 。奇异值分解就是要在行空间中寻找一组正交基，将其通过矩阵 <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D" style="display:inline-block;margin: 0;"> 线性变换生成列空间 中的一组正交基 <img src="https://math.now.sh?inline=%5Cmathbf%7BA%7D%20%5Cmathbf%7Bv%7D_i%3D%5Csigma_i%20%5Cmathbf%7Bu%7D_i" style="display:inline-block;margin: 0;"> 。</p>
+<img src="https://pic1.zhimg.com/v2-2661c185a567047804e7831766cd79f0_r.jpg" style="zoom:80%;">
+<p>对于SVD中的那三个矩阵的求解，可以采用如下的方法：</p>
+<p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BA%20%20A%5ET%3DU%20%5CSigma%20V%5ET%20V%20%5CSigma%20U%5ET%3DU%20%5CSigma%5E2%20U%5ET%7D%0A"></p><p style=""><img src="https://math.now.sh?from=%5Cmathbf%7BA%5ET%20%20A%3DV%20%5CSigma%20U%5ET%20U%20%5CSigma%20V%5ET%20%3DV%20%5CSigma%5E2%20V%5ET%7D%0A"></p><p>其实就是求这俩对阵矩阵的特征向量和特征值就行了。</p>
+<h3 id="基变换">基变换</h3>
+<p>我推荐看3b1b的：<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ys411472E?p=13&amp;vd_source=78821760a099022a284c04eeb639e1ae">link</a></p>
+<h2 id="PCA">PCA</h2>
+<h3 id="Intuition-2">Intuition</h3>
+<p>假设就是线性，具体来说就是我们想要找的基是由原基向量线性组合得到的，让我来复述一下我们的目标：</p>
+<ol>
+<li>最小化冗余，这里的冗余我们认为是变量间的协方差</li>
+<li>最大化信息，这里的信息我们认为是变量的方差</li>
+</ol>
+<p>也就是说，对于在新基下的数据表示，我们希望协方差矩阵是对角化的，<code>off-diagnoal</code>的元素都是0，达到去相关(<code>decorrelated</code>)。实际上有很多方法（变换）可以使得变换后的数据去相关，而PCA选取新的基向量都是<code>orthonormal</code>的，这个原因其实是根据数学证明来的（后面会提到），暂且我们可以先认为是为了简单和方便起见，因为<code>orthonormal matrix</code>可以认为是旋转让新的坐标轴和最大方差的方向对齐，就像在<code>Introduction</code>章节里的那张图一样。</p>
+<blockquote>
+<p>这里说的最大方差是在当前假设下，<strong>投影</strong>得到的最大方差，没有任何假设下的最大方差的轴向可能不是正交基向量的方向，这个后面会说，也就是ICA。</p>
+</blockquote>
+<p>假设我们进行变换后得到的数据向量表示是<img src="https://math.now.sh?inline=%5Cmathbf%7BY%7D" style="display:inline-block;margin: 0;">，设我们的基向量组成的<code>orthonormal matrix</code>为<img src="https://math.now.sh?inline=%5Cmathbf%7BS%7D" style="display:inline-block;margin: 0;">，那么就有<img src="https://math.now.sh?inline=%5Cmathbf%7BY%7D%3D%5Cmathbf%7BS%5E%7B-1%7D%20X%7D%3D%5Cmathbf%7BS%5ET%20X%7D" style="display:inline-block;margin: 0;">，此时得到的<img src="https://math.now.sh?inline=%5Cmathbf%7BY%7D" style="display:inline-block;margin: 0;">的协方差矩阵为：</p>
+<p style=""><img src="https://math.now.sh?from=%5Cbegin%7Baligned%7D%0A%5Cmathbf%7BC_Y%7D%20%26%3D%5Cmathbf%7B%5Cfrac%7B1%7D%7Bn-1%7D%20Y%20Y%5ET%7D%20%5C%5C%0A%26%3D%5Cmathbf%7B%5Cfrac%7B1%7D%7Bn-1%7D%20S%5ET%20X%5Cleft%28S%5ET%20X%5Cright%29%5ET%7D%5C%5C%0A%26%3D%5Cmathbf%7B%5Cfrac%7B1%7D%7Bn-1%7D%20S%5ET%20X%20X%5ET%20S%7D%20%5C%5C%0A%5Cend%7Baligned%7D%0A"></p><p>而我们知道每个对称矩阵都有对应的正交对角分解，如果我们就取$\mathbf{X X^T} <img src="https://math.now.sh?inline=%E5%88%86%E8%A7%A3%E5%BE%97%E5%88%B0%E7%9A%84%E6%AD%A3%E4%BA%A4%E7%9F%A9%E9%98%B5%E4%B8%BA" style="display:inline-block;margin: 0;">\mathbf{S}$，那么则有：</p>
+<p style=""><img src="https://math.now.sh?from=%5Cmathbf%7B%5Cfrac%7B1%7D%7Bn-1%7D%20S%5ET%20S%20%5CLambda%20S%5ET%20S%3D%5Cfrac%7B%5CLambda%7D%7Bn-1%7D%7D%0A"></p><p>嘿！这不就是我们想要的结果么，变换后的协方差矩阵已经变成了对角化😀，我们的目标达成了，这样的<img src="https://math.now.sh?inline=%5Cmathbf%7BS%7D" style="display:inline-block;margin: 0;">就是我们要找的新的基向量矩阵，而具体对于<img src="https://math.now.sh?inline=%5Cmathbf%7BS%7D" style="display:inline-block;margin: 0;">的计算可以通过SVD得到 :)</p>
+<p>we must define what we consider optimal results. In the context of dimensional reduction, one measure of success is the degree to which a reduced representation can predict the original data. In statistical terms, we must define an error function (or loss function). It can be proved that under a common loss function, mean squared error (i.e. L2 norm), PCA provides the optimal reduced representation of the data. This means that selecting orthogonal directions for principal components is the best solution to predicting the original data.</p>
+<h3 id="最大方差">最大方差</h3>
+<h3 id="最小重构误差">最小重构误差</h3>
+<h3 id="统一的视角">统一的视角</h3>
+<h3 id="一些说明">一些说明</h3>
+<p>The goal of the analysis is to decorrelate the data, or said in other terms, the goal is to remove second-order dependencies in the data. In the data sets of Figure 6, higher order dependencies exist between the variables. Therefore, removing second-order dependencies is insufficient at revealing all structure in the data.</p>
+<img src="https://s2.loli.net/2022/10/16/hKFrZdVm7Q4wODM.png" alt="image-20221007224537337.png" style="zoom: 50%;">
+<p>PCA和SVD都能用于求解Col X的basis，而且它们求解出来的basis可以‘认为’是同一个。两种方法的理论出发点不一样，PCA是从<img src="https://math.now.sh?inline=XX%5ET" style="display:inline-block;margin: 0;">出发，考虑的是change of variable，目的是使的替换之后的variable是uncorrelated，即新的covariance matrix是对角阵。SVD是从<img src="https://math.now.sh?inline=XX%5ET" style="display:inline-block;margin: 0;">出发，矩阵分解时得到Col X的一个basis，而该basis也可以验证得到是<img src="https://math.now.sh?inline=XX%5ET" style="display:inline-block;margin: 0;">的eigenvectors set。两者都是建立在symmetric matrix对角化分解理论的基础上。SVD计算得到的basis更多是算一种副产品，主要目的是matrix decomposition，PCA的目的就是找basis。在计算时，PCA一般也是用SVD来计算。</p>
+<h2 id="Kernel-Tutorial">Kernel Tutorial</h2>
+<h2 id="Kernel-PCA">Kernel PCA</h2>
+<h2 id="PPCA">PPCA</h2>
+<h3 id="从最小二乘谈起">从最小二乘谈起</h3>
+<h2 id="后记">后记</h2>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">zxr</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://xurui314.github.io/2022/10/16/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3PCA%E4%B9%88/">https://xurui314.github.io/2022/10/16/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3PCA%E4%B9%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E5%80%BC%E5%88%86%E6%9E%90/">数值分析</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/10/16/7S4fnGCBTi5jxtN.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2022/10/13/Tree-based-AI/"><img class="next-cover" src="https://s2.loli.net/2022/10/13/Z8Llvman5s1iGXz.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Tree based AI</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/07/31/数值分析/" title="数值分析"><img class="cover" src="https://i.loli.net/2021/11/30/b4sCamRDIcTvo6r.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-07-31</div><div class="title">数值分析</div></div></a></div></div></div><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info__name">zxr</div><div class="author-info__description">Think and Do like an MIT student</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">56</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">25</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">13</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XuRui314"><i class="fab fa-github"></i><span>This is zxr!🚀</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XuRui314" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://mail.qq.com/" target="_blank" title="Email-1977289398@qq.com"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">zxr的生活，math，编程记录,<div class="twopeople"><div class="container" style="height:200px;"><canvas class="illo" width="800" height="800" style="max-width: 200px; max-height: 200px; touch-action: none; width: 640px; height: 640px;"></canvas></div><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople1.js"></script><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/zdog.dist.js"></script><script id="rendered-js" src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople.js"></script><style>.twopeople{margin: 0;align-items: center;justify-content: center;text-align: center;}canvas{display: block;margin: 0 auto;cursor: move;}</style></div><div class="twopeople"></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Intuition"><span class="toc-number">2.</span> <span class="toc-text">Intuition</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">3.</span> <span class="toc-text">Introduction</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linear-Algebra"><span class="toc-number">4.</span> <span class="toc-text">Linear Algebra</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5"><span class="toc-number">4.1.</span> <span class="toc-text">协方差矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SVD%E5%88%86%E8%A7%A3"><span class="toc-number">4.2.</span> <span class="toc-text">SVD分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E5%8F%98%E6%8D%A2"><span class="toc-number">4.3.</span> <span class="toc-text">基变换</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PCA"><span class="toc-number">5.</span> <span class="toc-text">PCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Intuition-2"><span class="toc-number">5.1.</span> <span class="toc-text">Intuition</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E6%96%B9%E5%B7%AE"><span class="toc-number">5.2.</span> <span class="toc-text">最大方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E9%87%8D%E6%9E%84%E8%AF%AF%E5%B7%AE"><span class="toc-number">5.3.</span> <span class="toc-text">最小重构误差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BB%9F%E4%B8%80%E7%9A%84%E8%A7%86%E8%A7%92"><span class="toc-number">5.4.</span> <span class="toc-text">统一的视角</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%BA%9B%E8%AF%B4%E6%98%8E"><span class="toc-number">5.5.</span> <span class="toc-text">一些说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kernel-Tutorial"><span class="toc-number">6.</span> <span class="toc-text">Kernel Tutorial</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Kernel-PCA"><span class="toc-number">7.</span> <span class="toc-text">Kernel PCA</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PPCA"><span class="toc-number">8.</span> <span class="toc-text">PPCA</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E8%B0%88%E8%B5%B7"><span class="toc-number">8.1.</span> <span class="toc-text">从最小二乘谈起</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8E%E8%AE%B0"><span class="toc-number">9.</span> <span class="toc-text">后记</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/10/16/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3PCA%E4%B9%88/" title="你真的理解PCA么"><img src="https://s2.loli.net/2022/10/16/7S4fnGCBTi5jxtN.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="你真的理解PCA么"></a><div class="content"><a class="title" href="/2022/10/16/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3PCA%E4%B9%88/" title="你真的理解PCA么">你真的理解PCA么</a><time datetime="2022-10-16T15:27:37.000Z" title="Created 2022-10-16 23:27:37">2022-10-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/13/Tree-based-AI/" title="Tree based AI"><img src="https://s2.loli.net/2022/10/13/Z8Llvman5s1iGXz.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Tree based AI"></a><div class="content"><a class="title" href="/2022/10/13/Tree-based-AI/" title="Tree based AI">Tree based AI</a><time datetime="2022-10-13T13:10:43.000Z" title="Created 2022-10-13 21:10:43">2022-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/11/Compiler-lab/" title="Compiler lab"><img src="https://s2.loli.net/2022/10/11/8wKrgVGmsxWj1qY.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Compiler lab"></a><div class="content"><a class="title" href="/2022/10/11/Compiler-lab/" title="Compiler lab">Compiler lab</a><time datetime="2022-10-11T07:20:01.000Z" title="Created 2022-10-11 15:20:01">2022-10-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/08/Math-Modeling-Competition/" title="Math Modeling Competition"><img src="https://s2.loli.net/2022/10/08/NhaMPbwAYjRIof3.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Math Modeling Competition"></a><div class="content"><a class="title" href="/2022/10/08/Math-Modeling-Competition/" title="Math Modeling Competition">Math Modeling Competition</a><time datetime="2022-10-08T06:44:24.000Z" title="Created 2022-10-08 14:44:24">2022-10-08</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/08/10/2022-8-10/" title="2022-8-10"><img src="https://i.loli.net/2021/10/19/gS136WRoxqVGTnu.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="2022-8-10"></a><div class="content"><a class="title" href="/2022/08/10/2022-8-10/" title="2022-8-10">2022-8-10</a><time datetime="2022-08-10T15:07:23.000Z" title="Created 2022-08-10 23:07:23">2022-08-10</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">©2020 - 2022 By zxr</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="github-badge"><a style="color: #fff" rel="license" href="https://hexo.io/" target="_blank" title="由 Hexo 强力驱动"><span class="badge-subject">Powered</span><span class="badge-value bg-blue">Hexo</span></a><a style="color: #fff" rel="license" href="https://gitee.com/" target="_blank" title="静态网页托管于 GitHub Pages 和 Coding Pages 和 Gitee Pages"><span class="badge-subject">Hosted</span><span class="badge-value bg-brightgreen">GitHub &amp; Coding &amp; Gitee</span></a><a style="color: #fff" rel="license" href="https://www.jsdelivr.com/" target="_blank" title="jsDelivr 提供 CDN 加速服务"><span class="badge-subject">CDN</span><span class="badge-value bg-orange">jsDelivr</span></a><a style="color: #fff" rel="license" href="https://jerryc.me" target="_blank" title="站点使用 Butterfly主题"><span class="badge-subject">Theme</span><span class="badge-value bg-blue">Butterfly</span></a><a style="color: #fff" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可"><span class="badge-subject"><i class="fa fa-copyright"></i></span><span class="badge-value bg-lightgrey">BY-NC-SA 4.0  </span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="Increase font size"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="Decrease font size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = '[object Object]'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://xurui314.github.io/2022/10/16/%E4%BD%A0%E7%9C%9F%E7%9A%84%E7%90%86%E8%A7%A3PCA%E4%B9%88/'
+    this.page.identifier = '2022/10/16/你真的理解PCA么/'
+    this.page.title = '你真的理解PCA么'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script src="https://cdn.jsdelivr.net/gh/XuRui314/live2d-widget@1.0.1/autoload.js"></script><script src="/js/title.js"></script><script src="/dist/nochocolate.js"></script><div id="aplayer"></div><script type="text/javascript" src="/dist/APlayer.min.js"></script><script type="text/javascript" src="/dist/music.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax="">if(document.getElementById('recent-posts') && (location.pathname ==='all'|| 'all' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Math/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 zxrの数学世界 (13)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/算法学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎮 zxrの算法学习 (5)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活趣闻/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱‍👓 zxrの生活趣闻 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/编程实例/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 zxrの编程学习 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活感悟/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🚴‍♂ zxrの生活感悟 (11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Hexo/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💌 zxrのBlog记录 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://XuRui314.github.io/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style> <script data-pjax="">if(document.getElementById('recent-posts') && location.pathname =='/'){
+    
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg" alt="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-09-17</span><a class="blog-slider__title" href="2021/09/17/概率和测度/">概率和测度(ZJU大佬)</a><div class="blog-slider__text">来看看ZJU计科大佬解释概率和测度🥙</div><a class="blog-slider__button" href="2021/09/17/概率和测度/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg" alt="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-26</span><a class="blog-slider__title" href="2021/08/26/算法题目练习/">AcWing-Oj-刷题学习记录(基础算法)</a><div class="blog-slider__text">来看算法蒟蒻的丢人日常啊👩‍🦽</div><a class="blog-slider__button" href="2021/08/26/算法题目练习/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg" alt="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-15</span><a class="blog-slider__title" href="2021/08/15/两层神经网络识别手写数字/">两层神经网络识别手写数字</a><div class="blog-slider__text">识别手写数字最简单的实现🧦</div><a class="blog-slider__button" href="2021/08/15/两层神经网络识别手写数字/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg" alt="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-14</span><a class="blog-slider__title" href="2021/08/14/神经网络搭建准备内容/">神经网络搭建准备内容</a><div class="blog-slider__text">如何识别手写🔢，zxr带你一步一步实现🎼</div><a class="blog-slider__button" href="2021/08/14/神经网络搭建准备内容/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg" alt="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-12</span><a class="blog-slider__title" href="2021/08/12/xuperchain-solidity/">xuperchain&solidity</a><div class="blog-slider__text">区块链不止是挖币，还有v神和solidity🎈</div><a class="blog-slider__button" href="2021/08/12/xuperchain-solidity/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png" alt="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/FFT/">FFT的详解</a><div class="blog-slider__text">这么好看的FFT，信号狗都馋哭了💦</div><a class="blog-slider__button" href="2021/07/26/FFT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg" alt="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-09</span><a class="blog-slider__title" href="2021/08/09/炒鸡好理解的测度论/">炒鸡好理解的测度论</a><div class="blog-slider__text">三段字，让你读懂测度论</div><a class="blog-slider__button" href="2021/08/09/炒鸡好理解的测度论/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png" alt="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-27</span><a class="blog-slider__title" href="2021/07/27/FT/">傅里叶学习资料</a><div class="blog-slider__text">简单好学的傅里叶学习资料</div><a class="blog-slider__button" href="2021/07/27/FT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg" alt="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/hello-world/">大鸟转转转酒吧内部绝密档案</a><div class="blog-slider__text">不要点进来QAQ！</div><a class="blog-slider__button" href="2021/07/26/hello-world/">详情</a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载swiper')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.js"></script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper@0.18/swiper/swiperindex.js"></script>
+<style></style><script data-pjax="">function electric_clock_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img id="card-clock-loading" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-clock/clock/images/weather/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading" class="entered loading"></div></div></div></div></div>';
+                console.log('已挂载electric_clock')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            electric_clock_injector_config()
+        } </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.js"></script>
+  <script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-github-calendar@1.21/hexo_githubcalendar.js"></script>
+  <script data-pjax="">
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://python-github-calendar-api.vercel.app/api?XuRui314";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="XuRui314";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="height:100%;display: flex;align-items: center;justify-content: center;"><svg style="height:50px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:248px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><script async="" src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>
