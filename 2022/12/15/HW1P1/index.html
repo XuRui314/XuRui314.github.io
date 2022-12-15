@@ -1,0 +1,530 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width,initial-scale=1"><title>HW1P1 | XuRui-Blog</title><meta name="keywords" content="Deep Learning"><meta name="author" content="zxr"><meta name="copyright" content="zxr"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="用英文写比较方便 -。-    In this HW, i’m gonna to complete the basic MLP (aka the simplest NN) by designing my own mytorch library which can be reused in the subsequent HW.  &nbsp;Here is the layout of this note (">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HW1P1">
+<meta property="og:url" content="https://xurui314.github.io/2022/12/15/HW1P1/index.html">
+<meta property="og:site_name" content="XuRui-Blog">
+<meta property="og:description" content="用英文写比较方便 -。-    In this HW, i’m gonna to complete the basic MLP (aka the simplest NN) by designing my own mytorch library which can be reused in the subsequent HW.  &nbsp;Here is the layout of this note (">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://s2.loli.net/2022/12/15/dGcSa6TvyYk5riO.jpg">
+<meta property="article:published_time" content="2022-12-15T13:20:39.000Z">
+<meta property="article:modified_time" content="2022-12-15T16:01:03.698Z">
+<meta property="article:author" content="zxr">
+<meta property="article:tag" content="Deep Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2022/12/15/dGcSa6TvyYk5riO.jpg"><link rel="shortcut icon" href="https://i.loli.net/2021/07/27/lSHRJbx7dYwTk8f.jpg"><link rel="canonical" href="https://xurui314.github.io/2022/12/15/HW1P1/"><link rel="preconnect" href="//cdn.jsdelivr.net"><link rel="preconnect" href="//busuanzi.ibruce.info"><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  date_suffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@latest/dist/jquery.min.js',
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/js/jquery.justifiedGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/justifiedGallery/dist/css/justifiedGallery.min.css'
+    },
+    fancybox: {
+      js: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@latest/dist/jquery.fancybox.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isanchor: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'HW1P1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-12-16 00:01:03'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const fontSizeVal = saveToLocal.get('global-font-size')
+    if (fontSizeVal !== undefined) {
+      document.documentElement.style.setProperty('--global-font-size', fontSizeVal + 'px')
+    }
+    
+    const detectApple = () => {
+      if (GLOBAL_CONFIG_SITE.isHome && /iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    document.addEventListener('pjax:complete', detectApple)})(window)</script><link rel="stylesheet" href="/css/badge.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/mouse.css"><link rel="stylesheet" href="/dist/APlayer.min.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/bilibiliBanner.css" media="defer" onload="this.media='screen'"><!-- hexo injector head_end start -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.12.0/dist/katex.min.css">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/hexo-math@4.0.0/dist/style.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiperstyle.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-double-row-display@1.00/cardlistpost.min.css">
+<style>#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags:before {content:"\A";
+  white-space: pre;}#recent-posts > .recent-post-item >.recent-post-info > .article-meta-wrap > .tags > .article-meta__separator{display:none}</style>
+<link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script async="" src="https://unpkg.zhimg.com/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 5.4.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"></div><div class="site-data"><div class="data-item is-center"><div class="data-item-link"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">63</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">31</div></a></div></div><div class="data-item is-center"><div class="data-item-link"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div></div></div><hr><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2022/12/15/dGcSa6TvyYk5riO.jpg')"><nav id="nav"><span id="blog_name"><a id="site-name" href="/">XuRui-Blog</a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页🍭</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 档案🌊</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签📑</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类🌈</span></a></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 好康的✨</span><i class="fas fa-chevron-down expand"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://ocw.mit.edu/"><i class="fa-fw fas fa-link"></i><span> 来学麻学</span></a></li><li><a class="site-page child" href="/bangumis/"><i class="fa-fw fas fa-video"></i><span> zxrの追番计划</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=RyOyXsKuUgI"><i class="fa-fw fas fa-heart"></i><span> zxr最爱滴up嘉倩</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://oskarstalberg.com/game/planet/planet.html"><span> Planet</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链💕</span></a></div><div class="menus_item"><a class="site-page" href="https://xurui314.github.io/aboutme/"><span> AboutMe🏂</span></a></div><div class="menus_item"><a class="site-page" target="_blank" rel="noopener" href="https://www.foreverblog.cn/go.html"><span> 虫洞</span></a></div></div><div id="toggle-menu"><a class="site-page"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">HW1P1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2022-12-15T13:20:39.000Z" title="Created 2022-12-15 21:20:39">2022-12-15</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2022-12-15T16:01:03.698Z" title="Updated 2022-12-16 00:01:03">2022-12-16</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>12min</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="HW1P1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post View:</span><span id="busuanzi_value_page_pv"></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('https://s2.loli.net/2022/12/15/dGcSa6TvyYk5riO.jpg');"></div><article class="post-content" id="article-container"><blockquote>
+<p>用英文写比较方便 -。-</p>
+</blockquote>
+<p>  In this HW, i’m gonna to complete the basic MLP (aka the simplest NN) by designing my own <code>mytorch</code> library which can be reused in the subsequent HW.</p>
+<p> &nbsp;Here is the layout of this note (blog):</p>
+<ol>
+<li>Brief Introduction</li>
+<li>Python Implementation</li>
+<li>Torch Pipeline</li>
+</ol>
+<h2 id="Introduction">Introduction</h2>
+<h3 id="Representation">Representation</h3>
+<p> &nbsp;MLPs are universal function approximators , they can model any Boolean function, classification function, or regression. Now, I will explain this powerful representation ability in an intuitive way.</p>
+<p> &nbsp;First, MLPs can be viewed as universal Boolean functions, because perceptrons can model<code>AND </code>, <code>OR</code>, <code>NOT</code> gate. Any truth table can be expressed in one-hidden-layer MLP, if we just get every item from the table and compose an expression, it costs <img src="https://math.now.sh?inline=2%5E%7BN-1%7D" style="display:inline-block;margin: 0;"> neurons.</p>
+<p> &nbsp;But what if using more layers instead of just one-hidden-layer, by increasing the depth of the network, we are able to use less perceptrons, because it captures the relations between neurons.</p>
+<p> &nbsp;The decision boundary captured by the boolean network can be any convex region, and can be composed together by adding one more layer to get a bigger maybe non-convex region. In this way, we can get any region we want in theory.</p>
+<img src="..\..\source\image\HW1P1_image1.png" alt="image-20221215153529805" style="zoom:80%;">
+<p> But can one-hidden-layer MLP model all the decision boundary, in another word, is one-hidden-layer MLP a universal classifier?</p>
+<p> &nbsp;The answer is YES, the intuition behind this is as follows. Consider now we want to model <img src="https://math.now.sh?inline=%5Csum_%7Bi%3D1%7D%5ENy_i%5Cgeq%20N" style="display:inline-block;margin: 0;">, when we push <img src="https://math.now.sh?inline=N" style="display:inline-block;margin: 0;"> to infinite, we will get a circle region in 2d, and a cylinder in 3d.</p>
+<img src="..\..\source\image\HW1P1_image2.png" alt="image-20221215153609086" style="zoom:80%;">
+<p>  So in theory, we can achieve this:</p>
+<img src="..\..\source\image\HW1P1_image3.png" alt="image-20221215153753410" style="zoom:80%;">
+<p> &nbsp;But this is true only when N is infinite, this actually won’t work in practice. However, deeper networks can require far fewer neurons– 12 vs. ~infinite hidden neurons in this example. And in many cases, increase the depth can help a lot, a special case for this is the sum-product problem, also can be viewed as kind of DP idea.</p>
+<p> &nbsp;How can MLP model any function? The intuition is as behind:</p>
+<img src="..\..\source\image\HW1P1_image4.png" alt="image-20221215154409190" style="zoom:80%;">
+<img src="..\..\source\image\HW1P1_image5.png" alt="image-20221215154523328" style="zoom:80%;">
+<p> &nbsp;The network is actually a universal map from the entire domain of input values to the entire range of the output activation</p>
+<p> &nbsp;Next i will cover the trade-off between width, depth and sufficiency of architecture. Not all architectures can represent any function. If your layers width is narrow, and without proper activation function, the network may be not sufficient to represent some functions. However, narrow layers can still pass information to subsequent layers if the activation function is sufficiently graded. But will require greater depth, to permit later layers to capture patterns.</p>
+<p>  In a short summary, deeper MLPs can achieve the same precision with far fewer neurons, but must still have sufficient capacity:</p>
+<ul>
+<li>
+<p>The activations must pass information through</p>
+</li>
+<li>
+<p>Each layer must still be sufficiently wide to convey all relevant information to subsequent layers.</p>
+</li>
+</ul>
+<p>  There are some supplement material analyzing the “capacity” of a network using VC dimension. I don’t want to cover them all here. :)</p>
+<p>  Then here let me introduce a variant network called RBF network. If you know Kernel SVM before, you must be familiar with the word RBF. So a RBF network is like this:</p>
+<img src="..\..\source\image\HW1P1_image6.png" alt="image-20221215183217223" style="zoom:80%;">
+<p>  The difference between RBF network and BP network lies on the way they combine weights and inputs, see more here <a target="_blank" rel="noopener" href="https://stats.stackexchange.com/a/228596/363445">link</a>.</p>
+<p>  RBF network is the best approximation to continuous funcitons:</p>
+<img src="https://images2018.cnblogs.com/blog/729758/201807/729758-20180722151159800-1715533610.png" style="zoom:80%;">
+<p>  See more material on <a target="_blank" rel="noopener" href="https://www.cnblogs.com/pinking/p/9349695.html">RBFNN and SVM</a>, <a target="_blank" rel="noopener" href="https://qr.ae/prpqSu">RBFNN and GMM</a></p>
+<h3 id="Learning">Learning</h3>
+<blockquote>
+<p>还没听完课别急</p>
+</blockquote>
+<h2 id="Python-Implementation">Python Implementation</h2>
+<blockquote>
+<p>还没写完先别急</p>
+</blockquote>
+<h2 id="Torch-Pipeline">Torch Pipeline</h2>
+<p> Colloquially,training a model can be described like this:</p>
+<ol>
+<li>
+<p>We get data-pairs of questions and answers.</p>
+</li>
+<li>
+<p>For a pair <code>(x, y)</code>, we run <code>x</code> through the model to get the model’s answer <code>y</code>.</p>
+</li>
+<li>
+<p>Then, a “teacher” gives the model a grade depending on “how wrong” <code>y</code>  is compared to the true answer <code>y</code>.</p>
+</li>
+<li>
+<p>Then based on the grade,we figure out who’s fault the error is.</p>
+</li>
+<li>
+<p>Then, we fix the faults so the model can do better next time.</p>
+</li>
+</ol>
+<p> To train a model using Pytorch, in general, there are 5 main parts:</p>
+<ol>
+<li>Data</li>
+<li>Model</li>
+<li>Loss Function</li>
+<li>Backpropagation</li>
+<li>Optimizer</li>
+</ol>
+<h3 id="Data">Data</h3>
+<p> When training a model, data is generally a long list of <code>(x, y)</code> pairs, where you want the model to see <code>x</code> and predict <code>y</code>.</p>
+<p> Pytorch has two classes you will need to use to deal with data:</p>
+<ul>
+<li><code>torch.utils.data.Dataset</code></li>
+<li><code>torch.utils.data.Dataloader</code></li>
+</ul>
+<p> Dataset class is used to preprocess data and load single pairs <code>(x, y)</code></p>
+<p> Dataloader class uses your Dataset class to get single pairs and group them into batches</p>
+<img src="..\..\source\image\HW1P1_image7.png" alt="image-20221215214237507" style="zoom:80%;">
+<p> When defining a Dataset, there are three class methods that you need to implement 3 methods: <code>__init__</code>, <code>__len__</code>, <code>__getitem__</code>.</p>
+<p> Use <code>__init__</code> to load the data to the class so it can be accessed later, Pytorch will use <code>__len__</code> to know how many <code>(x, y)</code> pairs (training samples) are in your dataset. After using <code>__len__</code> to figure out how many samples there are, Pytorch will use <code>__getitem__</code> to ask for() a certain sample. So <code>__getitem__(i)</code> should return the “i-th” sample, with order chosen by you. You should use <code>getitem</code> to do some final processing on the data before it’s sent out. Since <code>__getitem__</code> will be called maybe millions of times, so make sure you do as little work in here as possible for fast code. Try to keep heavy preprocessing in <code>__init__</code>, which is only called once</p>
+<p> Here is a simple Dataset example:</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyDataset</span>(<span class="params">data.Dataset</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self, X, Y</span>):</span></span><br><span class="line">        self.X = X</span><br><span class="line">        self.Y = Y</span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__len__</span>(<span class="params">self.Y</span>):</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">len</span>(self.Y)</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__getitem</span>(<span class="params">self, index</span>):</span></span><br><span class="line">        X = self.X[index].<span class="built_in">float</span>().reshape(-<span class="number">1</span>) <span class="comment">#flatten the input</span></span><br><span class="line">        Y = self.Y[index].long()</span><br><span class="line">        <span class="keyword">return</span> X, Y</span><br></pre></td></tr></tbody></table></figure>
+<p> Here is a simple Dataloader example:</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Training</span></span><br><span class="line">train_dataset = MyDataset(train.train_data, train.train_labels)</span><br><span class="line"></span><br><span class="line">train_loader_args = <span class="built_in">dict</span>(shuffle = <span class="literal">True</span>, batch_size = <span class="number">256</span>, num_workers = num_workers, pin_memory = <span class="literal">True</span>)\</span><br><span class="line"><span class="keyword">if</span> cuda <span class="keyword">else</span> <span class="built_in">dict</span>(shuffle = <span class="literal">True</span>, batch_size = <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">train_loader = data.DataLoader(train_dataset, **train_loader_args)</span><br></pre></td></tr></tbody></table></figure>
+<h3 id="Model">Model</h3>
+<p> This section will be in two parts:</p>
+<p>• How to generate the model you’ll use</p>
+<p>• How to run the data sample through the model.</p>
+<img src="..\..\source\image\HW1P1_image8.png" alt="image-20221215224941804" style="zoom:80%;">
+<p> One key point in neural network is modularity, this means when coding a network, we can break down the structure into small parts and take it step by step.</p>
+<p> Now, let’s get into coding a model in Pytorch. Networks in Pytorch are (generally) classes that are based off of the <code>nn.Module class</code>. Similar to the Dataset class, Pytorch wants you to implement the <code>__init__ </code> and <code>forward</code> methods.</p>
+<p>• <code>__init__</code>: this is where you define the actual model itself (along with other</p>
+<p>stuff you might need)</p>
+<p>• <code>Forward</code>: given an input <code>x</code>, you run it through the model defined in <code>__init__</code></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Our_Model</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        <span class="built_in">super</span>().__init__()</span><br><span class="line">        </span><br><span class="line">        self.layer1 = nn.Linear(<span class="number">3</span>, <span class="number">4</span>)</span><br><span class="line">        self.layer2 = nn.Linear(<span class="number">4</span>, <span class="number">4</span>)</span><br><span class="line">        self.layer3 = nn,Linear(<span class="number">4</span>, <span class="number">1</span>)</span><br><span class="line">      </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        out = self.layer1(x)</span><br><span class="line">        out = self.layer2(out)</span><br><span class="line">        out = self.layer3(out)</span><br><span class="line">      </span><br><span class="line">    	<span class="keyword">return</span> out</span><br></pre></td></tr></tbody></table></figure>
+<p> However, it can get annoying to type each of the layers twice – once in <code>__init__ </code>and once in forward. Since on the right, we take the output of each layer and directly put it into the next, we can use the <strong>nn.Sequential</strong> module.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Our_Model</span>(<span class="params">nn.Module</span>):</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span>(<span class="params">self</span>):</span></span><br><span class="line">        layers = {</span><br><span class="line">            nn.Linear(<span class="number">3</span>, <span class="number">4</span>),</span><br><span class="line">            nn.Linear(<span class="number">4</span>, <span class="number">4</span>),</span><br><span class="line">            nn.Linear(<span class="number">4</span>, <span class="number">1</span>)</span><br><span class="line">        }</span><br><span class="line">        self.layers = nn.Sequential(*layers) <span class="comment"># * operator opens up the lsit and directly puts them in as arguments of nn.Sequential</span></span><br><span class="line">        </span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">forward</span>(<span class="params">self, x</span>):</span></span><br><span class="line">        <span class="keyword">return</span> self.layers(out)</span><br></pre></td></tr></tbody></table></figure>
+<p> As a beginner to Pytorch, you should definitely have <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/nn.html">link</a> open. The documentation is very thorough. Also, for optimizers: <a target="_blank" rel="noopener" href="https://pytorch.org/docs/stable/optim.html">link</a>.</p>
+<p> Now that we have our model generated, how do we use it? First, we want to put the model on GPU. Note that for <code>nn.Module</code> classes, <code>.to(device)</code> is in-place. However, for tensors, you must do <code>x = x.to(device)</code></p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">device = torch.device(<span class="string">"cuda"</span> <span class="keyword">if</span> cuda <span class="keyword">else</span> <span class="string">"cpu"</span>)</span><br><span class="line">model.to(device)</span><br></pre></td></tr></tbody></table></figure>
+<p> Also, models have <code>.train()</code> and <code>.eval()</code> methods. Before training, you should run <code>model.train()</code> to tell the model to save gradients. When validating or testing, run <code>model.eval()</code> to tell the model it doesn’t need to save gradients (save memory and time). A common mistake is to forget to toggle back to .train(), then your model doesn’t learn anything.</p>
+<p> So far, we can build:</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dataset Stuff</span></span><br><span class="line">train_dataset = MyDataset(train.train_data, train.train_labels)</span><br><span class="line"></span><br><span class="line">train_loader_args = <span class="built_in">dict</span>(shuffle = <span class="literal">True</span>, batch_size = <span class="number">256</span>, num_workers = num_workers, pin_memory = <span class="literal">True</span>)\</span><br><span class="line"><span class="keyword">if</span> cuda <span class="keyword">else</span> <span class="built_in">dict</span>(shuffle = <span class="literal">True</span>, batch_size = <span class="number">64</span>)</span><br><span class="line"></span><br><span class="line">train_loader = data.DataLoader(train_dataset, **train_loader_args)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Model Stuff</span></span><br><span class="line">model = nn.Sequential(nn.Linear(<span class="number">3</span>,<span class="number">4</span> ), nn.Linear(<span class="number">4</span>, <span class="number">4</span>), nn.Linear(<span class="number">4</span>, <span class="number">1</span>))</span><br><span class="line">device = torch.device[<span class="string">"cuda"</span> <span class="keyword">if</span> cuda <span class="keyword">else</span> <span class="string">"cpu"</span>]</span><br><span class="line">model.to(device)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Optimization Stuff</span></span><br><span class="line">NUM_EPOCHS = <span class="number">100</span></span><br><span class="line"><span class="comment"># ----------------- #</span></span><br><span class="line"><span class="comment"># |	Not	cover yet | # initialize the criterion</span></span><br><span class="line"><span class="comment"># ----------------- #</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Training</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(NUM_EPOCHS):</span><br><span class="line">    model.train()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(x, y) <span class="keyword">in</span> train_loaders:</span><br><span class="line">        <span class="comment"># ----------------- #</span></span><br><span class="line">		<span class="comment"># |	Not	cover yet | # optimizer initialize</span></span><br><span class="line">		<span class="comment"># ----------------- #</span></span><br><span class="line">        x.to(device)</span><br><span class="line">        y.to(device)</span><br><span class="line">        </span><br><span class="line">        output = model(x)</span><br><span class="line">        <span class="comment"># ----------------- #</span></span><br><span class="line">		<span class="comment"># |	Not	cover yet | # calculate loss, minimize this loss and backpropagate</span></span><br><span class="line">		<span class="comment"># ----------------- #</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="Loss-Function">Loss Function</h3>
+<p>To recap, we have run x through our model and gotten “output,” or <code>y</code>. Recall we need something to tell us how wrong it is compared to the true answer <code>y</code>. We rely on a “loss function,” also called a “criterion” to tell us this. The choice of a criterion will depend on the model/application/task,  but for classification, a criterion called “CrossEntropyLoss” is commonly used.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Optimization Stuff</span></span><br><span class="line">NUM_EPOCHS = <span class="number">100</span></span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line"><span class="comment"># ----------------- #</span></span><br><span class="line"><span class="comment"># |	Not	cover yet | #</span></span><br><span class="line"><span class="comment"># ----------------- #</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#Training</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(NUM_EPOCHS):</span><br><span class="line">    model.train()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(x, y) <span class="keyword">in</span> train_loaders:</span><br><span class="line">        <span class="comment"># ----------------- #</span></span><br><span class="line">		<span class="comment"># |	Not	cover yet | #</span></span><br><span class="line">		<span class="comment"># ----------------- #</span></span><br><span class="line">        x.to(device)</span><br><span class="line">        y.to(device)</span><br><span class="line">        </span><br><span class="line">        output = model(x)</span><br><span class="line">        loss = criterion(output, y)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># ----------------- #</span></span><br><span class="line">		<span class="comment"># |	Not	cover yet | #</span></span><br><span class="line">		<span class="comment"># ----------------- #</span></span><br></pre></td></tr></tbody></table></figure>
+<h3 id="Backpropagation">Backpropagation</h3>
+<p>Backpropagation is the process of working backwards from the loss and calculating the gradients of every single (trainable) parameter w.r.t the loss. The gradients tell us the direction in which to move to minimize the loss.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#Training</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(NUM_EPOCHS):</span><br><span class="line">    model.train()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(x, y) <span class="keyword">in</span> train_loaders:</span><br><span class="line">        <span class="comment"># ----------------- #</span></span><br><span class="line">		<span class="comment"># |	Not	cover yet | #</span></span><br><span class="line">		<span class="comment"># ----------------- #</span></span><br><span class="line">        x.to(device)</span><br><span class="line">        y.to(device)</span><br><span class="line">        </span><br><span class="line">        output = model(x)</span><br><span class="line">        loss = criterion(output, y)</span><br><span class="line">        </span><br><span class="line">        loss.backward() <span class="comment"># add here</span></span><br><span class="line">        <span class="comment"># ----------------- #</span></span><br><span class="line">		<span class="comment"># |	Not	cover yet | #</span></span><br><span class="line">		<span class="comment"># ----------------- #</span></span><br></pre></td></tr></tbody></table></figure>
+<p>By doing <code>loss.backward()</code>, we get gradients w.r.t the loss. Remember model.train()? That allowed us to compute the gradients. If it had been in the eval state, we wouldn’t be able to even compute the gradients, much less train.</p>
+<h3 id="Optimizer">Optimizer</h3>
+<p>Now, backprop only <em>computes</em> the <img src="https://math.now.sh?inline=%E2%88%87p" style="display:inline-block;margin: 0;"> values – it doesn’t do anything with them. We want to <em>update</em> the value of <img src="https://math.now.sh?inline=p" style="display:inline-block;margin: 0;"> using <img src="https://math.now.sh?inline=%E2%88%87p" style="display:inline-block;margin: 0;">. This is the optimizer’s job.</p>
+<p>A crucial component of any optimizer is the “learning rate.” This is a hyperparameter that controls how much we should believe in <img src="https://math.now.sh?inline=%E2%88%87p" style="display:inline-block;margin: 0;">.  Again, this will be covered in more detail in a future lecture. Ideally, <img src="https://math.now.sh?inline=%E2%88%87p" style="display:inline-block;margin: 0;"> is a perfect assignment of blame w.r.t the <strong>entire</strong> dataset. However, it’s likely that optimizing to perfectly match the <em>current</em> (x, y) sample <img src="https://math.now.sh?inline=%E2%88%87p" style="display:inline-block;margin: 0;"> was generated from won’t be great for matching the entire dataset.</p>
+<p>Among other concerns, the optimizer <em>weights</em> the <img src="https://math.now.sh?inline=%E2%88%87p" style="display:inline-block;margin: 0;"> with the learning rate and use the weighted ∇p to update <img src="https://math.now.sh?inline=p" style="display:inline-block;margin: 0;">.</p>
+<figure class="highlight python"><table><tbody><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Optimization Stuff</span></span><br><span class="line">NUM_EPOCHS = <span class="number">100</span></span><br><span class="line">criterion = nn.CrossEntropyLoss()</span><br><span class="line">optimizer = optim.Adam(model.parameters(), lr = <span class="number">1e-4</span>) <span class="comment"># add here</span></span><br><span class="line"><span class="comment">#Training</span></span><br><span class="line"><span class="keyword">for</span> epoch <span class="keyword">in</span> <span class="built_in">range</span>(NUM_EPOCHS):</span><br><span class="line">    model.train()</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(x, y) <span class="keyword">in</span> train_loaders:</span><br><span class="line">        optimizer.zero_grad()</span><br><span class="line">        x.to(device)</span><br><span class="line">        y.to(device)</span><br><span class="line">        </span><br><span class="line">        output = model(x)</span><br><span class="line">        loss = criterion(output, y)</span><br><span class="line">        </span><br><span class="line">        loss.backward() <span class="comment"># add here</span></span><br><span class="line">        optimizer.step()</span><br></pre></td></tr></tbody></table></figure>
+<p>What is zero_grad? Every call to .backward() saves gradients for each parameter in the model. However, calling <code>optimizer.step()</code> <strong>does not</strong> delete these gradients after using them. So, you want to remove them so they don’t interfere with the gradients of the next sample.</p>
+<p>By doing <code>optimizer.step()</code>, we update the weights of the model using the computed gradients.</p>
+<p>After here, you would generally perform validation (after every epoch or a couple), to see how your model performs on data it is not trained on. Validation follows a similar format as training, but without <code>loss.backward()</code> or <code>optimizer.step()</code>. You should  check the notebooks for more guidance.</p>
+<blockquote>
+<p>The complete code: <a target="_blank" rel="noopener" href="https://colab.research.google.com/drive/1huAQcxM9jMqSNb4h6XJ78Xd8EM1-UF_x#scrollTo=Sg8IUZ1er0dl">link</a></p>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="mailto:undefined">zxr</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="https://xurui314.github.io/2022/12/15/HW1P1/">https://xurui314.github.io/2022/12/15/HW1P1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Deep-Learning/">Deep Learning</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2022/12/15/dGcSa6TvyYk5riO.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/social-share.js/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/social-share.js/dist/js/social-share.min.js" defer=""></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2022/12/15/HW0/"><img class="prev-cover" src="https://i.loli.net/2021/11/07/D8Zi1hCmlwrNG7k.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">HW0</div></div></a></div><div class="next-post pull-right"><a href="/2022/10/25/Deep-Generative-Model/"><img class="next-cover" src="https://s2.loli.net/2022/10/25/XhxITA72oyGnDEQ.webp" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">Deep Generative Model</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span> Related Articles</span></div><div class="relatedPosts-list"><div><a href="/2022/06/16/nlp-learning-recording/" title="nlp learning recording"><img class="cover" src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-1.2.1&amp;ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&amp;auto=format&amp;fit=crop&amp;w=873&amp;q=80" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-16</div><div class="title">nlp learning recording</div></div></a></div><div><a href="/2022/06/01/Multimodal-NER/" title="Multimodal NER"><img class="cover" src="https://s2.loli.net/2022/06/01/NGZoMHJQIyVS5Ab.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-06-01</div><div class="title">Multimodal NER</div></div></a></div></div></div><hr><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> Comment</span></div><div id="comment-switch"><span class="first-comment">Valine</span><span class="switch-btn"></span><span class="second-comment">Disqus</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div><div><div id="disqus_thread"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2021/12/08/yTYthVwXD4IPbJ9.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"></div><div class="author-info__name">zxr</div><div class="author-info__description">Think and Do like an MIT student</div></div><div class="card-info-data"><div class="card-info-data-item is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">63</div></a></div><div class="card-info-data-item is-center"><a href="/tags/"><div class="headline">Tags</div><div class="length-num">31</div></a></div><div class="card-info-data-item is-center"><a href="/categories/"><div class="headline">Categories</div><div class="length-num">14</div></a></div></div><a class="button--animated" id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/XuRui314"><i class="fab fa-github"></i><span>This is zxr!🚀</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/XuRui314" target="_blank" title="Github"><i class="fab fa-github"></i></a><a class="social-icon" href="https://mail.qq.com/" target="_blank" title="Email-1977289398@qq.com"><i class="fas fa-envelope"></i></a></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn card-announcement-animation"></i><span>Announcement</span></div><div class="announcement_content">zxr的生活，math，编程记录,<div class="twopeople"><div class="container" style="height:200px;"><canvas class="illo" width="800" height="800" style="max-width: 200px; max-height: 200px; touch-action: none; width: 640px; height: 640px;"></canvas></div><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople1.js"></script><script src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/zdog.dist.js"></script><script id="rendered-js" src="https://cdn.jsdelivr.net/gh/Justlovesmile/CDN/js/twopeople.js"></script><style>.twopeople{margin: 0;align-items: center;justify-content: center;text-align: center;}canvas{display: block;margin: 0 auto;cursor: move;}</style></div><div class="twopeople"></div></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Introduction"><span class="toc-number">1.</span> <span class="toc-text">Introduction</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Representation"><span class="toc-number">1.1.</span> <span class="toc-text">Representation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Learning"><span class="toc-number">1.2.</span> <span class="toc-text">Learning</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Python-Implementation"><span class="toc-number">2.</span> <span class="toc-text">Python Implementation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Torch-Pipeline"><span class="toc-number">3.</span> <span class="toc-text">Torch Pipeline</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Data"><span class="toc-number">3.1.</span> <span class="toc-text">Data</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Model"><span class="toc-number">3.2.</span> <span class="toc-text">Model</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss-Function"><span class="toc-number">3.3.</span> <span class="toc-text">Loss Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Backpropagation"><span class="toc-number">3.4.</span> <span class="toc-text">Backpropagation</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimizer"><span class="toc-number">3.5.</span> <span class="toc-text">Optimizer</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2022/12/15/HW0/" title="HW0"><img src="https://i.loli.net/2021/11/07/D8Zi1hCmlwrNG7k.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HW0"></a><div class="content"><a class="title" href="/2022/12/15/HW0/" title="HW0">HW0</a><time datetime="2022-12-15T13:21:18.000Z" title="Created 2022-12-15 21:21:18">2022-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/12/15/HW1P1/" title="HW1P1"><img src="https://s2.loli.net/2022/12/15/dGcSa6TvyYk5riO.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="HW1P1"></a><div class="content"><a class="title" href="/2022/12/15/HW1P1/" title="HW1P1">HW1P1</a><time datetime="2022-12-15T13:20:39.000Z" title="Created 2022-12-15 21:20:39">2022-12-15</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/25/Deep-Generative-Model/" title="Deep Generative Model"><img src="https://s2.loli.net/2022/10/25/XhxITA72oyGnDEQ.webp" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Deep Generative Model"></a><div class="content"><a class="title" href="/2022/10/25/Deep-Generative-Model/" title="Deep Generative Model">Deep Generative Model</a><time datetime="2022-10-25T13:43:19.000Z" title="Created 2022-10-25 21:43:19">2022-10-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/25/EM-VI/" title="EM &amp; VI"><img src="https://s2.loli.net/2022/10/25/UFRaWQTP7d6m1oC.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="EM &amp; VI"></a><div class="content"><a class="title" href="/2022/10/25/EM-VI/" title="EM &amp; VI">EM &amp; VI</a><time datetime="2022-10-25T02:15:20.000Z" title="Created 2022-10-25 10:15:20">2022-10-25</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2022/10/23/Kaggle-NLP/" title="Kaggle NLP"><img src="https://s2.loli.net/2022/10/23/2Kh1nNloGqswE76.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Kaggle NLP"></a><div class="content"><a class="title" href="/2022/10/23/Kaggle-NLP/" title="Kaggle NLP">Kaggle NLP</a><time datetime="2022-10-23T02:54:32.000Z" title="Created 2022-10-23 10:54:32">2022-10-23</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">©2020 - 2022 By zxr</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="github-badge"><a style="color: #fff" rel="license" href="https://hexo.io/" target="_blank" title="由 Hexo 强力驱动"><span class="badge-subject">Powered</span><span class="badge-value bg-blue">Hexo</span></a><a style="color: #fff" rel="license" href="https://gitee.com/" target="_blank" title="静态网页托管于 GitHub Pages 和 Coding Pages 和 Gitee Pages"><span class="badge-subject">Hosted</span><span class="badge-value bg-brightgreen">GitHub &amp; Coding &amp; Gitee</span></a><a style="color: #fff" rel="license" href="https://www.jsdelivr.com/" target="_blank" title="jsDelivr 提供 CDN 加速服务"><span class="badge-subject">CDN</span><span class="badge-value bg-orange">jsDelivr</span></a><a style="color: #fff" rel="license" href="https://jerryc.me" target="_blank" title="站点使用 Butterfly主题"><span class="badge-subject">Theme</span><span class="badge-value bg-blue">Butterfly</span></a><a style="color: #fff" rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank" title="本站点采用知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议进行许可"><span class="badge-subject"><i class="fa fa-copyright"></i></span><span class="badge-value bg-lightgrey">BY-NC-SA 4.0  </span></a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="font-plus" type="button" title="Increase font size"><i class="fas fa-plus"></i></button><button id="font-minus" type="button" title="Decrease font size"><i class="fas fa-minus"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="Scroll To Comments"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="Back To Top"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"]],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.2
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, ''],
+        insertScript: [200, () => {
+          document.querySelectorAll('mjx-container:not\([display]\)').forEach(node => {
+            const target = node.parentNode
+            if (target.nodeName.toLowerCase() === 'li') {
+              target.parentNode.classList.add('has-jax')
+            } else {
+              target.classList.add('has-jax')
+            }
+          });
+        }, '', false]
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = '[object Object]'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typeset()
+}</script><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script><script>function loadDisqus () {
+  var disqus_config = function () {
+    this.page.url = 'https://xurui314.github.io/2022/12/15/HW1P1/'
+    this.page.identifier = '2022/12/15/HW1P1/'
+    this.page.title = 'HW1P1'
+  };
+
+  window.disqusReset = () => {
+    DISQUS.reset({
+      reload: true,
+      config: disqus_config
+    })
+  }
+
+  if (window.DISQUS) disqusReset()
+  else {
+    (function() { 
+      var d = document, s = d.createElement('script');
+      s.src = 'https://.disqus.com/embed.js';
+      s.setAttribute('data-timestamp', +new Date());
+      (d.head || d.body).appendChild(s);
+    })();
+  }
+}
+
+if ('Valine' === 'Disqus' || !false) {
+  if (false) btf.loadComment(document.getElementById('disqus_thread'), loadDisqus)
+  else loadDisqus()
+} else {
+  function loadOtherComment () {
+    loadDisqus()
+  }
+}
+</script></div><script src="https://cdn.jsdelivr.net/gh/XuRui314/live2d-widget@1.0.1/autoload.js"></script><script src="/js/title.js"></script><script src="/dist/nochocolate.js"></script><div id="aplayer"></div><script type="text/javascript" src="/dist/APlayer.min.js"></script><script type="text/javascript" src="/dist/music.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = true;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/gh/metowolf/MetingJS@1.2/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = [
+  'title',
+  '#config-diff',
+  '#body-wrap',
+  '#rightside-config-hide',
+  '#rightside-config-show',
+  '.js-pjax'
+]
+
+if (false) {
+  pjaxSelectors.unshift('meta[property="og:image"]', 'meta[property="og:title"]', 'meta[property="og:url"]')
+}
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.removeEventListener('scroll', window.tocScrollFn)
+  window.removeEventListener('scroll', scrollCollect)
+
+  typeof preloader === 'object' && preloader.initLoading()
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof chatBtnFn === 'function' && chatBtnFn()
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // Analytics
+  if (false) {
+    MtaH5.pgv()
+  }
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+
+  typeof preloader === 'object' && preloader.endLoading()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async="" data-pjax="" src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div><!-- hexo injector body_end start --> <script data-pjax="">if(document.getElementById('recent-posts') && (location.pathname ==='all'|| 'all' ==='all')){
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="width:100%;height: auto"><div id="catalog_magnet"><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Math/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">📚 zxrの数学世界 (12)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/算法学习/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🎮 zxrの算法学习 (6)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活趣闻/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🐱‍👓 zxrの生活趣闻 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/编程实例/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">👩‍💻 zxrの编程学习 (4)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/生活感悟/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">🚴‍♂ zxrの生活感悟 (11)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><div class="magnet_item"><a class="magnet_link" href="https://XuRui314.github.io/categories/Hexo/"><div class="magnet_link_context" style=""><span style="font-weight:500;flex:1">💌 zxrのBlog记录 (1)</span><span style="padding:0px 4px;border-radius: 8px;"><i class="fas fa-arrow-circle-right"></i></span></div></a></div><a class="magnet_link_more"  href="https://XuRui314.github.io/categories" style="flex:1;text-align: center;margin-bottom: 10px;">查看更多...</a></div></div>';
+    console.log('已挂载magnet')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script><style>#catalog_magnet{flex-wrap: wrap;display: flex;width:100%;justify-content:space-between;padding: 10px 10px 0 10px;align-content: flex-start;}.magnet_item{flex-basis: calc(50% - 5px);background: #f2f2f2;margin-bottom: 10px;border-radius: 8px;transition: all 0.2s ease-in-out;}.magnet_item:hover{background: #b30070}.magnet_link_more{color:#555}.magnet_link{color:black}.magnet_link:hover{color:white}@media screen and (max-width: 600px) {.magnet_item {flex-basis: 100%;}}.magnet_link_context{display:flex;padding: 10px;font-size:16px;transition: all 0.2s ease-in-out;}.magnet_link_context:hover{padding: 10px 20px;}</style>
+    <style></style> <script data-pjax="">if(document.getElementById('recent-posts') && location.pathname =='/'){
+    
+    var parent = document.getElementById('recent-posts');
+    var child = '<div class="recent-post-item" style="height: auto;width: 100%"><div class="blog-slider swiper-container-fade swiper-container-horizontal" id="swiper_container"><div class="blog-slider__wrp swiper-wrapper" style="transition-duration: 0ms"><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg" alt="https://i.loli.net/2021/09/17/9H5WSbTrVejOdkz.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-09-17</span><a class="blog-slider__title" href="2021/09/17/概率和测度/">概率和测度(ZJU大佬)</a><div class="blog-slider__text">来看看ZJU计科大佬解释概率和测度🥙</div><a class="blog-slider__button" href="2021/09/17/概率和测度/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg" alt="https://i.loli.net/2021/08/25/bPy5m3j9QAilwr2.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-26</span><a class="blog-slider__title" href="2021/08/26/算法题目练习/">AcWing-Oj-刷题学习记录(基础算法)</a><div class="blog-slider__text">来看算法蒟蒻的丢人日常啊👩‍🦽</div><a class="blog-slider__button" href="2021/08/26/算法题目练习/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg" alt="https://i.loli.net/2021/08/15/NYcSXrECnvzOiLP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-15</span><a class="blog-slider__title" href="2021/08/15/两层神经网络识别手写数字/">两层神经网络识别手写数字</a><div class="blog-slider__text">识别手写数字最简单的实现🧦</div><a class="blog-slider__button" href="2021/08/15/两层神经网络识别手写数字/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg" alt="https://i.loli.net/2021/08/15/F8aP7R36IidpCt5.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-14</span><a class="blog-slider__title" href="2021/08/14/神经网络搭建准备内容/">神经网络搭建准备内容</a><div class="blog-slider__text">如何识别手写🔢，zxr带你一步一步实现🎼</div><a class="blog-slider__button" href="2021/08/14/神经网络搭建准备内容/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg" alt="https://i.loli.net/2021/08/12/SJs3MgYC7x8IU26.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-12</span><a class="blog-slider__title" href="2021/08/12/xuperchain-solidity/">xuperchain&solidity</a><div class="blog-slider__text">区块链不止是挖币，还有v神和solidity🎈</div><a class="blog-slider__button" href="2021/08/12/xuperchain-solidity/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png" alt="https://i.loli.net/2021/07/27/6fy8mTCbAOWPkrq.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/FFT/">FFT的详解</a><div class="blog-slider__text">这么好看的FFT，信号狗都馋哭了💦</div><a class="blog-slider__button" href="2021/07/26/FFT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg" alt="https://i.loli.net/2021/08/09/zdt4YKoehQvR96S.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-08-09</span><a class="blog-slider__title" href="2021/08/09/炒鸡好理解的测度论/">炒鸡好理解的测度论</a><div class="blog-slider__text">三段字，让你读懂测度论</div><a class="blog-slider__button" href="2021/08/09/炒鸡好理解的测度论/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png" alt="https://i.loli.net/2021/08/12/wF7TJlqxOLEWGQk.png"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-27</span><a class="blog-slider__title" href="2021/07/27/FT/">傅里叶学习资料</a><div class="blog-slider__text">简单好学的傅里叶学习资料</div><a class="blog-slider__button" href="2021/07/27/FT/">详情</a></div></div><div class="blog-slider__item swiper-slide" style="width: 750px; opacity: 1; transform: translate3d(0px, 0px, 0px); transition-duration: 0ms"><div class="blog-slider__img"><img src="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg" alt="https://i.loli.net/2021/07/27/f7jO8hlNpzWVXSP.jpg"/></div><div class="blog-slider__content"><span class="blog-slider__code">2021-07-26</span><a class="blog-slider__title" href="2021/07/26/hello-world/">大鸟转转转酒吧内部绝密档案</a><div class="blog-slider__text">不要点进来QAQ！</div><a class="blog-slider__button" href="2021/07/26/hello-world/">详情</a></div></div></div><div class="blog-slider__pagination swiper-pagination-clickable swiper-pagination-bullets"></div></div></div>';
+    console.log('已挂载swiper')
+    parent.insertAdjacentHTML("afterbegin",child)}
+     </script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper/swiper/swiper.min.js"></script>
+<script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-swiper@0.18/swiper/swiperindex.js"></script>
+<style></style><script data-pjax="">function electric_clock_injector_config(){
+                var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+                var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img id="card-clock-loading" src="https://cdn.jsdelivr.net/gh/Zfour/Butterfly-clock/clock/images/weather/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading" class="entered loading"></div></div></div></div></div>';
+                console.log('已挂载electric_clock')
+                // parent_div_git.innerHTML=item_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",item_html) // 有报错，但不影响使用(支持pjax跳转)
+            }if( document.getElementsByClassName('sticky_layout')[0] && (location.pathname ==='all'|| 'all' ==='all')){
+
+            electric_clock_injector_config()
+        } </script><script src="https://pv.sohu.com/cityjson?ie=utf-8"></script><script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-electric-clock@1.0.6/clock.js"></script>
+  <script data-pjax="" src="https://cdn.jsdelivr.net/gh/Zfour/hexo-github-calendar@1.21/hexo_githubcalendar.js"></script>
+  <script data-pjax="">
+        function GithubCalendarConfig(){
+            var git_githubapiurl ="https://python-github-calendar-api.vercel.app/api?XuRui314";
+            var git_color =['#ebedf0', '#fdcdec', '#fc9bd9', '#fa6ac5', '#f838b2', '#f5089f', '#c4067e', '#92055e', '#540336', '#48022f', '#30021f'];
+            var git_user ="XuRui314";
+            var parent_div_git = document.getElementById('recent-posts');
+            var git_div_html = '<div class="recent-post-item" style="width:100%;height:auto;padding:10px;"><div id="github_loading" style="height:100%;display: flex;align-items: center;justify-content: center;"><svg style="height:50px" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"  viewBox="0 0 50 50" style="enable-background:new 0 0 50 50" xml:space="preserve"><path fill="#d0d0d0" d="M25.251,6.461c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615V6.461z" transform="rotate(275.098 25 25)"><animateTransform attributeType="xml" attributeName="transform" type="rotate" from="0 25 25" to="360 25 25" dur="0.6s" repeatCount="indefinite"></animateTransform></path></svg></div><div id="github_container"></div></div>';
+            if(parent_div_git && location.pathname =='/'){
+                console.log('已挂载github calendar')
+                // parent_div_git.innerHTML=git_div_html+parent_div_git.innerHTML // 无报错，但不影响使用(支持pjax跳转)
+                parent_div_git.insertAdjacentHTML("afterbegin",git_div_html) // 有报错，但不影响使用(支持pjax跳转)
+            };
+            GithubCalendar(git_githubapiurl,git_color,git_user)
+        }
+        if(document.getElementById('recent-posts')){
+            GithubCalendarConfig()
+        }
+    </script>
+    <style>#github_container{min-height:248px}@media screen and (max-width:650px) {#github_container{background-image:;min-height:0px}}</style>
+    <style></style><script async="" src="//at.alicdn.com/t/font_2032782_8d5kxvn09md.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"live2d-widget-model-wanko"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"react":{"opacity":0.7},"log":false});</script></body></html>
