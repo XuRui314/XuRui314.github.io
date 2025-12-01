@@ -77,21 +77,21 @@ ninja.data = [{
         title: 'email',
         section: 'Socials',
         handler: () => {
-          window.open("mailto:%63%67%77%66%65%65%6C@%31%36%33.%63%6F%6D", "_blank");
+          window.open("mailto:%7A%68%6F%75%78%75%72%75%69%31%33%31%34@%67%6D%61%69%6C.%63%6F%6D", "_blank");
         },
       },{
         id: 'social-github',
         title: 'GitHub',
         section: 'Socials',
         handler: () => {
-          window.open("https://github.com/GongweiChen", "_blank");
+          window.open("https://github.com/XuRui314", "_blank");
         },
       },{
         id: 'social-scholar',
         title: 'Google Scholar',
         section: 'Socials',
         handler: () => {
-          window.open("https://scholar.google.com/citations?user=Mpg0w3cAAAAJ&h", "_blank");
+          window.open("https://scholar.google.com/citations?user=vOz8NBcAAAAJ&h", "_blank");
         },
       },{
       id: 'light-theme',
