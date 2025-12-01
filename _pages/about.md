@@ -27,10 +27,9 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am currently an associate professor at School of Information Science and Technology, Harbin Institute of Technology (Shenzhen). Before that, I worked as a PostDoc in [Prof. Liqiang Nie](https://liqiangnie.github.io)'s group. I received my PhD degree from Institute of Computing Technology, Chinese Academy of Sciences in 2023, supervised by [Prof. Shuqiang Jiang](https://vipl.ict.ac.cn/homepage/jsqgrzy/), and my bachelor degree from University of Science and Technology Beijing in 2016. I also had close collaboration with [Prof. Rui Shao](https://rshaojimmy.github.io/OrionLab/index.html), [Prof. Miao Zhang](https://miaozhang0525.github.io/), and [Prof. Xinhang Song](https://vipl.ict.ac.cn/people/xhsong/).
+I am currently a Master’s student at the School of Computer Science and Technology, Harbin Institute of Technology (Shenzhen), supervised by [Prof. Rui Shao](https://rshaojimmy.github.io/OrionLab/index.html) and [Prof. Gongwei Chen](https://gongweichen.github.io/). Before that, I received my Bachelor’s degree in Computer Science and Technology from Harbin Institute of Technology (Shenzhen) in 2024. I am currently seeking suitable PhD opportunities or industry positions.
 
-My research interests focus on the broad areas of multimodal learning, AI agent, efficient learning, and scene understanding. Recently, I focus on
+My research interests focus on the broad areas of multimodal learning, AI agent and RL. Recently, I focus on
 - Multimodal Large Language Models (MLLM)
 - MLLM-based Agent
-- MLLM-based Multimodal Retrieval
-- Dataset Distillation
+- Reinforcement Learning for MLLM
