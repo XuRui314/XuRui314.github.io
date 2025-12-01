@@ -27,7 +27,7 @@ latest_posts:
   limit: 3 # leave blank to include all the blog posts
 ---
 
-I am currently a Master’s student at the School of Computer Science and Technology, Harbin Institute of Technology (Shenzhen), supervised by [Prof. Rui Shao](https://rshaojimmy.github.io/OrionLab/index.html) and [Prof. Gongwei Chen](https://gongweichen.github.io/). Before that, I received my Bachelor’s degree in Computer Science and Technology from Harbin Institute of Technology (Shenzhen) in 2024. I am currently seeking suitable PhD opportunities or industry positions.
+I am currently a Master student at the School of Computer Science and Technology, Harbin Institute of Technology (Shenzhen), supervised by [Prof. Rui Shao](https://rshaojimmy.github.io/OrionLab/index.html) and [Prof. Gongwei Chen](https://gongweichen.github.io/). Before that, I received my Bachelor’s degree in Computer Science and Technology from Harbin Institute of Technology (Shenzhen) in 2024. I am currently seeking suitable PhD opportunities or industry positions.
 
 My research interests focus on the broad areas of multimodal learning, AI agent and RL. Recently, I focus on
 - Multimodal Large Language Models (MLLM)
