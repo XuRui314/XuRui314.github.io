@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One paper about GUI Agent Benchmark is accepted by ICLR 2025 as Spotlight! :sparkles:
+One papers about GUI Agent is accepted by ICCV 2025 as Highlight! :sparkles:
