@@ -5,4 +5,4 @@ inline: true
 related_posts: false
 ---
 
-One papers about GUI Agent is accepted by ICCV 2025 as Highlight! :sparkles:
+One paper about GUI Agent is accepted by ICCV 2025 as Highlight! :sparkles:
