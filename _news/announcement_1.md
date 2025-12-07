@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2025-06-26
+date: 2025-12-01
 inline: true
 related_posts: false
 ---
 
-One paper about GUI Agent is accepted by ICCV 2025 as Highlight! :sparkles:
+A new paper on GUI agents and reinforcement learning has been released on arXiv!
