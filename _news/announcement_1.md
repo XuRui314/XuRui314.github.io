@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2025-12-01
+date: 2026-02-21
 inline: true
 related_posts: false
 ---
 
-A new paper on GUI agents and reinforcement learning has been released on arXiv!
+One paper about GUI Agent and RL is accepted by CVPR 2026! :sparkles:
