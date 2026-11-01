@@ -2,7 +2,12 @@
   <!-- Nav Bar -->
   <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
     <div class="container">
-      {% if page.permalink != '/' %}
+      {% if page.permalink == '/' %}
+        <a class="navbar-brand home-wordmark" href="{{ '/' | relative_url }}" aria-label="Xurui Zhou home">
+          <span class="home-monogram" aria-hidden="true">XZ<span>.</span></span>
+          <span class="home-wordmark-label">Xurui Zhou</span>
+        </a>
+      {% elsif page.permalink != '/' %}
         <a class="navbar-brand title font-weight-lighter" href="{{ site.baseurl }}/">
           {% if site.title == 'blank' %}
             {% if site.first_name %}
@@ -56,6 +61,11 @@
             </a>
           </li>
 
+          {% if page.permalink == '/' and site.data.homepage.experience %}
+            <li class="nav-item"><a class="nav-link" href="#experience">Experience</a></li>
+            <li class="nav-item"><a class="nav-link" href="#education">Education</a></li>
+          {% endif %}
+
           <!-- Other pages -->
           {% assign sorted_pages = site.pages | sort: 'nav_order' %}
           {% for p in sorted_pages %}
@@ -105,7 +115,11 @@
                   {%- elsif p.permalink contains '/blog/' -%}
                     {%- assign url = '/blog/' -%}
                   {%- else -%}
-                    {%- assign url = p.url -%}
+                    {%- if page.permalink == '/' and p.permalink == '/publications/' -%}
+                      {%- assign url = '#selected-publications' -%}
+                    {%- else -%}
+                      {%- assign url = p.url -%}
+                    {%- endif -%}
                   {%- endif %}
                   <a class="nav-link" href="{{ url | relative_url }}">
                     {{- p.title }}
@@ -128,10 +142,10 @@
           {% if site.enable_darkmode %}
             <!-- Toogle theme mode -->
             <li class="toggle-container">
-              <button id="light-toggle" title="Change theme">
-                <i class="ti ti-sun-moon" id="light-toggle-system"></i>
-                <i class="ti ti-moon-filled" id="light-toggle-dark"></i>
-                <i class="ti ti-sun-filled" id="light-toggle-light"></i>
+              <button id="light-toggle" title="Change theme" aria-label="Change color theme">
+                <span id="light-toggle-system" aria-hidden="true">◐</span>
+                <span id="light-toggle-dark" aria-hidden="true">☾</span>
+                <span id="light-toggle-light" aria-hidden="true">☀</span>
               </button>
             </li>
           {% endif %}

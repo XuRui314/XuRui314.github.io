@@ -1,0 +1,79 @@
+experience:
+  - organization: Qwen
+    team: Alibaba Tongyi Lab · Foundation Models
+    role: Algorithm Intern
+    mark: QW
+    style: qwen
+    introduction: >-
+      Worked on GUI Agent and Hybrid Coding capabilities for Qwen foundation models,
+      spanning continued pretraining and post-training.
+    areas:
+      - title: GUI Agent
+        description: >-
+          Built verifiable data pipelines for task synthesis, environment initialization,
+          trajectory collection, validation, and cleaning, connected to RL training and rollout.
+      - title: Hybrid Coding
+        description: >-
+          Unified GUI interaction and CLI programming in a shared harness, using visual
+          feedback for development, debugging, and verification in real applications.
+    keywords: [MobileWorld, AndroidBench, Design Arena]
+  - organization: Huawei Noah's Ark Lab
+    team: Reasoning & Decision Making
+    role: Research Intern
+    mark: HW
+    style: huawei
+    introduction: >-
+      Built GUI-agent data production and training infrastructure for mobile assistant
+      scenarios, including Xiaoyi. Studied vision-based GUI agents with multimodal
+      large language models.
+    keywords: [Vision-based GUI Agents, Multimodal Learning, Mobile Assistants]
+
+publications:
+  - id: zhou2025hiconagent
+    short_title: HiconAgent
+    title: "HiconAgent: History Context-aware Policy Optimization for GUI Agents"
+    authors: "**Xurui Zhou**, Gongwei Chen, Yuquan Xie, Zaijing Li, Kaiwen Zhou, Shuai Wang, Shuo Yang, Zhuotao Tian, Rui Shao"
+    venue: CVPR
+    year: 2026
+    contribution: First author
+    summary: History-aware policy optimization for more effective and efficient GUI agents.
+    pdf: https://arxiv.org/abs/2512.01763
+    code: https://github.com/JiuTian-VL/HiconAgent
+  - id: chen2025less
+    short_title: SimpAgent
+    title: "Less is More: Empowering GUI Agent with Context-Aware Simplification"
+    authors: "Gongwei Chen, **Xurui Zhou**, Rui Shao, Yibo Lyu, Kaiwen Zhou, Shuai Wang, Wentao Li, Yinchuan Li, Zhongang Qi, Liqiang Nie"
+    venue: ICCV
+    year: 2025
+    distinction: Highlight
+    contribution: Student first author
+    summary: Simplifying visual elements and interaction history to improve both performance and efficiency.
+    pdf: https://arxiv.org/pdf/2507.03730
+    code: https://github.com/JiuTian-VL/SimpAgent
+  - id: chen2025spa
+    short_title: SPA-Bench
+    title: "SPA-Bench: A Comprehensive Benchmark for SmartPhone Agent Evaluation"
+    authors: "Jingxuan Chen, Derek Yuen, Bin Xie, Yuhao Yang, Gongwei Chen, Zhihao Wu, Yixing Li, **Xurui Zhou**, Weiwen Liu, Shuai Wang, et al."
+    venue: ICLR
+    year: 2025
+    distinction: Spotlight
+    summary: A comprehensive benchmark for evaluating smartphone agents across interactive tasks.
+    pdf: https://arxiv.org/pdf/2410.15164
+    code: https://github.com/ai-agents-2030/SPA-Bench
+
+education:
+  - degree: M.Eng. in Electronic Information
+    field: Computer Technology
+    university: Harbin Institute of Technology (Shenzhen)
+    period: Sep 2024 – Dec 2026 (expected)
+    level: Master's
+  - degree: B.Eng. in Computer Science and Technology
+    university: Harbin Institute of Technology (Shenzhen)
+    period: Sep 2020 – Jul 2024
+    detail: "GPA: 91.47 / 100 (3.7 / 4.0)"
+    level: Bachelor's
+
+honor:
+  title: National First Prize
+  competition: China Undergraduate Mathematical Contest in Modeling
+  year: 2022
