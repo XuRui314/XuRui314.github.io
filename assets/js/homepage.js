@@ -1,0 +1,1 @@
+document.addEventListener("DOMContentLoaded",function(){document.querySelectorAll('#navbarNav a[href^="#"]').forEach(function(e){e.addEventListener("click",function(){const e=document.querySelector('.navbar-toggler[aria-controls="navbarNav"]');e&&"true"===e.getAttribute("aria-expanded")&&e.click()})})});
