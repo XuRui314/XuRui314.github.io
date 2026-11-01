@@ -7,7 +7,7 @@
 # bluesky_url: # your bluesky URL
 # dblp_url: # your DBLP profile url
 # discord_id: # your discord id (18-digit unique numerical identifier)
-email:  zhouxurui1314@gmail.com # your email address
+email: zhouxurui1314@gmail.com # your email address
 # facebook_id: # your facebook id
 # flickr_id: # your flickr id
 github_username: XuRui314 # your GitHub user name
@@ -48,6 +48,6 @@ scholar_userid: vOz8NBcAAAAJ&h # your Google Scholar ID
 # youtube_id: # your youtube channel id (youtube.com/@<youtube_id>)
 # zotero_username: # your zotero username
 # custom_social: # can be any name here other than the ones already defined above
-  # logo: https://www.alberteinstein.com/wp-content/uploads/2024/03/cropped-favicon-192x192.png # can be png, svg, jpg
-  # title: Custom Social
-  # url: https://www.alberteinstein.com/
+# logo: https://www.alberteinstein.com/wp-content/uploads/2024/03/cropped-favicon-192x192.png # can be png, svg, jpg
+# title: Custom Social
+# url: https://www.alberteinstein.com/

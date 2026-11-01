@@ -5,46 +5,96 @@ layout: default
   <header class="home-hero" id="about">
     <div class="home-hero-main">
       <p class="home-eyebrow"><span class="home-status-dot" aria-hidden="true"></span> Multimodal intelligence &amp; agents</p>
-      <div class="home-name"><h1 class="post-title">{{ site.first_name }} {{ site.last_name }}</h1><span class="home-name-cn" lang="zh-CN">周绪睿</span></div>
+      <div class="home-name">
+        <h1 class="post-title">
+          {{ site.first_name }}
+          {{ site.last_name }}
+        </h1>
+        <span class="home-name-cn" lang="zh-CN">周绪睿</span>
+      </div>
       <p class="home-role">Master's student <span aria-hidden="true">/</span> HIT (Shenzhen)</p>
       <div class="home-intro">{{ content }}</div>
       <div class="home-links" aria-label="Profile links">
         <a href="mailto:{{ site.data.socials.email }}">Email <span aria-hidden="true">↗</span></a>
-        <a href="https://github.com/{{ site.data.socials.github_username }}" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
-        <a href="https://scholar.google.com/citations?user={{ site.data.socials.scholar_userid | escape }}" target="_blank" rel="noopener noreferrer">Google Scholar <span aria-hidden="true">↗</span></a>
+        <a href="https://github.com/{{ site.data.socials.github_username }}" target="_blank" rel="noopener noreferrer"
+          >GitHub <span aria-hidden="true">↗</span></a
+        >
+        <a href="https://scholar.google.com/citations?user={{ site.data.socials.scholar_userid | escape }}" target="_blank" rel="noopener noreferrer"
+          >Google Scholar <span aria-hidden="true">↗</span></a
+        >
       </div>
     </div>
     <aside class="home-focus" aria-label="Research focus">
       <div class="focus-topline"><span>Research focus</span><span aria-hidden="true">↗</span></div>
       <div class="focus-item">
-        <div class="focus-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><rect x="5" y="7" width="30" height="25" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M5 14h30M11 10.5h1m3 0h1M11 20h9m-9 5h5m9-5 7 5-4 1-1 4-2-10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><h2>GUI Agent</h2><p>Perceive. Plan. Interact.</p></div>
+        <div class="focus-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="5" y="7" width="30" height="25" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="M5 14h30M11 10.5h1m3 0h1M11 20h9m-9 5h5m9-5 7 5-4 1-1 4-2-10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2>GUI Agent</h2>
+          <p>Perceive. Plan. Interact.</p>
+        </div>
       </div>
       <div class="focus-bridge" aria-hidden="true"><span></span><i>+</i><span></span></div>
       <div class="focus-item">
-        <div class="focus-icon" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><rect x="5" y="7" width="30" height="25" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="m12 17 5 4-5 4m10 0h6M5 13h30" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div><h2>Hybrid Coding</h2><p>Code. Execute. Verify.</p></div>
+        <div class="focus-icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none">
+            <rect x="5" y="7" width="30" height="25" rx="4" stroke="currentColor" stroke-width="1.6"/><path d="m12 17 5 4-5 4m10 0h6M5 13h30" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <h2>Hybrid Coding</h2>
+          <p>Code. Execute. Verify.</p>
+        </div>
       </div>
       <div class="focus-foundations"><span>Multimodal learning</span><span>Reinforcement learning</span></div>
     </aside>
   </header>
 
-  <div class="home-opportunities"><span>Open to PhD opportunities &amp; industry positions.</span><a href="mailto:{{ site.data.socials.email }}">Let's talk <span aria-hidden="true">↗</span></a></div>
+  <div class="home-opportunities">
+    <span>Open to PhD opportunities &amp; industry positions.</span
+    ><a href="mailto:{{ site.data.socials.email }}">Let's talk <span aria-hidden="true">↗</span></a>
+  </div>
 
   <article>
     <section class="home-section" id="experience" aria-labelledby="experience-title">
-      <div class="home-section-heading"><div class="home-section-title"><span class="section-number" aria-hidden="true">01</span><h2 id="experience-title">Research experience</h2></div><span class="home-section-note">Industry internships</span></div>
+      <div class="home-section-heading">
+        <div class="home-section-title">
+          <span class="section-number" aria-hidden="true">01</span>
+          <h2 id="experience-title">Research experience</h2>
+        </div>
+        <span class="home-section-note">Industry internships</span>
+      </div>
       <div class="experience-list">
         {% for item in site.data.homepage.experience %}
           <div class="experience-entry experience-{{ item.style }}">
             <div class="company-mark" aria-hidden="true">{{ item.mark }}</div>
             <div class="experience-content">
-              <div class="experience-heading"><div><h3>{{ item.organization }}</h3><p class="experience-team">{{ item.team }}</p></div><span class="experience-role">{{ item.role }}</span></div>
+              <div class="experience-heading">
+                <div>
+                  <h3>{{ item.organization }}</h3>
+                  <p class="experience-team">{{ item.team }}</p>
+                </div>
+                <span class="experience-role">{{ item.role }}</span>
+              </div>
               <p class="experience-intro">{{ item.introduction }}</p>
               {% if item.areas %}
-                <div class="experience-areas">{% for area in item.areas %}<div><h4>{{ area.title }}</h4><p>{{ area.description }}</p></div>{% endfor %}</div>
+                <div class="experience-areas">
+                  {% for area in item.areas %}
+                    <div>
+                      <h4>{{ area.title }}</h4>
+                      <p>{{ area.description }}</p>
+                    </div>
+                  {% endfor %}
+                </div>
               {% endif %}
-              <ul class="experience-tags" aria-label="{{ item.organization }} research topics">{% for keyword in item.keywords %}<li>{{ keyword }}</li>{% endfor %}</ul>
+              <ul class="experience-tags" aria-label="{{ item.organization }} research topics">
+                {% for keyword in item.keywords %}
+                  <li>{{ keyword }}</li>
+                {% endfor %}
+              </ul>
             </div>
           </div>
         {% endfor %}
@@ -53,12 +103,37 @@ layout: default
 
     {% if page.selected_papers %}
       <section class="home-section" id="selected-publications" aria-labelledby="papers-title">
-        <div class="home-section-heading"><div class="home-section-title"><span class="section-number" aria-hidden="true">02</span><h2 id="papers-title">Selected research</h2></div><a class="home-section-link" href="{{ '/publications/' | relative_url }}">All publications <span aria-hidden="true">↗</span></a></div>
+        <div class="home-section-heading">
+          <div class="home-section-title">
+            <span class="section-number" aria-hidden="true">02</span>
+            <h2 id="papers-title">Selected research</h2>
+          </div>
+          <a class="home-section-link" href="{{ '/publications/' | relative_url }}">All publications <span aria-hidden="true">↗</span></a>
+        </div>
         <div class="research-list">
           {% for paper in site.data.homepage.publications %}
             <article class="research-entry" id="{{ paper.id }}">
-              <div class="paper-venue"><span>{{ paper.venue }}</span><strong>{{ paper.year }}</strong>{% if paper.distinction %}<span class="paper-distinction">{{ paper.distinction }}</span>{% endif %}</div>
-              <div class="paper-content"><div class="paper-topline"><span>{{ paper.short_title }}</span>{% if paper.contribution %}<span class="paper-contribution">{{ paper.contribution }}</span>{% endif %}</div><h3>{{ paper.title }}</h3><p class="paper-summary">{{ paper.summary }}</p><div class="paper-authors">{{ paper.authors | markdownify }}</div><div class="paper-links"><a href="{{ paper.pdf }}" target="_blank" rel="noopener noreferrer">Paper <span aria-hidden="true">↗</span></a><a href="{{ paper.code }}" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a></div></div>
+              <div class="paper-venue">
+                <span>{{ paper.venue }}</span><strong>{{ paper.year }}</strong>
+                {%- if paper.distinction -%}
+                  <span class="paper-distinction">{{ paper.distinction }}</span>
+                {%- endif %}
+              </div>
+              <div class="paper-content">
+                <div class="paper-topline">
+                  <span>{{ paper.short_title }}</span>
+                  {%- if paper.contribution -%}
+                    <span class="paper-contribution">{{ paper.contribution }}</span>
+                  {%- endif %}
+                </div>
+                <h3>{{ paper.title }}</h3>
+                <p class="paper-summary">{{ paper.summary }}</p>
+                <div class="paper-authors">{{ paper.authors | markdownify }}</div>
+                <div class="paper-links">
+                  <a href="{{ paper.pdf }}" target="_blank" rel="noopener noreferrer">Paper <span aria-hidden="true">↗</span></a
+                  ><a href="{{ paper.code }}" target="_blank" rel="noopener noreferrer">Code <span aria-hidden="true">↗</span></a>
+                </div>
+              </div>
             </article>
           {% endfor %}
         </div>
@@ -66,17 +141,63 @@ layout: default
     {% endif %}
 
     <section class="home-section" id="education" aria-labelledby="education-title">
-      <div class="home-section-heading"><div class="home-section-title"><span class="section-number" aria-hidden="true">03</span><h2 id="education-title">Education</h2></div><span class="home-section-note">Harbin Institute of Technology</span></div>
-      <div class="education-grid">{% for item in site.data.homepage.education %}<div class="education-entry"><span class="education-level">{{ item.level }}</span><h3>{{ item.degree }}</h3>{% if item.field %}<p class="education-field">{{ item.field }}</p>{% endif %}<p>{{ item.university }}</p><p class="education-period">{{ item.period }}</p>{% if item.detail %}<p class="education-detail">{{ item.detail }}</p>{% endif %}</div>{% endfor %}</div>
-      <div class="home-honor"><span class="honor-icon" aria-hidden="true">✧</span><div><strong>{{ site.data.homepage.honor.title }}</strong><span>{{ site.data.homepage.honor.competition }}</span></div><time>{{ site.data.homepage.honor.year }}</time></div>
+      <div class="home-section-heading">
+        <div class="home-section-title">
+          <span class="section-number" aria-hidden="true">03</span>
+          <h2 id="education-title">Education</h2>
+        </div>
+        <span class="home-section-note">Harbin Institute of Technology</span>
+      </div>
+      <div class="education-grid">
+        {% for item in site.data.homepage.education %}
+          <div class="education-entry">
+            <span class="education-level">{{ item.level }}</span>
+            <h3>{{ item.degree }}</h3>
+            {% if item.field %}
+              <p class="education-field">{{ item.field }}</p>
+            {% endif %}
+            <p>{{ item.university }}</p>
+            <p class="education-period">{{ item.period }}</p>
+            {% if item.detail %}
+              <p class="education-detail">{{ item.detail }}</p>
+            {% endif %}
+          </div>
+        {% endfor %}
+      </div>
+      <div class="home-honor">
+        <span class="honor-icon" aria-hidden="true">✧</span>
+        <div>
+          <strong>{{ site.data.homepage.honor.title }}</strong><span>{{ site.data.homepage.honor.competition }}</span>
+        </div>
+        <time>{{ site.data.homepage.honor.year }}</time>
+      </div>
     </section>
 
     {% if page.announcements and page.announcements.enabled %}
-      <section class="home-section home-news" id="news" aria-labelledby="news-title"><div class="home-section-heading"><div class="home-section-title"><span class="section-number" aria-hidden="true">04</span><h2 id="news-title">Recent updates</h2></div><a class="home-section-link" href="{{ '/news/' | relative_url }}">All updates <span aria-hidden="true">↗</span></a></div>{% include news.liquid limit=true %}</section>
+      <section class="home-section home-news" id="news" aria-labelledby="news-title">
+        <div class="home-section-heading">
+          <div class="home-section-title">
+            <span class="section-number" aria-hidden="true">04</span>
+            <h2 id="news-title">Recent updates</h2>
+          </div>
+          <a class="home-section-link" href="{{ '/news/' | relative_url }}">All updates <span aria-hidden="true">↗</span></a>
+        </div>
+        {% include news.liquid limit=true %}
+      </section>
     {% endif %}
 
     {% if page.social %}
-      <section class="home-contact" aria-labelledby="contact-title"><div><p class="home-eyebrow">Get in touch</p><h2 id="contact-title">Let's build what's next.</h2><p>Research discussions, collaborations, and new opportunities.</p></div><a class="home-contact-link" href="mailto:{{ site.data.socials.email }}">{{ site.data.socials.email }} <span aria-hidden="true">↗</span></a></section>
+      <section class="home-contact" aria-labelledby="contact-title">
+        <div>
+          <p class="home-eyebrow">Get in touch</p>
+          <h2 id="contact-title">Let's build what's next.</h2>
+          <p>Research discussions, collaborations, and new opportunities.</p>
+        </div>
+        <a class="home-contact-link" href="mailto:{{ site.data.socials.email }}">
+          {{- site.data.socials.email }}
+          <span aria-hidden="true">↗</span></a
+        >
+      </section>
     {% endif %}
   </article>
 </div>
